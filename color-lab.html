@@ -4,16 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#7058d6">
-  <meta name="app-version" content="4.5.0">
+  <meta name="app-version" content="4.6.0">
   <meta name="description" content="Kids Paint Color Lab — mix paint-like pigments and solve friendly color challenges.">
   <title>مختبر الألوان | Kids Paint</title>
   <link rel="icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="color-lab.css?v=4.5.0">
+  <link rel="stylesheet" href="color-lab.css?v=4.6.0">
   <script src="vendor/spectral.min.js?v=3.0.0" defer></script>
-  <script src="color-lab-core.js?v=4.5.0" defer></script>
-  <script src="color-lab.js?v=4.5.0" defer></script>
+  <script src="color-lab-core.js?v=4.6.0" defer></script>
+  <script src="color-lab.js?v=4.6.0" defer></script>
 </head>
 <body>
   <div class="lab-shell">
@@ -47,12 +47,16 @@
       <section id="challengeSection" class="challenge-panel" aria-labelledby="challengeTitle" hidden>
         <div class="section-heading">
           <div>
-            <p class="eyebrow" data-t="fourChallenges">٤ تحديات بدون مؤقت</p>
+            <p class="eyebrow" data-t="twelveChallenges">١٢ تحديًا بدون مؤقت</p>
             <h2 id="challengeTitle" data-t="challengeTitle">اصنع اللون المطلوب!</h2>
           </div>
           <span class="no-clock" data-t="noClock">بدون وقت أو عقوبات</span>
         </div>
-        <div id="challengePicker" class="challenge-picker" role="group" aria-label="Choose a challenge / اختر تحديًا"></div>
+        <div class="progress-strip" role="status" aria-live="polite">
+          <span data-t="starsCollected">نجومك المكتسبة</span>
+          <strong id="challengeProgress">0 / 36 ★</strong>
+        </div>
+        <div id="challengePicker" class="challenge-picker" aria-label="Choose a challenge / اختر تحديًا"></div>
         <div class="target-card">
           <div class="target-copy">
             <p class="eyebrow" data-t="targetColor">اللون المطلوب</p>
@@ -69,7 +73,7 @@
             <p class="eyebrow" data-t="yourExperiment">تجربتك</p>
             <h2 id="mixTitle" data-t="mixTitle">هيا نخلط الألوان!</h2>
           </div>
-          <span class="hint-chip" data-t="chooseTwo">لونان في كل تجربة</span>
+          <span class="hint-chip" data-t="chooseThree">حتى ٣ ألوان مع الأبيض والأسود</span>
         </div>
 
         <div class="color-shelf" id="colorShelf" role="group" aria-label="Pigment tubes / أنابيب الألوان">
@@ -88,8 +92,18 @@
             <strong data-t="blue">أزرق</strong><small id="blueCount" class="drop-count">0</small>
             <span class="add-mark" aria-hidden="true">+</span>
           </button>
+          <button class="pigment" type="button" data-pigment="white">
+            <span class="paint-tube tube-white" aria-hidden="true"><span class="tube-cap"></span><span class="tube-body"></span></span>
+            <strong data-t="white">أبيض</strong><small id="whiteCount" class="drop-count">0</small>
+            <span class="add-mark" aria-hidden="true">+</span>
+          </button>
+          <button class="pigment" type="button" data-pigment="black">
+            <span class="paint-tube tube-black" aria-hidden="true"><span class="tube-cap"></span><span class="tube-body"></span></span>
+            <strong data-t="black">أسود</strong><small id="blackCount" class="drop-count">0</small>
+            <span class="add-mark" aria-hidden="true">+</span>
+          </button>
         </div>
-        <p class="shelf-instruction" data-t="tapTube">اضغط على أي أنبوب لإضافة قطرة إلى الكأس.</p>
+        <p class="shelf-instruction" data-t="tapTube">أضف قطرات الألوان، ثم جرّب الأبيض للتفتيح والأسود للتغميق.</p>
 
         <div class="mix-playground">
           <div class="cup-wrap">
@@ -105,7 +119,7 @@
           <div class="mix-description">
             <p class="eyebrow" data-t="theRecipe">وصفة اللون</p>
             <h3 id="dropSummary" data-t="noDrops">لم تضف قطرات بعد</h3>
-            <p id="dropLimit" class="muted" data-t="maxTwelve">يمكنك إضافة 12 قطرة كحد أقصى.</p>
+            <p id="dropLimit" class="muted" data-t="maxEighteen">يمكنك إضافة 18 قطرة كحد أقصى.</p>
             <p id="mixLearning" class="learning-card" data-t="learningStart">هل تعلم؟ تغيير عدد القطرات يغير درجة اللون الناتج!</p>
             <div class="mix-actions">
               <button type="button" id="undoDropBtn" class="outlined" disabled data-t="undoDrop">↶ تراجع عن قطرة</button>
@@ -140,9 +154,10 @@
             <p class="eyebrow" data-t="discoveriesEyebrow">ذكريات من المختبر</p>
             <h2 id="collectionTitle" data-t="collection">دفتر ألواني</h2>
           </div>
-          <span id="savedCount" class="saved-count">0 / 24</span>
+          <span id="savedCount" class="saved-count">0 / 48</span>
         </div>
         <p class="muted" data-t="saveLocal">الألوان والنجوم تُحفظ على هذا الجهاز فقط.</p>
+        <p class="notebook-guide" data-t="notebookGuide">اضغط «جرّب» لاستعادة الوصفة، أو «احذف» لإزالة اللون من الدفتر.</p>
         <div id="savedColors" class="saved-colors"></div>
       </section>
     </main>
@@ -150,7 +165,7 @@
     <footer class="lab-footer">
       <p><span data-t="poweredBy">مزج الأصباغ التقريبي بواسطة</span> <a href="https://github.com/rvanwijnen/spectral.js" target="_blank" rel="noopener noreferrer">Spectral.js</a> · MIT © 2025 Ronald van Wijnen</p>
       <p><a href="THIRD_PARTY_NOTICES.md" data-t="licenseLink">حقوق المكتبات والتراخيص</a> · <a href="README.ar.md" data-t="aboutProject">عن المشروع</a></p>
-      <p><span data-t="versionLabel">الإصدار</span> <bdi>4.5.0</bdi> · <button id="labUpdateBtn" type="button" data-t="checkUpdates">التحقق من التحديثات</button></p>
+      <p><span data-t="versionLabel">الإصدار</span> <bdi>4.6.0</bdi> · <button id="labUpdateBtn" type="button" data-t="checkUpdates">التحقق من التحديثات</button></p>
       <p id="labUpdateStatus" class="muted" role="status" aria-live="polite"></p>
     </footer>
   </div>
