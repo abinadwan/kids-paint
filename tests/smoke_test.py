@@ -66,10 +66,11 @@ def run():
         page.on('pageerror', lambda err: errors.append(str(err)))
         load_app(page)
         assert page.title().startswith('عالم التلوين')
-        assert page.locator('.template-item').count() == 6
+        assert page.locator('.template-item').count() == 14
+        assert page.locator('#bucketTool').get_attribute('aria-pressed') == 'true'
         assert alpha_count(page) == 0
         assert alpha_count(page, 'templateCanvas') > 500
-        print('PASS: initialization and 6 original built-in templates')
+        print('PASS: initialization, 14 pages, default paint bucket')
 
         page.locator('#langEn').click()
         assert page.locator('html').get_attribute('dir') == 'ltr'
@@ -78,6 +79,37 @@ def run():
         assert page.locator('html').get_attribute('dir') == 'rtl'
         page.locator('#langEn').click()
         print('PASS: Arabic/English and RTL/LTR switching')
+
+
+        # Paint Bucket: every built-in picture has a testable enclosed region.
+        shapes = [('cat',300,180),('fish',300,200),('apple',180,200),('lion',300,210),
+                  ('pencil',290,175),('butterfly',204,126),('flower',300,166),
+                  ('house',298,228),('rocket',300,230),('car',300,228),('turtle',293,204),
+                  ('icecream',298,156),('sun',300,193)]
+        for i,(name,x,y) in enumerate(shapes):
+            page.locator('.template-item').nth(i).click()
+            assert page.locator('#bucketTool').get_attribute('aria-pressed') == 'true', name
+            assert alpha_count(page) == 0, name
+            page.locator('#paintCanvas').scroll_into_view_if_needed()
+            bounds = page.locator('#paintCanvas').bounding_box()
+            page.mouse.click(bounds['x'] + bounds['width']*x/600, bounds['y'] + bounds['height']*y/400)
+            filled = alpha_count(page)
+            assert filled > 200, name
+            page.locator('#undoBtn').click()
+            assert alpha_count(page) == 0, name
+            page.locator('#redoBtn').click()
+            assert alpha_count(page) == filled, name
+            page.locator('#undoBtn').click()
+        print('PASS: bounded fills, Undo/Redo on 13 illustrated templates')
+
+        page.locator('.template-item').first.click()
+        page.locator('#paintCanvas').scroll_into_view_if_needed()
+        bounds = page.locator('#paintCanvas').bounding_box()
+        page.mouse.click(bounds['x'] + bounds['width']*.025, bounds['y'] + bounds['height']*.025)
+        assert alpha_count(page) == 0
+        print('PASS: open background is not painted')
+
+        page.locator('#brushTool').click()
 
         draw_with_mouse(page)
         painted = alpha_count(page)
