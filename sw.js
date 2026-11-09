@@ -47,14 +47,24 @@ self.addEventListener('fetch', (event) => {
         const response = await fetch(request);
         if (response.ok) {
           const cache = await caches.open(CACHE_NAME);
-          await cache.put(appRoot.href, response.clone());
+          // Cache each route under its own path: Color Lab must never replace Home.
+          const page = new URL(request.url);
+          page.search = '';
+          page.hash = '';
+          await cache.put(page.href, response.clone());
         }
         return response;
       } catch (_) {
         const cache = await caches.open(CACHE_NAME);
-        return (await cache.match(request, { ignoreSearch: true })) ||
-          (await cache.match(appRoot.href)) ||
-          (await cache.match(new URL('index.html', appRoot).href)) ||
+        const page = new URL(request.url);
+        page.search = '';
+        page.hash = '';
+        const isHome = page.href === appRoot.href ||
+          page.href === new URL('index.html', appRoot).href;
+        return (await cache.match(page.href)) ||
+          (await cache.match(request, { ignoreSearch: true })) ||
+          (isHome ? (await cache.match(appRoot.href)) ||
+            (await cache.match(new URL('index.html', appRoot).href)) : null) ||
           Response.error();
       }
     })());
