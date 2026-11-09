@@ -1,6 +1,6 @@
 {
-  "version": "4.7.0",
+  "version": "4.8.0",
   "released": "2026-11-09",
-  "summary": "Phase 2C World of Light RGB inside Color Lab, six untimed light challenges and identical update/version controls on both app pages",
-  "notes": "One installed PWA: Drawing and Color Lab. Inside Color Lab, switch between pigments and additive RGB light. Both app pages offer Update app and a current-version label. Offline readiness now checks the complete app shell. Pigment and light notebooks and stars are stored separately."
+  "summary": "Approved banners for Pigment Lab, RGB World of Light and README; identical bilingual headers; detailed licenses and credits moved out of page footers",
+  "notes": "Both pages share the same responsive logo/navigation/Arabic-English controls. Dedicated 3:1 banners for the two Color Lab tabs, complete platform banner in README, and detailed docs/LICENSING_AND_CREDITS.md. Original MIT and Spectral.js rights remain preserved. All 27 offline PWA assets and prior saved progress are retained."
 }
