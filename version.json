@@ -1,6 +1,6 @@
 {
-  "version": "4.6.0",
+  "version": "4.7.0",
   "released": "2026-11-09",
-  "summary": "Color Lab 2B: 3 primary pigments plus white/black, 12 untimed challenges, 18-drop mixing, and 48 saved recipes",
-  "notes": "Open Color Lab to create lighter/darker shades and play eight new challenges. Previous saved 2A colors and stars remain intact. All assets are included in the offline PWA cache, with Spectral.js MIT attribution preserved."
+  "summary": "Phase 2C World of Light RGB inside Color Lab, six untimed light challenges and identical update/version controls on both app pages",
+  "notes": "One installed PWA: Drawing and Color Lab. Inside Color Lab, switch between pigments and additive RGB light. Both app pages offer Update app and a current-version label. Offline readiness now checks the complete app shell. Pigment and light notebooks and stars are stored separately."
 }
