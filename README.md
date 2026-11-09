@@ -148,3 +148,8 @@ At the bottom of Kids Paint you will see the **current version** (e.g. `4.3.0`) 
 When offline, checking cannot work; reconnect and retry. Publication to GitHub Pages may lag behind commits. Browser storage (IndexedDB/localStorage) is separate from the offline app-shell cache and can still be lost if site data is cleared or evicted.
 
 **Future release checklist:** bump the HTML `meta[name="app-version"]` and visible footer version, update versioned CSS/JS URLs in `index.html` and the Service Worker precache, bump `CACHE_NAME` in `sw.js`, and **publish `version.json` last** after all other assets. Never clear artwork storage as part of an app update.
+
+
+## Mobile layout / accidental zoom protection (v4.4.1)
+
+The interface uses a responsive width rather than fixed pixel widths on phones. The portrait drawing canvas remains 85% of the viewport height when creating a new portrait mobile picture. Touch gestures within the app scroll vertically without unintended page pinch/double-tap zoom; the painting surface itself captures brush gestures. Mobile inputs use a minimum 16px font size to avoid Safari's automatic focus zoom. The viewport still allows browser/OS accessibility zoom: the site does **not** set `user-scalable=no`. These changes affect layout and gestures only, not saved artwork or the canvas dimensions.
