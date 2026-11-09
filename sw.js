@@ -1,8 +1,8 @@
 /* Kids Paint offline application shell. Scope follows this script's directory (GitHub Pages subpath). */
-const CACHE_NAME = 'kids-paint-shell-v4.2.1';
+const CACHE_NAME = 'kids-paint-shell-v4.3.0';
 const PRECACHE = [
   './', './index.html', './manifest.webmanifest',
-  './style.css?v=4.2.1', './drawing.js?v=4.2.0', './pwa.js?v=4.2.1',
+  './style.css?v=4.3.0', './drawing.js?v=4.2.0', './pwa.js?v=4.3.0',
   './assets/kids-paint-banner.webp', './assets/app-icon.png',
   './assets/icon-192.png', './assets/icon-512.png',
   './apple-touch-icon.png', './favicon.ico'
@@ -31,6 +31,11 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin || !url.pathname.startsWith(appRoot.pathname)) return;
+  // Version checks must always hit the network, not a stale offline shell.
+  if (url.pathname === new URL('version.json', appRoot).pathname) {
+    event.respondWith(fetch(request, { cache: 'no-store' }));
+    return;
+  }
 
   if (request.mode === 'navigate') {
     // Prefer fresh HTML online; use the cached app entry when offline, including ?query launches.
