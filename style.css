@@ -278,3 +278,16 @@ dialog::backdrop { background: rgba(30, 25, 52, .45); }
   #installDialog.install-sheet { width: 100%; }
   .install-sheet .install-dialog-body { padding-inline: 18px; }
 }
+
+
+/* v4.3.0: unobtrusive version and safe manual PWA update, kept below the editor. */
+.footer-update { max-width: 660px; margin: 0 auto 18px; padding: 13px 16px; background: #f8faff; border: 1px solid #dde5f6; border-radius: 16px; color: var(--ink); text-align: start; }
+.footer-update-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.footer-version { font-size: .88rem; font-weight: 650; color: #45516d; }
+.footer-version bdi { font-variant-numeric: tabular-nums; color: #4f3c9d; font-weight: 800; }
+.update-cta { min-height: 44px; padding: 9px 16px; border-radius: 11px; background: white; color: #5135a2; border: 2px solid #baa8e7; font-size: .9rem; font-weight: 750; cursor: pointer; }
+.update-cta:hover { background: #ede7ff; }
+.update-cta:disabled { opacity: .65; cursor: progress; }
+.update-cta:focus-visible { outline: 3px solid #23b5bb; outline-offset: 3px; }
+.update-status { margin: 10px 0 0; min-height: 1.3em; color: #64748b; font-size: .81rem; line-height: 1.55; overflow-wrap: anywhere; }
+@media (max-width: 400px) { .footer-update { padding: 12px; } .footer-update-top { align-items: stretch; } .footer-version { align-self: center; } .update-cta { width: 100%; } }
