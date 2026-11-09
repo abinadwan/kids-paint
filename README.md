@@ -64,9 +64,9 @@ To import a photo, select **Import a photo**, pick an image from the phone's gal
 
 ## Install as a mobile app and use offline
 
-**iPhone (Safari):** open the live link, tap **Share → Add to Home Screen**, enable **Open as Web App** when displayed, and tap **Add**. Launch it once while online. iOS may isolate the installed app's storage from Safari: save/export important artwork before switching contexts or clearing website data.
+**iPhone (Safari):** tap the **Install app** button at the **bottom of the Kids Paint page**. A compact guide slides up from the **bottom of the screen** and shows only iPhone steps. Safari cannot allow the website to install itself automatically: use **Page Menu → Share → Add to Home Screen → Open as Web App → Add**. Launch it once while online. Installed app storage may be separate from Safari; export important artwork before switching profiles or clearing browser data.
 
-**Android (Chrome):** open the live link, choose **Install app** or **Add to Home Screen** from the browser menu, or follow the **Install app** instructions within Kids Paint. Open the installed app once while connected.
+**Android (Chrome):** scroll to the **Install app** button at the bottom of the page. When Chrome supplies the native install event, tapping it opens Android's **official install confirmation** immediately; accept to install. If Chrome does not offer the event, a small bottom sheet displays the browser-menu fallback (**⋮ → Install app / Add to Home Screen**). Open the installed app once while connected. The button disappears in installed standalone mode.
 
 The Service Worker caches the HTML, CSS, JavaScript, banner, manifest, and icons inside the `/kids-paint/` GitHub Pages scope; after the initial cache succeeds, the drawing editor can launch offline. **Your saved drawings are stored in browser storage, not in the Service Worker cache or GitHub.** Browser storage can be deleted or evicted, so export important artwork to PNG. Updates load when online; an installed device may need a restart/reload after an update.
 
@@ -91,7 +91,7 @@ The Service Worker caches the HTML, CSS, JavaScript, banner, manifest, and icons
 | `index.html` | Bilingual layout, tool buttons, file input, art canvas, gallery and installation guidance |
 | `style.css` | Responsive layout, drawing tools, emoji panel, buttons, footer |
 | `drawing.js` | All drawing, stamps/emoji, share/export, image import, translations and local data |
-| `pwa.js` | Installation prompt and in-app instructions |
+| `pwa.js` | Native Chromium installation prompt, platform detection and bottom-sheet guidance |
 | `sw.js` | Offline Service Worker; precaches required app assets |
 | `manifest.webmanifest` | App name, scope, display mode, icon references |
 | `assets/` | Approved banner, website/app icons, PWA icons |
@@ -124,3 +124,7 @@ Some tests use an in-memory browser page and mocked localStorage; they do **not*
 Copyright © 2026 **abinadwan**. Licensed under the [MIT License](LICENSE), which permits use, modification, and distribution (including commercially) provided the license and copyright notice are retained. See the [GitHub repository](https://github.com/abinadwan/kids-paint) for source, issues, and contributions.
 
 **[Read the complete Arabic README →](README.ar.md)**
+
+### Install UX update (v4.2.1)
+
+The install action was moved out of the top hero into the footer, and device-specific help now opens as a compact **bottom sheet** rather than a centered dialog. iOS requires manual Share → Add to Home Screen; the browser does not expose a one-tap installation API. Android/Chromium can use the native install confirmation when offered. Service Worker shell cache updated to `v4.2.1` to refresh these changes.
