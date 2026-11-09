@@ -323,3 +323,18 @@ img, canvas { max-width:100%; }
   /* At 16px or above, input focus does not auto-enlarge Safari's page. */
   input:not([type="range"]), textarea, select { font-size:16px; }
 }
+
+/* v4.5.0 — route between drawing and Color Lab, preserving compact mobile layout. */
+.app-pages-nav { display:flex; align-items:center; gap:4px; border:1px solid #e5dcf5; padding:5px; background:#fff; border-radius:14px; flex-wrap:wrap; }
+.app-pages-nav a { color:#594990; text-decoration:none; padding:9px 13px; font-weight:750; font-size:.87rem; border-radius:10px; min-height:41px; display:inline-flex; align-items:center; justify-content:center; }
+.app-pages-nav a[aria-current="page"] { background:#eee9ff; color:#4d398e; }
+.app-pages-nav a:focus-visible { outline:3px solid #23b5bb; outline-offset:2px; }
+.hero-cta.lab-cta { background:#fff; color:#5c46ad; border:2px solid #c9bce9; }
+.hero-cta.lab-cta:hover { background:#eee8ff; }
+@media (max-width:760px) {
+  .app-pages-nav { order:3; width:100%; justify-content:stretch; }
+  .app-pages-nav a { flex:1; white-space:nowrap; }
+}
+@media (max-width:380px) {
+  .app-pages-nav a { font-size:.78rem; padding:8px 7px; }
+}
