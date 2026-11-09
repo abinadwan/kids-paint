@@ -1,0 +1,32 @@
+{
+  "id": "./",
+  "name": "عالم التلوين للأطفال | Kids Paint",
+  "short_name": "عالم التلوين",
+  "description": "لعبة تلوين ورسم للأطفال تعمل دون إنترنت. ارسم ولوّن وأضف الأختام والصور.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f3ff",
+  "theme_color": "#7058d6",
+  "categories": [
+    "education",
+    "kids",
+    "entertainment"
+  ],
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

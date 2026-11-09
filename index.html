@@ -4,12 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#7058d6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="عالم التلوين">
+  <link rel="manifest" href="manifest.webmanifest">
   <meta name="description" content="Kids Paint — an offline Arabic/English paint-bucket coloring game for children.">
   <title>عالم التلوين | Kids Paint</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico?v=4.0.0">
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=4.0.0">
-  <link rel="stylesheet" href="style.css?v=4.0.1">
-  <script src="drawing.js?v=4.0.1" defer></script>
+  <link rel="stylesheet" href="style.css?v=4.1.0">
+  <script src="drawing.js?v=4.1.0" defer></script>
+  <script src="pwa.js?v=4.1.0" defer></script>
 </head>
 <body>
   <div class="app-shell">
@@ -31,8 +36,12 @@
       <img class="hero-art" src="assets/kids-paint-banner.webp" width="1400" height="467" alt="Kids Paint — عالم التلوين للأطفال: دلو ألوان وفرشاة ولوحة رسم برسوم مبهجة" fetchpriority="high">
       <div class="hero-info">
         <p id="heroCaption" data-i18n="heroCaption">اختر رسمة، امسك اللون، وابدأ إبداعك!</p>
-        <a class="hero-cta" href="#workspaceTitle"><span data-i18n="startPainting">ابدأ التلوين</span><span aria-hidden="true">↘</span></a>
+        <div class="hero-actions">
+          <a class="hero-cta" href="#workspaceTitle"><span data-i18n="startPainting">ابدأ التلوين</span><span aria-hidden="true">↘</span></a>
+          <button type="button" class="install-cta" id="installAppBtn" data-pwa-ar="ثبّت التطبيق" data-pwa-en="Install app">ثبّت التطبيق</button>
+        </div>
       </div>
+      <p id="offlineReady" class="offline-ready" hidden data-pwa-ar="جاهز للعمل دون إنترنت بعد أول تحميل" data-pwa-en="Ready for offline use after the first download">جاهز للعمل دون إنترنت بعد أول تحميل</p>
     </section>
 
 
@@ -146,6 +155,15 @@
         <button type="submit" class="action-button primary" data-i18n="save">حفظ</button>
       </div>
     </form>
+  </dialog>
+  <dialog id="installDialog" aria-labelledby="installDialogTitle">
+    <div class="install-dialog-body">
+      <h2 id="installDialogTitle" data-pwa-ar="ثبّت عالم التلوين على الجوال" data-pwa-en="Install Kids Paint on your phone">ثبّت عالم التلوين على الجوال</h2>
+      <p data-pwa-ar="على الآيفون (Safari): مشاركة ← إضافة إلى الشاشة الرئيسية ← فتح كتطبيق ← إضافة." data-pwa-en="On iPhone (Safari): Share → Add to Home Screen → Open as Web App → Add.">على الآيفون (Safari): مشاركة ← إضافة إلى الشاشة الرئيسية ← فتح كتطبيق ← إضافة.</p>
+      <p data-pwa-ar="على أندرويد (Chrome): القائمة ⋮ ← تثبيت التطبيق أو إضافة إلى الشاشة الرئيسية." data-pwa-en="On Android (Chrome): Menu ⋮ → Install app or Add to Home Screen.">على أندرويد (Chrome): القائمة ⋮ ← تثبيت التطبيق أو إضافة إلى الشاشة الرئيسية.</p>
+      <p class="install-note" data-pwa-ar="بعد تثبيت التطبيق افتحه مرة بالإنترنت وانتظر رسالة الجاهزية. بعدها تعمل أدوات الرسم دون اتصال. الرسومات محفوظة على هذا الجهاز فقط؛ صدّر PNG للاحتفاظ بنسخة." data-pwa-en="After installing, open the app online once and wait for the ready message. Drawing tools then work offline. Artwork is stored only on this device; export PNG for a backup.">بعد تثبيت التطبيق افتحه مرة بالإنترنت وانتظر رسالة الجاهزية. بعدها تعمل أدوات الرسم دون اتصال. الرسومات محفوظة على هذا الجهاز فقط؛ صدّر PNG للاحتفاظ بنسخة.</p>
+      <div class="dialog-actions"><button type="button" class="action-button primary" id="closeInstallDialog" data-pwa-ar="فهمت" data-pwa-en="Got it">فهمت</button></div>
+    </div>
   </dialog>
 </body>
 </html>

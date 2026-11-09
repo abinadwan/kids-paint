@@ -3,6 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 ![Arabic + English](https://img.shields.io/badge/Languages-Arabic%20%7C%20English-blue)
 ![Vanilla JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-f7df1e?logo=javascript&logoColor=black)
+![Installable PWA](https://img.shields.io/badge/Installable-PWA-7058d6)
 ![Offline ready](https://img.shields.io/badge/App-Offline%20Ready-purple)
 ![No dependencies](https://img.shields.io/badge/Dependencies-None-brightgreen)
 [![Live website](https://img.shields.io/badge/Live-GitHub%20Pages-7058d6)](https://abinadwan.github.io/kids-paint/)
@@ -38,6 +39,18 @@ A free, open-source drawing and painting app for kids with **three creative pain
 - **Privacy-first:** no accounts, ads, analytics, API keys, servers, tracking, external images, fonts or runtime dependencies.
 - **Fully static** and responsive on phones, tablets and desktop browsers.
 
+## Install as an offline phone app (PWA) — تثبيت التطبيق على الجوال
+
+Kids Paint now includes a real web-app manifest, 192/512px home-screen icons, and a Service Worker that caches the complete static app shell for offline launches. The website is hosted under `/kids-paint/` on GitHub Pages, and the manifest and cache paths respect that project scope.
+
+**iPhone / iPad (Safari):** open [Kids Paint](https://abinadwan.github.io/kids-paint/) in Safari → **Share** → **Add to Home Screen** → enable **Open as Web App** → **Add**. Launch the new home-screen app **once while connected** and wait until it says it is ready for offline use. You can then open it without internet.
+
+**Android (Chrome):** visit the same website → tap **Install app** in the page or open Chrome's menu **⋮ → Install app / Add to Home Screen**. Open the installed app once online and wait for the offline-ready message.
+
+**العربية:** على الآيفون: افتح الرابط في سفاري، ثم **مشاركة ← إضافة إلى الشاشة الرئيسية ← فتح كتطبيق ← إضافة**. على أندرويد: من كروم اختر **تثبيت التطبيق**. بعد التثبيت افتح التطبيق مرة واحدة بالإنترنت حتى تظهر رسالة الجاهزية، ثم جرّب تشغيله دون إنترنت.
+
+**Important limitations:** offline access requires a successful first online load, HTTPS and a supported browser. It does **not** work as a Service Worker when opening `index.html` via `file://`. The operating system may purge stored caches. Drawings and imported images are stored locally in browser/app storage, **not uploaded**, and home-screen web apps may have their **own storage separate from Safari**. Saved drawings are **not guaranteed to move automatically** from Safari to the installed app. Export important art as PNG before switching, clearing app data, or removing the app. Photo gallery access may depend on mobile permissions.
+
 ## Getting started
 
 ### On the web
@@ -71,6 +84,8 @@ The approved bilingual Kids Paint banner is displayed in the website hero and th
 | --- | --- |
 | `assets/kids-paint-banner.webp` | Optimized approved banner for the web and README |
 | `assets/app-icon.png` | Matching icon in the website header |
+| `assets/icon-192.png`, `assets/icon-512.png` | Home-screen PWA icons |
+| `manifest.webmanifest`, `sw.js`, `pwa.js` | App metadata, offline cache, install guidance |
 | `favicon.ico` | Multi-resolution browser favicon |
 | `apple-touch-icon.png` | Home screen icon for iPhone / iPad |
 

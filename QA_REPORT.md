@@ -87,3 +87,12 @@ The production HTML uses versioned CSS/JS query parameters (`?v=3.1.0`) so brows
 - Existing `tests/smoke_test.py` and `tests/user_outline_test.py` also pass without regressions.
 - Browser test harness mocks localStorage on about:blank. **Real IndexedDB, real GitHub Pages deployment, and hardware Safari/iPhone were not verified** in this environment (localhost and test origin are administrator-blocked).
 - Imported image persistence uses browser JPEG compression; saved colors may differ slightly from the original image. Photo files are resized to 960×640 pixels with letterboxing, without altering the source file.
+
+## PWA / offline install update — 2026-11-09
+
+- PASS: Web manifest valid JSON with same-scope `./` launch and 192×192/512×512 actual PNG icons.
+- PASS: `sw.js` / `pwa.js` syntax check (`node --check`).
+- PASS: service-worker mocked-runtime regression for install precache list, navigation fallback for offline query URLs, cache cleanup, scope protection, and cached JS/CSS/icons (`node tests/service_worker_unit.js`).
+- PASS: Chromium in-memory DOM tests for the bilingual install guide, 320/390/768/1280px layouts, 14 templates and drawing tool (`python tests/install_ui_test.py`).
+- NOT VERIFIED: true Service Worker installation and offline launch on a real web origin or physical iPhone/Android. Sandbox Chromium blocks all localhost navigation (`net::ERR_BLOCKED_BY_ADMINISTRATOR`). Test the deployed GitHub Pages URL on a device after publication.
+- NOTE: PWA data can be partitioned from Safari browser storage; do not promise automatic migration of saved artwork. Export PNG before deleting any app/browser data.
