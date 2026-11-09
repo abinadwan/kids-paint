@@ -99,3 +99,13 @@ Cross-device persistence checks confirmed a 960×640 legacy landscape drawing op
 - Both Drawing and Color Lab now have a bottom version indicator and Update app button for 4.7.0. Offline status checks full cached assets, not only SW registration success.
 - Added permanent Node and Chromium regression files. Real browser/iPhone execution is not established in this connector session; tests require local/CI run and physical-device follow-up.
 - No external third-party library added; retained Spectral.js MIT © 2025 Ronald van Wijnen rights and original license for pigment-only mixing.
+
+
+## v4.8.0 — Approved banners and shared responsive header
+
+- Optimized three approved 2172×724 source images to WebP 1600×533 (approximately 3:1). Binary uploads to GitHub were confirmed byte-for-byte using the Git blob SHA-1 checks: pigment 61c9e3a228329a0dd647ad577e970baa0161d7fc, light 31ab88a3cf306c46fda08ff0454ee979fc139575, README 6eda5c9e0d0b45f24181dc389cb361f019ed030c.
+- The Color Lab pigment and RGB hero images share the same CSS class, native dimensions and aspect ratio. The README banner combines Drawing & Coloring, Pigment Lab and World of Light.
+- The two page headers use an identical DOM layout and one shared stylesheet: assets/site-header.css. Logo, page navigation, Arabic and English buttons use matching minimum heights, dimensions, positions and responsive breakpoints, including 320px-wide phones.
+- Removed visible footer links to license texts and author notices from both app pages. The standalone detailed bilingual docs/LICENSING_AND_CREDITS.md records copyright, MIT license, source references and art provenance; original LICENSE, Spectral MIT terms and THIRD_PARTY_NOTICES.md remain distributed.
+- The new 4.8.0 PWA cache lists 27 required assets and both pages validate the same complete list before announcing offline readiness. No saved-storage keys were reset or renamed.
+- Added a cross-page Playwright Chromium geometry regression (tests/header_layout_browser_test.py) for 320/375/390/530/768/1024/1440px in RTL/LTR. Visual Safari-on-iPhone verification remains outstanding until performed on a physical device.
