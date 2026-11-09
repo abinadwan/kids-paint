@@ -1,6 +1,6 @@
 {
-  "version": "4.4.1",
+  "version": "4.5.0",
   "released": "2026-11-09",
-  "summary": "Responsive fixed-scale mobile layout and prevention of accidental pinch/double-tap page zoom",
-  "notes": "The app keeps its responsive screen dimensions and vertical scrolling. The drawing area uses touch controls without scaling the page. System/browser accessibility zoom remains available. Update while online; save unsaved drawings first."
+  "summary": "Color Lab Phase 2A: pigment mixing, four untimed challenges, color notebook, and drawing color handoff",
+  "notes": "The Color Lab is a new standalone, offline-ready page. Tap red/yellow/blue paint drops, try four reachable 3-star challenges, save colors, and use them in the drawing page. Bundled Spectral.js MIT rights are documented."
 }
