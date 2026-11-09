@@ -43,7 +43,7 @@
       if (input == null) return {};
       throw new TypeError('Invalid drop recipe');
     }
-    for (const key of Object.keys(input)) if (!(key in pigments)) {
+    for (const key of Object.keys(input)) if (!Object.prototype.hasOwnProperty.call(pigments,key)) {
       throw new RangeError('Unknown pigment: '+key);
     }
     const result={};
@@ -59,7 +59,7 @@
     return result;
   }
   function mayAdd(drops,name) {
-    if (!(name in pigments)) return false;
+    if (!Object.prototype.hasOwnProperty.call(pigments,name)) return false;
     const clean=tidyDrops(drops);
     return totalDrops(clean)<MAX_DROPS &&
       (pigments[name].kind==='neutral'||!!clean[name]||
