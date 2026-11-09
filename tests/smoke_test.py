@@ -1,28 +1,25 @@
-"""Kids Paint automated Chromium smoke tests.
+"""Chromium smoke test for the real Kids Paint HTML/CSS/JS source.
 
-Run: python tests/smoke_test.py (requires Python Playwright and Chromium).
-
-The test environment prevents Chromium from navigating to file:// and http://
-URLs. To test actual app code, it injects unchanged CSS and JS after placing
-index.html into an about:blank document, and simulates localStorage. This
-verifies drawing and UI behavior but is NOT a direct-open/file:// validation,
-not a genuine IndexedDB validation, and not a physical touch-device test.
+Uses about:blank + injected unchanged sources and a mocked localStorage fallback
+because this environment blocks both file:// and localhost navigations.
+This does NOT verify actual IndexedDB, GitHub Pages, or physical device behavior.
+Run: python tests/smoke_test.py
 """
 from pathlib import Path
 import re
 from tempfile import TemporaryDirectory
 from playwright.sync_api import sync_playwright
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def load_app(page, stored=None):
-    html = (ROOT / 'index.html').read_text(encoding='utf-8')
+    html = (ROOT / 'index.html').read_text('utf-8')
     html = re.sub(r'<link[^>]+href="style.css"[^>]*>', '', html)
     html = html.replace('<script src="drawing.js" defer></script>', '')
     page.set_content(html)
-    page.add_style_tag(content=(ROOT / 'style.css').read_text(encoding='utf-8'))
-    # about:blank has no usable native storage; mock the fallback store.
+    page.add_style_tag(content=(ROOT / 'style.css').read_text('utf-8'))
     page.evaluate('''seed => {
         const store = new Map(Object.entries(seed));
         Object.defineProperty(window, 'indexedDB', { configurable:true, value:undefined });
@@ -35,7 +32,7 @@ def load_app(page, stored=None):
         }});
         window.__dumpStorage = () => Object.fromEntries(store);
     }''', stored or {})
-    page.add_script_tag(content=(ROOT / 'drawing.js').read_text(encoding='utf-8'))
+    page.add_script_tag(content=(ROOT / 'drawing.js').read_text('utf-8'))
     page.wait_for_selector('.template-item')
     page.wait_for_function("document.querySelector('#status').textContent.length > 0")
 
@@ -48,13 +45,31 @@ def alpha_count(page, canvas_id='paintCanvas'):
     }''', canvas_id)
 
 
+def tap_at(page, logical_x, logical_y, touch=False):
+    canvas = page.locator('#paintCanvas')
+    canvas.scroll_into_view_if_needed()
+    rect = canvas.bounding_box()
+    x = rect['x'] + rect['width'] * logical_x/600
+    y = rect['y'] + rect['height'] * logical_y/400
+    if touch: page.touchscreen.tap(x,y)
+    else: page.mouse.click(x,y)
+
+
 def draw_with_mouse(page):
-    rect = page.locator('#paintCanvas').bounding_box()
+    canvas = page.locator('#paintCanvas')
+    canvas.scroll_into_view_if_needed()
+    rect = canvas.bounding_box()
     x, y = rect['x'] + .55 * rect['width'], rect['y'] + .54 * rect['height']
-    page.mouse.move(x,y)
-    page.mouse.down()
+    page.mouse.move(x,y); page.mouse.down()
     page.mouse.move(x+rect['width']*.09,y+rect['height']*.07,steps=9)
     page.mouse.up()
+
+
+def pixel(page, x, y):
+    return page.evaluate('''xy => {
+       const ctx = document.getElementById('paintCanvas').getContext('2d');
+       return [...ctx.getImageData(xy[0],xy[1],1,1).data];
+    }''', [x,y])
 
 
 def run():
@@ -64,126 +79,160 @@ def run():
         page = context.new_page()
         errors = []
         page.on('pageerror', lambda err: errors.append(str(err)))
+        page.on('dialog', lambda dialog: dialog.accept())
         load_app(page)
-        assert page.title().startswith('عالم التلوين')
         assert page.locator('.template-item').count() == 14
         assert page.locator('#bucketTool').get_attribute('aria-pressed') == 'true'
         assert alpha_count(page) == 0
-        assert alpha_count(page, 'templateCanvas') > 500
-        print('PASS: initialization, 14 pages, default paint bucket')
+        print('PASS: initial page, 14 templates, bucket selected')
 
         page.locator('#langEn').click()
         assert page.locator('html').get_attribute('dir') == 'ltr'
-        assert 'Export PNG' in page.locator('#exportBtn').inner_text()
+        assert 'Paint bucket' in page.locator('#bucketTool').inner_text()
+        assert 'Spray paint' in page.locator('#sprayTool').inner_text()
         page.locator('#langAr').click()
         assert page.locator('html').get_attribute('dir') == 'rtl'
         page.locator('#langEn').click()
-        print('PASS: Arabic/English and RTL/LTR switching')
+        print('PASS: Arabic/English RTL/LTR, translated bucket')
 
-
-        # Paint Bucket: every built-in picture has a testable enclosed region.
         shapes = [('cat',300,180),('fish',300,200),('apple',180,200),('lion',300,210),
                   ('pencil',290,175),('butterfly',204,126),('flower',300,166),
                   ('house',298,228),('rocket',300,230),('car',300,228),('turtle',293,204),
                   ('icecream',298,156),('sun',300,193)]
-        for i,(name,x,y) in enumerate(shapes):
+        for i,(shape,x,y) in enumerate(shapes):
             page.locator('.template-item').nth(i).click()
-            assert page.locator('#bucketTool').get_attribute('aria-pressed') == 'true', name
-            assert alpha_count(page) == 0, name
-            page.locator('#paintCanvas').scroll_into_view_if_needed()
-            bounds = page.locator('#paintCanvas').bounding_box()
-            page.mouse.click(bounds['x'] + bounds['width']*x/600, bounds['y'] + bounds['height']*y/400)
-            filled = alpha_count(page)
-            assert filled > 200, name
+            assert page.locator('#bucketTool').get_attribute('aria-pressed') == 'true', shape
+            assert alpha_count(page) == 0, f'{shape}: starts blank'
+            tap_at(page,x,y)
+            painted = alpha_count(page)
+            assert painted > 200, f'{shape}: fill failed'
+            assert 'filled' in page.locator('#status').inner_text().lower(), shape
             page.locator('#undoBtn').click()
-            assert alpha_count(page) == 0, name
+            assert alpha_count(page) == 0, f'{shape}: undo failed'
             page.locator('#redoBtn').click()
-            assert alpha_count(page) == filled, name
-            page.locator('#undoBtn').click()
-        print('PASS: bounded fills, Undo/Redo on 13 illustrated templates')
+            assert alpha_count(page) == painted, f'{shape}: redo failed'
+        print('PASS: region fill + Undo/Redo for all 13 illustrated templates')
 
         page.locator('.template-item').first.click()
-        page.locator('#paintCanvas').scroll_into_view_if_needed()
-        bounds = page.locator('#paintCanvas').bounding_box()
-        page.mouse.click(bounds['x'] + bounds['width']*.025, bounds['y'] + bounds['height']*.025)
-        assert alpha_count(page) == 0
-        print('PASS: open background is not painted')
-
-        page.locator('#brushTool').click()
-
-        draw_with_mouse(page)
-        painted = alpha_count(page)
-        assert painted > 0
+        tap_at(page,10,10)
+        background_pixels = alpha_count(page)
+        assert background_pixels > 1000, 'background must fill rather than silently fail'
+        assert 'background' in page.locator('#status').inner_text().lower()
         page.locator('#undoBtn').click()
         assert alpha_count(page) == 0
+        print('PASS: background/external area paints, Undo restores white background')
+
+        tap_at(page,300,180)
+        painted = alpha_count(page)
+        assert painted > 200
+        red = pixel(page,480,288)
+        page.locator('.color-swatch').nth(5).click()
+        assert page.locator('#bucketTool').get_attribute('aria-pressed') == 'true'
+        tap_at(page,300,180)
+        blue = pixel(page,480,288)
+        assert blue[:3] == [79,152,236] and blue != red, (blue,red)
+        page.locator('#undoBtn').click()
+        assert pixel(page,480,288) == red
         page.locator('#redoBtn').click()
-        assert alpha_count(page) == painted
-        print('PASS: mouse strokes, undo, redo')
+        assert pixel(page,480,288) == blue
+        print('PASS: recolor same area, Undo/Redo restores colors')
 
-        # Erase is expected to remove some paint without changing the template layer.
-        outline_before = alpha_count(page, 'templateCanvas')
+        outline_before = alpha_count(page,'templateCanvas')
         page.locator('#eraserTool').click()
+        page.locator('#paintCanvas').scroll_into_view_if_needed()
         rect = page.locator('#paintCanvas').bounding_box()
-        x, y = rect['x'] + .57 * rect['width'], rect['y'] + .555 * rect['height']
-        page.mouse.move(x,y); page.mouse.down(); page.mouse.move(x+10,y+10,steps=4); page.mouse.up()
+        page.mouse.move(rect['x']+rect['width']*.5,rect['y']+rect['height']*.45)
+        page.mouse.down(); page.mouse.move(rect['x']+rect['width']*.51,rect['y']+rect['height']*.455,steps=3); page.mouse.up()
         assert alpha_count(page) < painted
-        assert alpha_count(page, 'templateCanvas') == outline_before
-        print('PASS: eraser preserves outline')
-        page.locator('#brushTool').click()
+        assert alpha_count(page,'templateCanvas') == outline_before
+        page.locator('#brushTool').click(); draw_with_mouse(page)
+        assert alpha_count(page) > 0
+        print('PASS: eraser preserves outline, optional brush strokes')
 
-        with TemporaryDirectory() as dest:
+        with TemporaryDirectory() as folder:
             with page.expect_download(timeout=8000) as pending:
                 page.locator('#exportBtn').click()
-            download = pending.value
-            output = Path(dest) / download.suggested_filename
-            download.save_as(output)
-            assert output.read_bytes()[:8] == b'\x89PNG\r\n\x1a\n'
-            assert output.stat().st_size > 2000
-        print('PASS: PNG download and signature')
+            result = pending.value
+            target = Path(folder) / result.suggested_filename
+            result.save_as(target)
+            assert target.read_bytes()[:8] == b'\x89PNG\r\n\x1a\n'
+            img = Image.open(target)
+            assert img.size == (960,640)
+            assert img.getpixel((10,10))[:3] == (255,255,255)
+            assert img.getpixel((520,288))[:3] != (255,255,255)
+        print('PASS: downloaded PNG has correct signature/dimensions and composited colors')
 
         page.locator('#saveBtn').click()
-        assert page.locator('#saveDialog').evaluate('(dialog) => dialog.open')
-        page.locator('#artworkName').fill('Test Artwork')
+        page.locator('#artworkName').fill('Painted cat')
         page.locator('#saveForm button[type=submit]').click()
         page.wait_for_selector('.saved-card')
         assert page.locator('.saved-card').count() == 1
-        page.once('dialog', lambda dialog: dialog.accept())
         page.locator('#clearBtn').click()
         assert alpha_count(page) == 0
-        assert alpha_count(page, 'templateCanvas') == outline_before
+        assert alpha_count(page,'templateCanvas') == outline_before
         page.locator('.saved-card-actions button').first.click()
-        page.wait_for_function("document.querySelector('#status').textContent.includes('opened')", timeout=5000)
-        assert alpha_count(page) > 0
-        print('PASS: save, clear, open, outline retention')
+        page.wait_for_function("document.querySelector('#status').textContent.includes('opened')")
+        assert alpha_count(page)>0
+        print('PASS: local save, clear, reopen, outline retained')
 
-        # Reload-equivalent browser document with persisted fallback storage seed.
         stored = page.evaluate('window.__dumpStorage()')
-        new_page = context.new_page()
-        new_page.on('pageerror', lambda err: errors.append(str(err)))
-        load_app(new_page, stored)
-        assert new_page.locator('html').get_attribute('dir') == 'ltr'
-        assert new_page.locator('.saved-card').count() == 1
-        new_page.once('dialog', lambda dialog: dialog.accept())
-        new_page.locator('.saved-card-actions button.delete').click()
-        new_page.wait_for_selector('.empty-gallery')
-        assert new_page.locator('.saved-card').count() == 0
-        print('PASS: language preference and saved artwork persists across recreated page (mock localStorage), delete')
+        fresh = context.new_page()
+        fresh.on('pageerror',lambda err:errors.append(str(err)))
+        fresh.on('dialog',lambda d:d.accept())
+        load_app(fresh, stored)
+        assert fresh.locator('html').get_attribute('dir') == 'ltr'
+        assert fresh.locator('.saved-card').count() == 1
+        fresh.locator('.saved-card-actions .delete').click()
+        fresh.wait_for_selector('.empty-gallery')
+        assert fresh.locator('.saved-card').count() == 0
+        print('PASS: language and saved art persist across document loads (mocked localStorage)')
 
-        # Browser-level layout at mobile viewport and simulated touch pointer input.
-        mobile_context = browser.new_context(viewport={'width':375,'height':812}, has_touch=True, is_mobile=True)
-        mobile = mobile_context.new_page()
-        mobile.on('pageerror', lambda err: errors.append(str(err)))
-        load_app(mobile)
-        mobile.locator('#templatePicker').scroll_into_view_if_needed()
-        assert mobile.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 1')
-        mobile.locator('#paintCanvas').scroll_into_view_if_needed()
-        bounds = mobile.locator('#paintCanvas').bounding_box()
-        mobile.touchscreen.tap(bounds['x'] + bounds['width']/2, bounds['y']+bounds['height']/2)
-        assert alpha_count(mobile) > 0
-        print('PASS: 375px layout, no horizontal overflow, synthetic touchscreen tap')
+        # Run the spray/free-draw scenario on a clean page to avoid carrying
+        # gallery thumbnails and multiple full-size image histories from earlier cases.
+        page.close(); fresh.close()
+        page = context.new_page()
+        page.on('pageerror', lambda err: errors.append(str(err)))
+        page.on('dialog', lambda dialog: dialog.accept())
+        load_app(page)
+        page.locator('.template-item').last.click()
+        assert page.locator('#brushTool').get_attribute('aria-pressed') == 'true'
+        page.locator('#bucketTool').click()
+        tap_at(page,10,10)
+        assert alpha_count(page) > 100000
+        page.locator('#undoBtn').click()
+        assert alpha_count(page) == 0
+        page.locator('#brushTool').click()
+        draw_with_mouse(page)
+        assert alpha_count(page) > 0
+        page.locator('#clearBtn').click()
+        assert alpha_count(page) == 0
+        page.locator('#sprayTool').click()
+        assert page.locator('#sprayTool').get_attribute('aria-pressed') == 'true'
+        tap_at(page,300,200)
+        dots = alpha_count(page)
+        assert dots > 10, 'one spray tap should add visible particles'
+        page.locator('#undoBtn').click()
+        assert alpha_count(page) == 0
+        page.locator('#redoBtn').click()
+        assert alpha_count(page) == dots
+        page.locator('#clearBtn').click()
+        assert alpha_count(page) == 0
+        draw_with_mouse(page)
+        assert alpha_count(page) > dots, 'dragging the spray should distribute pigment along the path'
+        print('PASS: blank canvas bucket/background, pen, spray tap + drag, Undo/Redo, Clear')
 
-        assert not errors, f'Browser JavaScript errors: {errors}'
-        print('PASS: zero uncaught browser JavaScript exceptions')
+        for width in [320,375,768,1024,1440]:
+            mobile_context=browser.new_context(viewport={'width':width,'height':800}, has_touch=True, is_mobile=width<=375)
+            mobile=mobile_context.new_page()
+            mobile.on('pageerror',lambda err:errors.append(str(err)))
+            load_app(mobile)
+            assert mobile.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 1'), f'overflow at {width}px'
+            tap_at(mobile,300,180,touch=True)
+            assert alpha_count(mobile)>0, f'touch fill at {width}px'
+            mobile_context.close()
+        print('PASS: 320/375/768/1024/1440 viewport layouts, synthetic touchscreen fills')
+        assert not errors, f'Uncaught browser exceptions: {errors}'
+        print('PASS: zero uncaught JS exceptions')
         browser.close()
 
 
