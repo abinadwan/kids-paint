@@ -37,3 +37,11 @@ Code syntax checked with Node.js (`drawing.js`, `sw.js`). The tests passed local
 7. Check English and Arabic `README` language links, screenshots, footer, and MIT license.
 
 **Status:** Ready for live-device acceptance testing; no claim of physical-device or production GitHub Pages verification is made here.
+
+## v4.2.1 — Bottom install UX
+
+- Moved the installation control from the hero to the page footer to avoid covering the primary artwork.
+- Replaced the centered modal with a compact, bottom-anchored dialog showing only iOS, Android or desktop instructions for the detected platform.
+- Chromium/Android uses `beforeinstallprompt.prompt()` on direct user click when the browser provides it; browser confirmation is still required.
+- iOS Safari cannot invoke automatic installation: use Safari Share → Add to Home Screen. The UI explicitly states this limitation.
+- Tests: Chromium in-memory views at 320/390/768/1280px, native prompt mock and Android fallback; Service Worker unit cache test. Physical Safari installation and deployed Pages propagation require device verification.
