@@ -6,7 +6,7 @@
 ![Vanilla JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-F7DF1E?logo=javascript&logoColor=black)
 ![PWA](https://img.shields.io/badge/PWA-Installable%20%26%20offline-7058d6)
 ![Languages](https://img.shields.io/badge/Languages-English%20%7C%20Arabic-22a5ad)
-![Dependencies](https://img.shields.io/badge/Runtime%20dependencies-0-34a853)
+![External runtime](https://img.shields.io/badge/External%20runtime%20requests-0-34a853)
 [![Website](https://img.shields.io/badge/Live-GitHub%20Pages-238d75)](https://abinadwan.github.io/kids-paint/)
 
 ![Official Kids Paint banner — عالم التلوين للأطفال](assets/kids-paint-banner.webp)
@@ -80,6 +80,7 @@ The new **[Color Lab](color-lab.html)** is a separate, bilingual, mobile-friendl
 | Save to Photos | Native file Share sheet where supported; otherwise download and manually save the PNG to your gallery |
 | Language | Arabic and English, including RTL/LTR switch and retained preference when storage is available |
 | PWA | Installable app shell, icons, manifest, offline cache of essential static assets, standalone display |
+| Color Lab | Separate pigment mixing page, four untimed color challenges, 3-star matching, saved recipes, and color handoff to the drawing editor |
 
 ## Get started
 
@@ -121,6 +122,8 @@ The Service Worker caches the HTML, CSS, JavaScript, banner, manifest, and icons
 | `pwa.js` | Native installation prompt, device-specific instructions and safe update checks |
 | `sw.js` | Offline Service Worker, versioned shell and network-only version checks
 | `version.json` | Latest published version used by the update button |
+| `color-lab.html`, `color-lab.css`, `color-lab.js`, `color-lab-core.js` | The new Color Lab page, interactive experience, and testable common mixing logic |
+| `vendor/spectral.min.js`, `licenses/spectral-MIT.txt`, `THIRD_PARTY_NOTICES.md` | Pinned open-source pigment engine and preserved copyright notices |
 | `manifest.webmanifest` | App name, scope, display mode, icon references |
 | `assets/` | Approved banner, website/app icons, PWA icons |
 | `docs/screenshots/` | Browser screenshots for this README |
