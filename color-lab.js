@@ -1,11 +1,11 @@
-/* Kids Paint Color Lab v4.6.0 — educational pigment play, no accounts or network APIs. */
+/* Kids Paint Color Lab v4.7.0 — educational pigment play, no accounts or network APIs. */
 (() => {
   'use strict';
   const core = window.KidsColorLabCore;
   const engine = window.spectral;
   const $ = id => document.getElementById(id);
   const pigmentNames = ['red', 'yellow', 'blue', 'white', 'black'];
-  const RELEASE = '4.6.0';
+  const RELEASE = '4.7.0';
   const LANGUAGE_KEY = 'kids-paint-language';
   const COLOR_KEY = 'kids-paint-lab-colors-v1';
   const PROGRESS_KEY = 'kids-paint-lab-progress-v1';
@@ -43,7 +43,7 @@
       discoveriesEyebrow:'ذكريات من المختبر',collection:'دفتر ألواني',
       saveLocal:'الألوان والنجوم تُحفظ على هذا الجهاز فقط.',
       poweredBy:'مزج الأصباغ التقريبي بواسطة',licenseLink:'حقوق المكتبات والتراخيص',
-      aboutProject:'عن المشروع',versionLabel:'الإصدار',checkUpdates:'التحقق من التحديثات',
+      aboutProject:'عن المشروع',versionLabel:'الإصدار',checkUpdates:'تحديث التطبيق',
       drops:'قطرات',oneDrop:'قطرة',twoDrops:'قطرتان',mixed:'لون ممزوج',
       stored:'تم حفظ اللون في دفتر ألواني.',alreadySaved:'هذا اللون محفوظ في دفتر ألواني.',
       savingUnavailable:'التخزين المحلي غير متاح. يمكنك استخدام اللون في الرسم دون حفظه.',
@@ -65,7 +65,11 @@
       networkError:'تعذّر التحقق من الإصدار، اتصل بالإنترنت وحاول مجددًا.',
       updated:'أنت تستخدم أحدث إصدار.',updateAvailable:'إصدار جديد متاح. احفظ تجاربك أولًا، ثم أكّد التحديث.',
       confirmUpdate:'يوجد إصدار جديد. احفظ أي عمل غير محفوظ أولًا؛ سيُعاد تحميل التطبيق. التحديث الآن؟',
-      updatePostponed:'تقدر تحدّث التطبيق لاحقًا.'
+      updatePostponed:'تقدر تحدّث التطبيق لاحقًا.',
+      updateHelp:'اضغط للتحقق من توفر إصدار أحدث.',
+      offlineChecking:'جارٍ التحقق من جاهزية العمل دون إنترنت…',
+      offlineReady:'الصفحتان جاهزتان للعمل دون إنترنت، بما فيها عالم الضوء.',
+      offlinePending:'ملفات العمل دون إنترنت لم تكتمل بعد. اتصل بالإنترنت وحدّث التطبيق.'
     },
     en: {
 
@@ -97,7 +101,7 @@
       discoveriesEyebrow:'Memories from the lab',collection:'My color notebook',
       saveLocal:'Colors and stars are saved only on this device.',
       poweredBy:'Approximate pigment mixing by',licenseLink:'Third-party licenses',
-      aboutProject:'About this project',versionLabel:'Version',checkUpdates:'Check for updates',
+      aboutProject:'About this project',versionLabel:'Version',checkUpdates:'Update app',
       drops:'drops',oneDrop:'drop',twoDrops:'two drops',mixed:'Mixed color',
       stored:'Saved in your color notebook.',alreadySaved:'This color is already saved.',
       savingUnavailable:'Local storage is unavailable. You can still use this color for drawing.',
@@ -118,7 +122,11 @@
       networkError:'Could not check for updates. Connect to the internet and try again.',
       updated:'You have the latest version.',updateAvailable:'A new version is available. Save your work before updating.',
       confirmUpdate:'An update is available. Save any unsaved artwork first; the app will reload. Update now?',
-      updatePostponed:'You can update later.'
+      updatePostponed:'You can update later.',
+      updateHelp:'Tap to check for a newer version.',
+      offlineChecking:'Checking both pages for offline readiness…',
+      offlineReady:'Drawing, Pigment Lab and World of Light are ready offline.',
+      offlinePending:'Offline files are not complete yet. Connect and update the app.'
     }
   };
   let lang = 'ar';
@@ -161,6 +169,8 @@
       $('challengeFeedback').textContent = text($('challengeFeedback').dataset.messageKey);
     }
     if ($('labStatus').dataset.messageKey) status($('labStatus').dataset.messageKey);
+    const offline=$('labOfflineStatus');
+    if(offline.dataset.state)offline.textContent=text(offline.dataset.state);
   }
   function notify(key) {
     $('labStatus').dataset.messageKey = key;
@@ -455,15 +465,59 @@
       if (metadata.version === RELEASE) { label.textContent = text('updated'); return; }
       label.textContent = text('updateAvailable');
       if (!window.confirm(text('confirmUpdate'))) { label.textContent = text('updatePostponed'); return; }
-      const registration = await navigator.serviceWorker?.getRegistration('./');
-      if (registration) await registration.update();
-      location.reload();
+      if ('serviceWorker' in navigator && window.isSecureContext) {
+        const registration = await navigator.serviceWorker.getRegistration('./');
+        if (registration) {
+          await registration.update();
+          const worker=registration.installing||registration.waiting;
+          if(worker&&!['activated','redundant'].includes(worker.state)){
+            await Promise.race([
+              new Promise(resolve=>{
+                const done=()=>{
+                  if(['activated','redundant'].includes(worker.state)){
+                    worker.removeEventListener('statechange',done);
+                    resolve();
+                  }
+                };
+                worker.addEventListener('statechange',done);
+              }),
+              new Promise(resolve=>setTimeout(resolve,6000))
+            ]);
+          }
+        }
+      }
+      window.location.reload();
     } catch (error) {
       console.warn('Color Lab update:', error);
       label.textContent = text('networkError');
     } finally {
       checkingUpdates = false;
       button.disabled = false;
+    }
+  }
+  async function verifyOffline(){
+    const element=$('labOfflineStatus');
+    if(!('caches' in window)||!('serviceWorker' in navigator)||!window.isSecureContext){
+      element.dataset.state='offlinePending';element.textContent=text('offlinePending');return;
+    }
+    try{
+      const name='kids-paint-shell-v4.7.0';
+      if(!(await caches.keys()).includes(name))throw new Error('Offline cache not installed');
+      const cache=await caches.open(name);
+      const root=new URL('./',document.baseURI);
+      const required=[
+        './index.html','./color-lab.html',
+        './drawing.js?v=4.5.0','./color-lab.js?v=4.7.0',
+        './light-lab-core.js?v=4.7.0','./light-lab.js?v=4.7.0',
+        './vendor/spectral.min.js?v=3.0.0'
+      ];
+      for(const path of required){
+        if(!(await cache.match(new URL(path,root).href)))throw new Error('Missing cached asset '+path);
+      }
+      element.dataset.state='offlineReady';element.textContent=text('offlineReady');
+    }catch(error){
+      console.warn('Offline readiness:',error);
+      element.dataset.state='offlinePending';element.textContent=text('offlinePending');
     }
   }
   function init() {
@@ -507,7 +561,10 @@
     showMode('free');
     if ('serviceWorker' in navigator && window.isSecureContext) {
       navigator.serviceWorker.register('./sw.js', {scope:'./',updateViaCache:'none'})
-        .catch(error => console.warn('Offline Color Lab setup:', error));
+        .then(()=>navigator.serviceWorker.ready)
+        .then(verifyOffline)
+        .catch(error=>{console.warn('Offline Color Lab setup:',error);verifyOffline();});
+      navigator.serviceWorker.addEventListener('controllerchange',verifyOffline);
     }
   }
   init();
