@@ -1,6 +1,6 @@
 {
-  "version": "4.5.0",
+  "version": "4.6.0",
   "released": "2026-11-09",
-  "summary": "Color Lab Phase 2A: pigment mixing, four untimed challenges, color notebook, and drawing color handoff",
-  "notes": "The Color Lab is a new standalone, offline-ready page. Tap red/yellow/blue paint drops, try four reachable 3-star challenges, save colors, and use them in the drawing page. Bundled Spectral.js MIT rights are documented."
+  "summary": "Color Lab 2B: 3 primary pigments plus white/black, 12 untimed challenges, 18-drop mixing, and 48 saved recipes",
+  "notes": "Open Color Lab to create lighter/darker shades and play eight new challenges. Previous saved 2A colors and stars remain intact. All assets are included in the offline PWA cache, with Spectral.js MIT attribution preserved."
 }
