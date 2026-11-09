@@ -1,4 +1,4 @@
-/* Kids Paint PWA v4.7.0: install, safe update checks, and stable touch gestures. */
+/* Kids Paint PWA v4.8.0: install, safe update checks, and stable touch gestures. */
 (() => {
   'use strict';
   const button = document.getElementById('installAppBtn');
@@ -149,21 +149,20 @@
     if(!('caches' in window)||!('serviceWorker' in navigator)||!window.isSecureContext)return;
     let ok=false;
     try {
-      const name='kids-paint-shell-v4.7.0';
+      const name='kids-paint-shell-v4.8.0';
       if(!(await caches.keys()).includes(name))throw new Error('New shell not cached yet');
       const cache=await caches.open(name);
       const root=new URL('./',document.baseURI);
       const required=[
-        './','./index.html','./manifest.webmanifest',
-        './style.css?v=4.5.0','./drawing.js?v=4.5.0','./pwa.js?v=4.7.0',
-        './color-lab.html','./color-lab.css?v=4.7.0',
-        './color-lab-core.js?v=4.6.0','./color-lab.js?v=4.7.0',
-        './light-lab-core.js?v=4.7.0','./light-lab.js?v=4.7.0',
-        './vendor/spectral.min.js?v=3.0.0',
-        './THIRD_PARTY_NOTICES.md','./licenses/spectral-MIT.txt',
-        './assets/kids-paint-banner.webp','./assets/app-icon.png',
-        './assets/icon-192.png','./assets/icon-512.png',
-        './apple-touch-icon.png','./favicon.ico'
+        './', './index.html', './manifest.webmanifest',
+        './style.css?v=4.5.0', './assets/site-header.css?v=4.8.0', './drawing.js?v=4.5.0',
+        './pwa.js?v=4.8.0', './color-lab.html', './color-lab.css?v=4.8.0',
+        './color-lab-core.js?v=4.6.0', './color-lab.js?v=4.8.0', './light-lab-core.js?v=4.7.0',
+        './light-lab.js?v=4.7.0', './vendor/spectral.min.js?v=3.0.0', './THIRD_PARTY_NOTICES.md',
+        './LICENSE', './docs/LICENSING_AND_CREDITS.md', './licenses/spectral-MIT.txt',
+        './assets/kids-paint-banner.webp', './assets/kids-paint-pigment-lab.webp', './assets/kids-paint-light-lab.webp',
+        './assets/kids-paint-platform-banner.webp', './assets/app-icon.png', './assets/icon-192.png',
+        './assets/icon-512.png', './apple-touch-icon.png', './favicon.ico'
       ];
       for(const file of required){
         if(!(await cache.match(new URL(file,root).href)))throw new Error('File missing from offline shell: '+file);
