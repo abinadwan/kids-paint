@@ -1,5 +1,10 @@
 # Third-party notices / إشعارات حقوق الأطراف الثالثة
 
+Full license and asset-credit details: [Licenses, Attribution & Asset Credits](docs/LICENSING_AND_CREDITS.md).
+
+للاطلاع على رخصة المشروع وحقوق الأكواد الخارجية ومصادر البنرات المعتمدة: [وثيقة التراخيص والحقوق التفصيلية](docs/LICENSING_AND_CREDITS.md).
+
+
 This project is licensed under MIT (see [LICENSE](LICENSE)). Bundled third-party software retains its own copyright and license notices.
 
 ## Spectral.js (v3.0.0)
