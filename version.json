@@ -1,0 +1,6 @@
+{
+  "version": "4.3.0",
+  "released": "2026-11-09",
+  "summary": "In-app version display and safe PWA update checks",
+  "notes": "Use Update app in the footer; save unsaved drawings before refreshing."
+}
