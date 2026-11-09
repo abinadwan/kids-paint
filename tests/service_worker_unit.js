@@ -32,6 +32,10 @@ function event(type,request){let job;const e={request,waitUntil(p){job=p},respon
  for(const item of ['','index.html','manifest.webmanifest','style.css?v=4.5.0','drawing.js?v=4.5.0','color-lab.html','color-lab.css?v=4.7.0','color-lab-core.js?v=4.6.0','color-lab.js?v=4.7.0','light-lab-core.js?v=4.7.0','light-lab.js?v=4.7.0','vendor/spectral.min.js?v=3.0.0','THIRD_PARTY_NOTICES.md','licenses/spectral-MIT.txt','assets/icon-192.png','assets/icon-512.png']){
   assert(await cache.match(scope+item), `Missing ${item}`);
  }
+ const rgbCore={url:scope+'light-lab-core.js?v=4.7.0',method:'GET',mode:'cors'};
+ const rgbUi={url:scope+'light-lab.js?v=4.7.0',method:'GET',mode:'cors'};
+ assert((await cache.match(rgbCore))?.ok,'RGB additive engine must be precached');
+ assert((await cache.match(rgbUi))?.ok,'RGB interactive experience must be precached');
  const versionReq={url:scope+'version.json?check=123',method:'GET',mode:'cors'};
  const versionResult=await event('fetch',versionReq);
  assert(versionResult && versionResult.ok && versionResult.source===versionReq.url,'Version metadata fetched from network');
@@ -56,6 +60,11 @@ function event(type,request){let job;const e={request,waitUntil(p){job=p},respon
  assert(labOffline.source===scope+'color-lab.html','Offline Color Lab must load its own HTML');
  const homeOffline=await event('fetch',{url:scope,method:'GET',mode:'navigate'});
  assert(homeOffline && homeOffline.source===scope,'Offline home must show drawing HTML, not Color Lab');
+ const lightRoute={url:scope+'color-lab.html?lab=light',method:'GET',mode:'navigate'};
+ const offlineLight=await event('fetch',lightRoute);
+ assert(offlineLight && offlineLight.ok,'World of Light route opens offline');
+ assert((await event('fetch',rgbCore)).ok,'RGB engine works without a network');
+ assert((await event('fetch',rgbUi)).ok,'RGB interface works without a network');
  const vendorAsset={url:scope+'vendor/spectral.min.js?v=3.0.0',method:'GET',mode:'cors'};
  assert((await event('fetch',vendorAsset)).ok,'Pigment library loads offline');
  const css={url:scope+'style.css?v=4.5.0',method:'GET',mode:'cors'};
