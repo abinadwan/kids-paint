@@ -93,3 +93,10 @@ Kids now mix red, yellow and blue with white and black in an 18-drop cup. There 
 **العربية:** افتح مختبر الألوان ثم اختر «عالم الضوء». حرّك أشرطة الأحمر والأخضر والأزرق من 0 إلى 100٪، واكتشف كيف يصنع الأحمر والأخضر ضوءًا أصفر، وكيف تصنع الأضواء الثلاثة بكامل شدتها اللون الأبيض. توجد ستة تحديات دون مؤقت ودفتر مستقل عن دفتر الأصباغ. جميع الرسومات والألوان والنجوم السابقة تبقى محفوظة محليًا.
 
 **English:** Open Color Lab and choose World of Light. Use red/green/blue sliders to learn additive light mixing, with six untimed challenges and a separate light notebook. Old pigment progress remains untouched. The same PWA offers version and Update app controls at the bottom of both app pages.
+
+
+## v4.8.0 — Unified navigation and approved banners / توحيد البنرات والأزرار
+
+**العربية:** تظهر صور معتمدة مستقلة لمختبر الأصباغ وعالم الضوء، مع بنر شامل في README يشرح الخدمات الثلاث. الترويسة في صفحة الرسم والمختبر صارت متطابقة: شعار بالحجم نفسه، أزرار تنقل في الصف نفسه، وزرا «العربية» و«English» في الموقع والأبعاد نفسها حتى على الآيفون. تفاصيل حقوق الأكواد والمكتبات صارت في docs/LICENSING_AND_CREDITS.md بدل أسفل واجهة الطفل. لم نحذف الرخص من المشروع، ولم تتغير بيانات الحفظ.
+
+**English:** Approved banners now represent both labs and the complete platform. Drawing and Color Lab share identical logo/navigation/language controls and responsive breakpoints. Legal credits remain in the repository rather than the child-facing footer. Existing drawings, recipes and star progress are unchanged.
