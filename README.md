@@ -91,8 +91,9 @@ The Service Worker caches the HTML, CSS, JavaScript, banner, manifest, and icons
 | `index.html` | Bilingual layout, tool buttons, file input, art canvas, gallery and installation guidance |
 | `style.css` | Responsive layout, drawing tools, emoji panel, buttons, footer |
 | `drawing.js` | All drawing, stamps/emoji, share/export, image import, translations and local data |
-| `pwa.js` | Native Chromium installation prompt, platform detection and bottom-sheet guidance |
-| `sw.js` | Offline Service Worker; precaches required app assets |
+| `pwa.js` | Native installation prompt, device-specific instructions and safe update checks |
+| `sw.js` | Offline Service Worker, versioned shell and network-only version checks
+| `version.json` | Latest published version used by the update button |
 | `manifest.webmanifest` | App name, scope, display mode, icon references |
 | `assets/` | Approved banner, website/app icons, PWA icons |
 | `docs/screenshots/` | Browser screenshots for this README |
@@ -128,3 +129,11 @@ Copyright © 2026 **abinadwan**. Licensed under the [MIT License](LICENSE), whic
 ### Install UX update (v4.2.1)
 
 The install action was moved out of the top hero into the footer, and device-specific help now opens as a compact **bottom sheet** rather than a centered dialog. iOS requires manual Share → Add to Home Screen; the browser does not expose a one-tap installation API. Android/Chromium can use the native install confirmation when offered. Service Worker shell cache updated to `v4.2.1` to refresh these changes.
+
+## In-app updates (v4.3.0)
+
+At the bottom of Kids Paint you will see the **current version** (e.g. `4.3.0`) and an **Update app** button. While online, tap the button to fetch the published `version.json` directly from the network (bypassing offline caches). If the server reports a different version, the app **asks before reloading**: save any unfinished artwork or export PNG first, as a reload loses unsaved edits. Once confirmed, it requests a new Service Worker and reloads. You do **not** need to reinstall the home-screen app. Saved artwork is not deliberately deleted.
+
+When offline, checking cannot work; reconnect and retry. Publication to GitHub Pages may lag behind commits. Browser storage (IndexedDB/localStorage) is separate from the offline app-shell cache and can still be lost if site data is cleared or evicted.
+
+**Future release checklist:** bump the HTML `meta[name="app-version"]` and visible footer version, update versioned CSS/JS URLs in `index.html` and the Service Worker precache, bump `CACHE_NAME` in `sw.js`, and **publish `version.json` last** after all other assets. Never clear artwork storage as part of an app update.
