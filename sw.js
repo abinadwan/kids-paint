@@ -1,8 +1,11 @@
 /* Kids Paint offline application shell. Scope follows this script's directory (GitHub Pages subpath). */
-const CACHE_NAME = 'kids-paint-shell-v4.4.1';
+const CACHE_NAME = 'kids-paint-shell-v4.5.0';
 const PRECACHE = [
   './', './index.html', './manifest.webmanifest',
-  './style.css?v=4.4.1', './drawing.js?v=4.4.0', './pwa.js?v=4.4.1',
+  './style.css?v=4.5.0', './drawing.js?v=4.5.0', './pwa.js?v=4.4.1',
+  './color-lab.html', './color-lab.css?v=4.5.0',
+  './color-lab-core.js?v=4.5.0', './color-lab.js?v=4.5.0',
+  './vendor/spectral.min.js?v=3.0.0',
   './assets/kids-paint-banner.webp', './assets/app-icon.png',
   './assets/icon-192.png', './assets/icon-512.png',
   './apple-touch-icon.png', './favicon.ico'
