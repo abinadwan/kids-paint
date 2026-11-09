@@ -29,6 +29,19 @@ Actual screenshots of the web interface captured in Chromium (not physical iPhon
 
 
 
+## New in v4.6.0 — Color Lab Phase 2B
+
+The [Color Lab](color-lab.html) has **five paint tubes**: red, yellow, blue, white and black. Mix all **three colored pigments**, add white to make lighter shades or black for darker shades, with up to **18 drops** per cup.
+
+- **12 untimed challenges in three levels:** Four existing Phase 2A targets are unchanged; eight new achievable recipes cover pastel tones, dark shades and more complex three-color blends. Scoring still uses perceptual OKLab distance, with up to three stars and unlimited retries.
+- **Learning as you play:** Bilingual hints explain how white, black and the proportions of three pigments affect the result.
+- **Expanded color notebook:** Save up to **48 distinct recipes**, see HEX and drop counts, restore saved mixes with **Try**, and remove only selected recipes using **Delete** and confirmation.
+- **No lost progress:** Historical notebook data (kids-paint-lab-colors-v1) and challenge stars (kids-paint-lab-progress-v1) use the existing storage keys. Up to 36 stars across all challenges; old stars are not reduced by later attempts.
+- **Offline:** Updated PWA cache includes the Phase 2B interface and locally vendored pigment engine. Both Arabic and English interfaces remain supported.
+
+**Important:** Spectral.js 3.0.0 approximates pigment mixing rather than predicting every real physical paint. White/black mixing and challenge star thresholds are educational approximations.
+
+**Copyright:** Third-party Spectral.js is MIT © 2025 Ronald van Wijnen. Its unmodified license is in [licenses/spectral-MIT.txt](licenses/spectral-MIT.txt), with source/attribution in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). No new external library was added in 2B.
 ## New in v4.5.0 — Color Lab / Phase 2A
 
 The new **[Color Lab](color-lab.html)** is a separate, bilingual, mobile-friendly page connected to the drawing editor. Its first release combines **free pigment-mixing** with **four educational challenges**, with no timer, attempt limit or penalty.
@@ -80,7 +93,7 @@ The new **[Color Lab](color-lab.html)** is a separate, bilingual, mobile-friendl
 | Save to Photos | Native file Share sheet where supported; otherwise download and manually save the PNG to your gallery |
 | Language | Arabic and English, including RTL/LTR switch and retained preference when storage is available |
 | PWA | Installable app shell, icons, manifest, offline cache of essential static assets, standalone display |
-| Color Lab | Separate pigment mixing page, four untimed color challenges, 3-star matching, saved recipes, and color handoff to the drawing editor |
+| Color Lab | Five pigments, 12 untimed challenges, up to 36 stars, saved recipes and color handoff to Drawing |
 
 ## Get started
 
