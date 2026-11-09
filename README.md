@@ -7,72 +7,75 @@
 ![No dependencies](https://img.shields.io/badge/Dependencies-None-brightgreen)
 [![Live website](https://img.shields.io/badge/Live-GitHub%20Pages-7058d6)](https://abinadwan.github.io/kids-paint/)
 
-A free, open-source **paint-by-tap** app for kids. Choose a color, tap **inside an enclosed shape**, and the **Paint Bucket** instantly fills that region. Freehand Brush and Eraser are also available.
+A free, open-source drawing and painting app for kids with **three creative painting tools**: **Drawing Pen** for smooth strokes, **Spray Paint** for a scattered mist effect, and **Paint Bucket** for one-tap region fills (including the background). An Eraser removes paint without erasing the outlines.
 
-**بالعربية:** اختر لونًا ثم اضغط داخل مساحة مغلقة في الرسمة لتصبغها بالكامل بضغطة واحدة. الفرشاة متوفرة للرسم الحر.
+**العربية:** اختر الأداة المناسبة: **القلم** للرسم، **البخاخ** لرذاذ اللون، أو **دلو الصبغ** لملء المساحات بما فيها الخلفية بضغطة واحدة. تعمل الممحاة على طبقة الألوان فقط.
 
 **[Try Kids Paint online](https://abinadwan.github.io/kids-paint/)**
 
 ## Features
 
-- **Paint Bucket (default)** — fill a closed area with a single mouse click or touch. The outline blocks the paint. The bucket deliberately refuses open areas connected to the outside background.
-- **14 pages** — 13 built-in line-art illustrations plus one blank Free Draw page: Cat, Fish, Apples, Lion, Pencil, Butterfly, Flower, House, Rocket, Car, Turtle, Ice Cream, Sun, and Free Draw.
-- **Arabic + English** — language toggle switches RTL/LTR and saves the preference when browser storage is available.
-- **Brush and Eraser** — optional smooth strokes for mouse, touch and stylus; adjustable brush size and 10 colors.
-- **Undo/Redo** — undo bucket fills and brush strokes; Clear Colors preserves the original illustration.
-- **Local artworks** — save, reopen and delete drawings in the browser (IndexedDB preferred, localStorage fallback).
-- **Export PNG** — downloads a 960 × 640 image combining a white background, paint and the original line-art.
-- **Offline and privacy-first** — no accounts, advertisements, analytics, external fonts, image CDNs, tracking, network API calls, build tools, or runtime dependencies.
+- **Paint Bucket (default for templates):** tap a region to fill it instantly; dark illustration outlines stay visible. The outside white background can also be colored, fixing an earlier confusing no-op behavior.
+- **14 coloring pages:** 13 built-in line-art pictures and one blank page for free drawing: Cat, Fish, Apples, Lion, Pencil, Butterfly, Flower, House, Rocket, Car, Turtle, Ice Cream, Sun, and Free Draw.
+- **Arabic and English** with RTL/LTR layout switching and a saved language preference where storage is available.
+- **Drawing Pen, Spray Paint and Eraser:** smooth pen strokes, scattered semi-transparent spray particles (tap or drag), and erasing user paint without removing the original template. Pointer Events support mouse, touch and stylus. Tool size adjusts pen, spray spread, and eraser size. There are 10 color swatches.
+- **Undo/Redo** for bucket fills and strokes, and **Clear Colors** without deleting the original outline.
+- **Save/Open/Delete** drawings locally in the browser (IndexedDB preferred, localStorage fallback).
+- **Export PNG:** downloads a 960 × 640 image with the painted area, original template, and a white background.
+- **Privacy-first:** no accounts, ads, analytics, API keys, servers, tracking, external images, fonts or runtime dependencies.
+- **Fully static** and responsive on phones, tablets and desktop browsers.
 
-## Try it
+## Getting started
 
-Go to **https://abinadwan.github.io/kids-paint/**. If Pages is not enabled yet, use **Settings → Pages → Deploy from branch → main → /(root)**.
+### On the web
 
-To run locally, keep `index.html`, `style.css` and `drawing.js` in one directory and open `index.html` in a modern browser; no installation is required.
+Open **https://abinadwan.github.io/kids-paint/**. If GitHub Pages is not yet enabled, open **Settings → Pages → Deploy from a branch → main → /(root)** in this repository.
 
-### How to paint with one tap
+### Locally, including offline
 
-1. Select a picture under **Coloring pages / رسومات جاهزة**.
-2. Choose a color and leave **Paint Bucket / دلو الصبغ** selected.
-3. Tap **inside** a closed area (not on the outline). Tap again with a different color to recolor it.
-4. Use Undo / Redo, Save, or Export PNG.
-5. For freehand drawing, choose **Free Draw**, where Brush is automatically selected.
+Keep `index.html`, `style.css`, and `drawing.js` together and open **`index.html`** in a modern browser. No installation, package manager, build command, or backend is necessary.
 
-**Limit:** The bucket fills *bounded* regions only; it intentionally refuses the outside background and decorative regions with gaps. Choose Brush for drawing in open areas. Brush size affects Brush and Eraser, not Bucket.
+### How to use the Paint Bucket
 
-## Save versus Export PNG
+1. Choose a picture from **Coloring pages** (Arabic: **رسومات جاهزة**).
+2. Choose a color from the palette.
+3. Select **Paint Bucket / دلو الصبغ** (selected automatically for templates).
+4. Tap a white area of the picture to fill it. You can also tap the outside background to paint that region; outline strokes stay visible. To recolor an area, select a different color and tap it again.
+5. Use **Undo / Redo**, **Save**, or **Export PNG** when finished.
 
-- **Save** keeps editable artwork in this browser profile. It does not sync or back up to the cloud; saved projects can disappear when browser data is cleared.
-- **Export PNG** downloads a standard standalone picture that can be shared or kept outside the application. PNG images are flattened, not editable multi-layer projects.
+**Tool selection:** choose **Drawing Pen** to draw freely, **Spray Paint** to scatter pigment, **Paint Bucket** to fill a bounded region or the outer background, and **Eraser** to remove user paint. The **Free Draw** page starts with Drawing Pen. The bucket is based on the provided outlines; incomplete decorative line segments may not form separate fill areas.
 
-## Repository files
+## Save vs. Export
+
+- **Save** stores editable artwork in your current browser profile. It is not backed up online, does not sync to other devices, and may disappear if browser data is cleared.
+- **Export PNG** downloads a standard picture to share or keep outside the app. Exported PNGs are flattened rather than editable layers.
+
+## Source files
 
 | Path | Purpose |
 | --- | --- |
-| `index.html` | Accessible bilingual UI, canvas, galleries and save dialog |
-| `style.css` | Responsive mobile and desktop layout |
-| `drawing.js` | Built-in vector templates, Paint Bucket, brush/eraser, history, local storage, image export |
-| `tests/smoke_test.py` | Chromium smoke/regression checks |
-| `PARENTING_KIDS_PAINT.md` | Arabic/English parent and child instructions |
-| `QA_REPORT.md` | Tests executed and known limitations |
+| `index.html` | Accessible bilingual UI, painting area, galleries and save dialog |
+| `style.css` | Responsive styling, mobile and desktop layouts |
+| `drawing.js` | Built-in outlines, region fill (including background), pen/spray/eraser, translations, history, local storage and export |
+| `tests/smoke_test.py` | Browser smoke/regression checks using Chromium and Playwright |
+| `PARENTING_KIDS_PAINT.md` | Parent/user instructions (Arabic and English) |
+| `QA_REPORT.md` | Verified tests and remaining limitations |
 | `LICENSE` | MIT open-source license |
 
-## Testing
+## Tests
 
-With Playwright (Python) and Chromium installed:
+With Python Playwright and Chromium installed:
 
 ```bash
 python tests/smoke_test.py
 ```
 
-The automated environment used actual Chromium but injected the unchanged application sources into an `about:blank` document because navigation to local file/HTTP URLs was blocked. It simulated the localStorage fallback. It **does not** validate real IndexedDB persistence, physical-device touch, `file://` navigation, or live GitHub Pages deployment. See [QA_REPORT.md](QA_REPORT.md).
+In the constrained automated environment, the test runner injects the same HTML/CSS/JavaScript into Chromium and simulates the localStorage fallback. It is **not** a substitute for a real `file://` or deployed-site test, physical touch-device testing, or genuine IndexedDB persistence testing. See [QA_REPORT.md](QA_REPORT.md).
 
-## Privacy, limitations, contributions
+## Privacy and limitations
 
-Your artwork stays in your browser unless you deliberately export/share it. No personal information is collected. Local browser storage has quotas and is not a reliable backup. This is a single-pointer application. Pixel-based flood fill at 960×640 may need further optimization on low-powered devices.
+The app does not transmit artwork or data to a server. Browser storage depends on permissions and quotas. Use PNG export to preserve important pictures. The bucket follows existing line-art boundaries and can also fill the background; it does not automatically treat freehand pen strokes as closed fill boundaries. It is designed for one active pointer at a time. Interface text is bilingual; the drawings are code-generated and have no external image licensing requirements.
 
-Bug reports and pull requests are welcome.
+## Open-source license
 
-## License
-
-Released under the [MIT License](LICENSE), © 2026 `abinadwan`. You may use, modify and distribute the code, including commercially, as long as the copyright notice and license remain included.
+Released under the [MIT License](LICENSE) © 2026 `abinadwan`. MIT allows reuse, modification and redistribution, including commercial use, provided the copyright and license notice remain included. Pull requests and issues are welcome.
