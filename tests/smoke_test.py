@@ -82,9 +82,10 @@ def run():
         page.on('dialog', lambda dialog: dialog.accept())
         load_app(page)
         assert page.locator('.template-item').count() == 14
-        assert page.locator('#bucketTool').get_attribute('aria-pressed') == 'true'
+        assert page.locator('#brushTool').get_attribute('aria-pressed') == 'true'
+        assert page.locator('.template-item').first.get_attribute('aria-pressed') == 'true'
         assert alpha_count(page) == 0
-        print('PASS: initial page, 14 templates, bucket selected')
+        print('PASS: blank landing page, 14 templates, pen selected')
 
         page.locator('#langEn').click()
         assert page.locator('html').get_attribute('dir') == 'ltr'
@@ -100,7 +101,7 @@ def run():
                   ('house',298,228),('rocket',300,230),('car',300,228),('turtle',293,204),
                   ('icecream',298,156),('sun',300,193)]
         for i,(shape,x,y) in enumerate(shapes):
-            page.locator('.template-item').nth(i).click()
+            page.locator('.template-item').nth(i+1).click()
             assert page.locator('#bucketTool').get_attribute('aria-pressed') == 'true', shape
             assert alpha_count(page) == 0, f'{shape}: starts blank'
             tap_at(page,x,y)
@@ -113,7 +114,7 @@ def run():
             assert alpha_count(page) == painted, f'{shape}: redo failed'
         print('PASS: region fill + Undo/Redo for all 13 illustrated templates')
 
-        page.locator('.template-item').first.click()
+        page.locator('.template-item').nth(1).click()
         tap_at(page,10,10)
         background_pixels = alpha_count(page)
         assert background_pixels > 1000, 'background must fill rather than silently fail'
@@ -194,7 +195,7 @@ def run():
         page.on('pageerror', lambda err: errors.append(str(err)))
         page.on('dialog', lambda dialog: dialog.accept())
         load_app(page)
-        page.locator('.template-item').last.click()
+        page.locator('.template-item').first.click()
         assert page.locator('#brushTool').get_attribute('aria-pressed') == 'true'
         page.locator('#bucketTool').click()
         tap_at(page,10,10)
