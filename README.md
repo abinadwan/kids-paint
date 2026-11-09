@@ -1,124 +1,126 @@
-# Kids Paint | عالم التلوين للأطفال
+# Kids Paint — عالم التلوين للأطفال
+
+**[English (default)](README.md) · [العربية — اقرأ التوثيق بالعربي](README.ar.md)**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-![Arabic + English](https://img.shields.io/badge/Languages-Arabic%20%7C%20English-blue)
-![Vanilla JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-f7df1e?logo=javascript&logoColor=black)
-![Installable PWA](https://img.shields.io/badge/Installable-PWA-7058d6)
-![Offline ready](https://img.shields.io/badge/App-Offline%20Ready-purple)
-![No dependencies](https://img.shields.io/badge/Dependencies-None-brightgreen)
-[![Live website](https://img.shields.io/badge/Live-GitHub%20Pages-7058d6)](https://abinadwan.github.io/kids-paint/)
+![Vanilla JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-F7DF1E?logo=javascript&logoColor=black)
+![PWA](https://img.shields.io/badge/PWA-Installable%20%26%20offline-7058d6)
+![Languages](https://img.shields.io/badge/Languages-English%20%7C%20Arabic-22a5ad)
+![Dependencies](https://img.shields.io/badge/Runtime%20dependencies-0-34a853)
+[![Website](https://img.shields.io/badge/Live-GitHub%20Pages-238d75)](https://abinadwan.github.io/kids-paint/)
 
-![Kids Paint — عالم التلوين للأطفال](assets/kids-paint-banner.webp)
+![Official Kids Paint banner — عالم التلوين للأطفال](assets/kids-paint-banner.webp)
 
-*Paint, spray, and create — صبغ، ارسم، وابتكر.*
+**Paint, spray, stamp, add emoji, and create.** Kids Paint is a free, open-source, bilingual drawing and coloring web app for kids. It works in modern mobile and desktop browsers, supports adding photos from your gallery, and can be installed on a phone's home screen for offline use after the first successful app-shell download.
 
-A free, open-source drawing and painting app for kids with **three creative painting tools**: **Drawing Pen** for smooth strokes, **Spray Paint** for a scattered mist effect, and **Paint Bucket** for one-tap fills inside the supplied outlines **or closed shapes you draw with the pen** (including the background). An Eraser removes paint without erasing the outlines.
+**Live app:** https://abinadwan.github.io/kids-paint/
 
-**العربية:** اختر الأداة المناسبة: **القلم** للرسم، **البخاخ** لرذاذ اللون، أو **دلو الصبغ** لتعبئة مساحات الرسومات الجاهزة أو الأشكال المغلقة التي ترسمها بالقلم، وكذلك الخلفية. تعمل الممحاة على طبقة الألوان فقط.
+## Screenshots
 
-**[Try Kids Paint online](https://abinadwan.github.io/kids-paint/)**
+Actual screenshots of the web interface captured in Chromium (not physical iPhone screenshots):
 
-## New in v4.0 — photo drawing, stamps, and color shades
+| Desktop | Emoji editor |
+| --- | --- |
+| ![Kids Paint desktop interface](docs/screenshots/desktop.webp) | ![Emoji tool and drawing canvas](docs/screenshots/emoji-editor.webp) |
 
-- **Import any gallery image supported by the browser** using **Import a photo / استيراد صورة من الاستديو**. Photos are resized to fit the 960×640 stage without cropping or stretching; drawing is on a **separate layer**, so the eraser and Clear do not change the photograph.
-- **Six stamps / الأختام**: heart, star, butterfly, flower, crescent moon, and smiley face. Pick a shape, a color, and tool size; tap the drawing or imported photo to place it. Stamps support Undo/Redo, Clear, Save/Open, and PNG export.
-- **Expanded colors:** 12 color families, 5 shades per family, plus a custom color picker. Pen, spray, paint bucket, and stamps use the same chosen color.
-- **Photo-aware paint bucket:** fills only user-drawn closed areas on imported photos. It intentionally does **not** flood the whole photo or recolor photographic objects.
-- **Local-first:** photo processing happens in your browser. Photos are not uploaded. Saved photos use resized JPEG encoding in browser storage (IndexedDB when available, localStorage fallback); larger projects may exceed localStorage quotas. Export a PNG to keep your result outside the app.
-- **Limits:** files above 30 MB are rejected; HEIC/HEIF support depends on the browser's image decoder. Physical iPhone/Safari testing is still required.
+**Mobile interface**
+
+<img src="docs/screenshots/mobile.webp" alt="Kids Paint Arabic mobile interface with the emoji picker" width="390">
+
+## What's new in v4.2
+
+- **Emoji stickers:** 18 native emoji (faces, hearts, rainbow, butterfly, animals, flowers, rocket, ball, food, celebration). Choose **Emoji**, select a symbol and set its size, then tap the canvas or imported picture. Emoji retain their native multicolor appearance, unlike the color-customizable vector stamps. Undo/redo, clear, local save, and PNG export all include emoji.
+- **Save to Photos / gallery handoff:** a new **Save to Photos** button prepares a PNG and opens the native **Share** sheet when file sharing is available. **On iPhone, select “Save Image” from the share sheet** to place the image in Photos; a website cannot silently add photos to the library. On Android, choose a supported Photos/gallery app or save destination. If sharing files is unavailable, the app **downloads the PNG**; open the downloaded file and save/share it into Photos manually. This is separate from the editable **Save** button.
+- **Documentation:** expanded English README, separate linked Arabic translation, and screenshots.
+- **Offline cache bump:** updates the PWA app shell to version `v4.2.0` so installed users receive the new tools and styles once they reconnect.
 
 ## Features
 
-- **Paint Bucket (default for templates):** tap inside an illustrated region or a **closed freehand pen outline** to fill only that area. Both built-in lines and user-drawn pen strokes act as boundaries; pen strokes remain visible. Tapping outside the outline deliberately paints the surrounding background.
-- **14 coloring pages:** 13 built-in line-art pictures and one blank page for free drawing: Cat, Fish, Apples, Lion, Pencil, Butterfly, Flower, House, Rocket, Car, Turtle, Ice Cream, Sun, and Free Draw.
-- **Arabic and English** with RTL/LTR layout switching and a saved language preference where storage is available.
-- **Drawing Pen, Spray Paint and Eraser:** smooth pen strokes, scattered semi-transparent spray particles (tap or drag), and erasing user paint without removing the original template. Pointer Events support mouse, touch and stylus. Tool size adjusts pen, spray spread, and eraser size. There are 10 color swatches.
-- **Undo/Redo** for bucket fills and strokes, and **Clear Colors** without deleting the original outline.
-- **Save/Open/Delete** drawings locally in the browser (IndexedDB preferred, localStorage fallback).
-- **Export PNG:** downloads a 960 × 640 image with the painted area, original template, and a white background.
-- **Privacy-first:** no accounts, ads, analytics, API keys, servers, tracking, external images, fonts or runtime dependencies.
-- **Fully static** and responsive on phones, tablets and desktop browsers.
-
-## Install as an offline phone app (PWA) — تثبيت التطبيق على الجوال
-
-Kids Paint now includes a real web-app manifest, 192/512px home-screen icons, and a Service Worker that caches the complete static app shell for offline launches. The website is hosted under `/kids-paint/` on GitHub Pages, and the manifest and cache paths respect that project scope.
-
-**iPhone / iPad (Safari):** open [Kids Paint](https://abinadwan.github.io/kids-paint/) in Safari → **Share** → **Add to Home Screen** → enable **Open as Web App** → **Add**. Launch the new home-screen app **once while connected** and wait until it says it is ready for offline use. You can then open it without internet.
-
-**Android (Chrome):** visit the same website → tap **Install app** in the page or open Chrome's menu **⋮ → Install app / Add to Home Screen**. Open the installed app once online and wait for the offline-ready message.
-
-**العربية:** على الآيفون: افتح الرابط في سفاري، ثم **مشاركة ← إضافة إلى الشاشة الرئيسية ← فتح كتطبيق ← إضافة**. على أندرويد: من كروم اختر **تثبيت التطبيق**. بعد التثبيت افتح التطبيق مرة واحدة بالإنترنت حتى تظهر رسالة الجاهزية، ثم جرّب تشغيله دون إنترنت.
-
-**Important limitations:** offline access requires a successful first online load, HTTPS and a supported browser. It does **not** work as a Service Worker when opening `index.html` via `file://`. The operating system may purge stored caches. Drawings and imported images are stored locally in browser/app storage, **not uploaded**, and home-screen web apps may have their **own storage separate from Safari**. Saved drawings are **not guaranteed to move automatically** from Safari to the installed app. Export important art as PNG before switching, clearing app data, or removing the app. Photo gallery access may depend on mobile permissions.
-
-## Getting started
-
-### On the web
-
-Open **https://abinadwan.github.io/kids-paint/**. If GitHub Pages is not yet enabled, open **Settings → Pages → Deploy from a branch → main → /(root)** in this repository.
-
-### Locally, including offline
-
-Keep `index.html`, `style.css`, and `drawing.js` together and open **`index.html`** in a modern browser. No installation, package manager, build command, or backend is necessary.
-
-### How to use the Paint Bucket
-
-1. Choose a picture from **Coloring pages** (Arabic: **رسومات جاهزة**).
-2. Choose a color from the palette.
-3. Select **Paint Bucket / دلو الصبغ** (selected automatically for templates).
-4. Tap an area of the picture to fill it. **Or choose Free Draw, draw a fully closed shape with Drawing Pen, select the Paint Bucket, and tap inside the shape.** Only the enclosed region will fill. Tapping outside deliberately colors the background. To recolor, select another color and tap the same region again.
-5. Use **Undo / Redo**, **Save**, or **Export PNG** when finished.
-
-**Tool selection:** choose **Drawing Pen** to draw freely, **Spray Paint** to scatter pigment, **Paint Bucket** to fill a bounded region or the outer background, and **Eraser** to remove user paint. The **Free Draw** page starts with Drawing Pen. The bucket uses both built-in outlines and **freehand pen strokes** as boundaries. Ensure your pen outline is fully closed: even a small gap can let the fill reach the background. Spray particles do not form boundaries.
-
-## Save vs. Export
-
-- **Save** stores editable artwork in your current browser profile. It is not backed up online, does not sync to other devices, and may disappear if browser data is cleared.
-- **Export PNG** downloads a standard picture to share or keep outside the app. Exported PNGs are flattened rather than editable layers.
-
-## Branding and app icon
-
-The approved bilingual Kids Paint banner is displayed in the website hero and this README.
-
-| Asset | Usage |
+| Feature | Details |
 | --- | --- |
-| `assets/kids-paint-banner.webp` | Optimized approved banner for the web and README |
-| `assets/app-icon.png` | Matching icon in the website header |
-| `assets/icon-192.png`, `assets/icon-512.png` | Home-screen PWA icons |
-| `manifest.webmanifest`, `sw.js`, `pwa.js` | App metadata, offline cache, install guidance |
-| `favicon.ico` | Multi-resolution browser favicon |
-| `apple-touch-icon.png` | Home screen icon for iPhone / iPad |
+| Drawing pen | Smooth pointer drawing with adjustable size; closed shapes can become paint-bucket boundaries |
+| Spray paint | Semi-transparent scattered dots, touch or drag |
+| Paint bucket | Fills areas in 13 provided line-art pictures, closed hand-drawn shapes, and optionally the outside background of ordinary templates; won't flood imported photos |
+| Eraser | Removes user-applied paint, marks, stamps, and emoji without erasing an imported photo or original template |
+| Vector stamps | Six recolorable shapes: heart, star, butterfly, flower, crescent moon, smiley face |
+| Emoji tool | 18 OS-rendered emoji stickers placed at adjustable size; their intrinsic colors are not changed by the palette |
+| Colors | 12 color families, five shades per family, plus a custom color input (for pen/spray/bucket/vector stamps) |
+| Gallery photo import | Import a browser-supported image (e.g. JPG, PNG, WebP) from your device, draw or place emoji/stamps over it; file size limit 30 MB |
+| Picture templates | 13 built-in vector illustrations plus one blank canvas (14 choices total) |
+| Undo / Redo | Up to 22 drawing states, including user pen boundaries and emoji/stamps |
+| Save / Open / Delete | Editable drawings saved locally in IndexedDB, with localStorage fallback; not synced or cloud-backed |
+| Export PNG | Download a flattened 960 × 640 PNG containing the photo/background, template, and all additions |
+| Save to Photos | Native file Share sheet where supported; otherwise download and manually save the PNG to your gallery |
+| Language | Arabic and English, including RTL/LTR switch and retained preference when storage is available |
+| PWA | Installable app shell, icons, manifest, offline cache of essential static assets, standalone display |
 
-The banner and icon ship locally with the app, so neither requires an external image service.
+## Get started
 
-## Source files
+Open [the live website](https://abinadwan.github.io/kids-paint/). Choose an illustration or **Free Draw**, select a tool and size, and start creating. You can choose a color family, then a shade, or use **Custom color**. The **Emoji** tool uses the symbol's built-in colors.
 
-| Path | Purpose |
+To import a photo, select **Import a photo**, pick an image from the phone's gallery/files, and use the pen, spray, stamps, or emoji on top. Your original photo stays on a separate non-destructive background layer. It is resized to fit a fixed 960 × 640 canvas without cropping; letterboxing may appear for different aspect ratios. Large files over 30 MB are refused; HEIC/HEIF support depends on the browser.
+
+**Bucket caution:** on an imported photo, fill is restricted to **closed pen-drawn regions** to prevent painting over the entire photograph. On templates or the blank page, tapping outside a closed boundary may color the outer background. Emoji and spray dots are not intended to form fill boundaries.
+
+## Install as a mobile app and use offline
+
+**iPhone (Safari):** open the live link, tap **Share → Add to Home Screen**, enable **Open as Web App** when displayed, and tap **Add**. Launch it once while online. iOS may isolate the installed app's storage from Safari: save/export important artwork before switching contexts or clearing website data.
+
+**Android (Chrome):** open the live link, choose **Install app** or **Add to Home Screen** from the browser menu, or follow the **Install app** instructions within Kids Paint. Open the installed app once while connected.
+
+The Service Worker caches the HTML, CSS, JavaScript, banner, manifest, and icons inside the `/kids-paint/` GitHub Pages scope; after the initial cache succeeds, the drawing editor can launch offline. **Your saved drawings are stored in browser storage, not in the Service Worker cache or GitHub.** Browser storage can be deleted or evicted, so export important artwork to PNG. Updates load when online; an installed device may need a restart/reload after an update.
+
+## Save, export, and Photos — what's the difference?
+
+- **Save:** keeps an *editable project* on this device and inside this particular browser/app storage profile. Photos included in projects may be re-encoded/resized for storage. The app does not create an online account or upload artwork.
+- **Export PNG:** downloads a finished *flat image*. Where the file goes depends on your browser/OS (often **Downloads** or **Files**).
+- **Save to Photos:** when the browser supports sharing files, opens the system share sheet; **you must choose Save Image / Photos yourself**. Otherwise PNG download is used and you can move the file to Photos manually. No browser API guarantees direct, automatic insertion into iOS Photos.
+
+## Privacy, accessibility, and limitations
+
+- **Local-first:** no backend, accounts, advertising, analytics, user-upload endpoint, runtime CDN scripts, or cloud synchronization. Imported images are handled on-device; artwork is not transmitted to a server by the app. Choosing an external share destination is an explicit user action.
+- **Accessibility:** descriptive labels, pressed-state feedback, large touch targets, keyboard-focus styling, and Arabic RTL/English LTR UI. Painting is primarily a pointer/touch interaction.
+- **Storage:** IndexedDB is preferred; localStorage fallback may run out of space. Separate Safari/PWA browser profiles might not share artwork. Deleted browser data can delete saved projects.
+- **Emoji appearance:** depends on the OS and installed fonts; not all platforms render emoji identically. Color selection applies to vector stamps, not native emoji glyphs.
+- **Drawing limits:** canvas is 960 × 640; bucket fill needs properly closed pen lines; photos are fitted into this fixed frame. Hardware-device support and actual iOS share-sheet/gallery behavior should be verified on a real phone.
+
+## Files
+
+| File / folder | Role |
 | --- | --- |
-| `index.html` | Accessible bilingual UI, approved hero banner, painting area, galleries and save dialog |
-| `style.css` | Responsive styling, mobile and desktop layouts |
-| `drawing.js` | Built-in outlines and freehand boundary mask, region fill, pen/spray/eraser, translations, history, local storage and export |
-| `tests/smoke_test.py` | Browser smoke/regression checks using Chromium and Playwright |
-| `tests/user_outline_test.py` | Regression for closed/open user pen shapes, bucket containment, Undo/Redo, export and stored pen mask |
-| `PARENTING_KIDS_PAINT.md` | Parent/user instructions (Arabic and English) |
-| `QA_REPORT.md` | Verified tests and remaining limitations |
+| `index.html` | Bilingual layout, tool buttons, file input, art canvas, gallery and installation guidance |
+| `style.css` | Responsive layout, drawing tools, emoji panel, buttons, footer |
+| `drawing.js` | All drawing, stamps/emoji, share/export, image import, translations and local data |
+| `pwa.js` | Installation prompt and in-app instructions |
+| `sw.js` | Offline Service Worker; precaches required app assets |
+| `manifest.webmanifest` | App name, scope, display mode, icon references |
+| `assets/` | Approved banner, website/app icons, PWA icons |
+| `docs/screenshots/` | Browser screenshots for this README |
+| `README.ar.md` | Full Arabic documentation |
+| `PARENTING_KIDS_PAINT.md` | Parent-facing guide |
+| `QA_REPORT.md` | Test coverage and limitations |
+| `tests/` | Chromium/Playwright and Service Worker regression tests |
 | `LICENSE` | MIT open-source license |
 
-## Tests
+## Local development and tests
 
-With Python Playwright and Chromium installed:
+No build system, Node package installation, framework, external API, or backend is needed to run the app. Serve this folder via a local HTTPS-enabled/static server to test PWA installation (Service Workers require a secure context; `localhost` is normally treated as secure). For a basic non-PWA preview, open `index.html` directly in a browser. A `file://` page will generally not register its Service Worker.
+
+Regression tests (when Python, Playwright, Pillow, Chromium, and Node.js are available):
 
 ```bash
 python tests/smoke_test.py
 python tests/user_outline_test.py
+python tests/photo_stamps_test.py
+python tests/emoji_gallery_test.py
+python tests/install_ui_test.py
+node tests/service_worker_unit.js
 ```
 
-In the constrained automated environment, the test runner injects the same HTML/CSS/JavaScript into Chromium and simulates the localStorage fallback. It is **not** a substitute for a real `file://` or deployed-site test, physical touch-device testing, or genuine IndexedDB persistence testing. See [QA_REPORT.md](QA_REPORT.md).
+Some tests use an in-memory browser page and mocked localStorage; they do **not** prove device-specific iOS photo-library behavior. See [QA_REPORT.md](QA_REPORT.md).
 
-## Privacy and limitations
+## License and contribution
 
-The app does not transmit artwork or data to a server. Browser storage depends on permissions and quotas. Use PNG export to preserve important pictures. The bucket recognizes both the built-in line art and **freehand pen strokes** as boundaries. Shapes must be actually closed; an open path or a small gap can cause a background fill. Older saved artwork still opens, but drawings saved before this update do not have a separate stroke-boundary mask, so pre-update pen lines cannot always be recognized as fill barriers. Save such a drawing again after redrawing the outline to enable this feature. It is designed for one active pointer at a time. Interface text is bilingual; the drawings are code-generated and have no external image licensing requirements.
+Copyright © 2026 **abinadwan**. Licensed under the [MIT License](LICENSE), which permits use, modification, and distribution (including commercially) provided the license and copyright notice are retained. See the [GitHub repository](https://github.com/abinadwan/kids-paint) for source, issues, and contributions.
 
-## Open-source license
-
-Released under the [MIT License](LICENSE) © 2026 `abinadwan`. MIT allows reuse, modification and redistribution, including commercial use, provided the copyright and license notice remain included. Pull requests and issues are welcome.
+**[Read the complete Arabic README →](README.ar.md)**

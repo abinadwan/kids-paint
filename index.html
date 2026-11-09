@@ -12,9 +12,9 @@
   <title>عالم التلوين | Kids Paint</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico?v=4.0.0">
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=4.0.0">
-  <link rel="stylesheet" href="style.css?v=4.1.0">
-  <script src="drawing.js?v=4.1.0" defer></script>
-  <script src="pwa.js?v=4.1.0" defer></script>
+  <link rel="stylesheet" href="style.css?v=4.2.0">
+  <script src="drawing.js?v=4.2.0" defer></script>
+  <script src="pwa.js?v=4.2.0" defer></script>
 </head>
 <body>
   <div class="app-shell">
@@ -43,7 +43,6 @@
       </div>
       <p id="offlineReady" class="offline-ready" hidden data-pwa-ar="جاهز للعمل دون إنترنت بعد أول تحميل" data-pwa-en="Ready for offline use after the first download">جاهز للعمل دون إنترنت بعد أول تحميل</p>
     </section>
-
 
     <main>
       <section class="workspace-card" aria-labelledby="workspaceTitle">
@@ -74,12 +73,21 @@
               <button id="stampTool" class="tool-button" type="button" aria-pressed="false" data-i18n-aria="stamp">
                 <span aria-hidden="true">♥</span><span data-i18n="stamp">الأختام</span>
               </button>
+              <button id="emojiTool" class="tool-button" type="button" aria-pressed="false" data-i18n-aria="emojiTool">
+                <span aria-hidden="true">😀</span><span data-i18n="emojiTool">إيموجي</span>
+              </button>
             </div>
 
             <div id="stampPanel" class="stamp-panel" hidden>
               <h3 data-i18n="stampShapes">اختر شكل الختم</h3>
               <div id="stampPicker" class="stamp-picker" role="group" aria-label="Stamps"></div>
               <p class="tool-hint" data-i18n="stampHint">اختر لونًا وحجمًا ثم اضغط على الصورة لوضع الختم</p>
+            </div>
+
+            <div id="emojiPanel" class="emoji-panel" hidden>
+              <h3 data-i18n="emojiShapes">اختر الإيموجي</h3>
+              <div id="emojiPicker" class="emoji-picker" role="group" aria-label="Emoji stickers"></div>
+              <p class="tool-hint" data-i18n="emojiHint">اختر الرمز والحجم ثم اضغط على الرسم. الإيموجي يحتفظ بألوانه الأصلية.</p>
             </div>
 
             <h3 class="section-spacing" data-i18n="colors">الألوان</h3>
@@ -116,7 +124,8 @@
             <div class="bottom-actions">
               <button type="button" id="clearBtn" class="action-button secondary" data-i18n-aria="clear"><span aria-hidden="true">🗑</span><span data-i18n="clear">مسح الألوان</span></button>
               <button type="button" id="saveBtn" class="action-button secondary" data-i18n-aria="save"><span aria-hidden="true">💾</span><span data-i18n="save">حفظ</span></button>
-              <button type="button" id="exportBtn" class="action-button primary" data-i18n-aria="export"><span aria-hidden="true">↓</span><span data-i18n="export">تصدير PNG</span></button>
+              <button type="button" id="exportBtn" class="action-button secondary" data-i18n-aria="export"><span aria-hidden="true">↓</span><span data-i18n="export">تنزيل PNG</span></button>
+              <button type="button" id="saveToPhotosBtn" class="action-button primary" data-i18n-aria="saveToPhotos"><span aria-hidden="true">▣</span><span data-i18n="saveToPhotos">حفظ في الصور</span></button>
             </div>
             <p id="status" class="status-message" role="status" aria-live="polite"></p>
           </div>

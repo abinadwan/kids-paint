@@ -1,98 +1,39 @@
-# Kids Paint — QA Report
+# Kids Paint — QA report (v4.2.0)
 
-Date: **2026-11-09**  
-Scope: recognize freehand pen-drawn closed shapes as bucket-fill boundaries without regressing built-in templates, brush/spray/eraser, bilingual UI, save/export, or MIT licensing.
+**Date:** 2026-11-09  
+**Scope:** Emoji stickers, mobile PNG-to-Photos sharing handoff, English/Arabic documentation, PWA shell, and regression coverage for existing drawing/photo tools.
 
-## Summary
+## Verified in Chromium test environment
 
-The bucket now recognizes **both template outlines and user-drawn pen strokes**, so a closed hand-drawn rectangle or circle can be filled without coloring the surrounding background. A separate offscreen pen-boundary mask is synchronized with brush strokes, erasing, history and local artwork saves. Background fills still work when tapping outside. The application retains 14 pages and its existing tools.
+| Test | Result | Coverage |
+| --- | --- | --- |
+| `tests/smoke_test.py` | PASS | Built-in coloring templates, bucket, palette, undo/redo, export, save/load mock, layout |
+| `tests/user_outline_test.py` | PASS | Hand-drawn closed boundaries, fill isolation, history and artwork persistence |
+| `tests/photo_stamps_test.py` | PASS | Six recolorable vector stamps, photo import, photo-safe bucket, eraser, save/load, export, mobile layout |
+| `tests/emoji_gallery_test.py` | PASS | 18 emoji choices, selectable emoji/size, visible painting, undo/redo, Arabic/English, Web Share mock receiving a real PNG File, download fallback with PNG signature/960 × 640 dimensions |
+| `tests/install_ui_test.py` | PASS | PWA install UI and language switching; widths 320, 390, 768, 1280; no horizontal overflow or JS exceptions |
+| `tests/service_worker_unit.js` | PASS | Simulated offline shell precache, cached offline navigation, versioned assets, cache activation cleanup, scope isolation |
+| README screenshot capture | PASS | Real Chromium-rendered desktop/mobile/editor images created at `docs/screenshots/` |
 
-## Verified tests
+Code syntax checked with Node.js (`drawing.js`, `sw.js`). The tests passed locally in the available runtime. Screenshots were produced with actual UI rendering, not mockup art.
 
-Executed in Chromium using the unchanged HTML/CSS/JavaScript inserted into an `about:blank` document by Playwright (browser environment blocks real navigation):
+## Known limitations and unverified areas
 
-| Check | Result |
-| --- | --- |
-| `node --check drawing.js` | PASS |
-| Page initializes; 14 templates; bucket selected | PASS |
-| Arabic ↔ English labels and RTL/LTR | PASS |
-| Paint Bucket fills a closed sample region on all 13 illustrated templates | PASS |
-| Undo/Redo restores the previous/new fill state on every tested template | PASS |
-| Background/outside region is filled instead of being ignored; Undo clears it | PASS |
-| Tapping the same area with a new color recolors it | PASS |
-| Undo/Redo correctly restores the previous/new color | PASS |
-| Drawing Pen and Eraser remain usable and leave the outline untouched | PASS |
-| Spray Paint produces visible scattered particles on tap and a trail on drag | PASS |
-| Spray Paint Undo/Redo and Clear | PASS |
-| Export downloads a valid 960×640 PNG with white background and colored artwork | PASS |
-| Save, clear, reopen using mocked localStorage fallback | PASS |
-| LocalStorage-fallback artwork and language persist across reloaded-equivalent documents | PASS |
-| Switching to Free Draw chooses Drawing Pen automatically | PASS |
-| Paint Bucket can fill the blank canvas background, and Undo reverses it | PASS |
-| 320, 375, 768, 1024, 1440 px viewports; no horizontal overflow | PASS |
-| Synthetic touchscreen tap paints a closed region at these viewport sizes | PASS |
-| A user-drawn closed rectangle fills only inside its pen outline | PASS |
-| Closed shape pen border remains visible after bucket fill | PASS |
-| Hand-drawn boundary persists through Undo/Redo and recoloring | PASS |
-| New saved drawing retains the pen boundary after clear/reopen (mocked localStorage) | PASS |
-| Older saved drawing without mask loads safely | PASS |
-| Open shape allows color to escape to background (expected) | PASS |
-| Downloaded PNG includes user-created pen outline and enclosed fill | PASS |
-| Uncaught browser JS exceptions during tests | NONE |
+1. **Native iPhone / Android sharing:** the test mocks `navigator.share` and `navigator.canShare`, checking file type, size, and file name. It **does not** open the physical iOS/Android share sheet or prove that a photo was inserted into a gallery. The user needs to choose **Save Image** on iOS; unsupported browsers download PNG instead. Browsers cannot write into iOS Photos automatically.
+2. **Offline on an actual installed phone:** Service Worker behavior was tested in a simulated worker unit test. Real GitHub Pages deployment, device installation, offline launch, quota/eviction, and PWA upgrade behavior still need on-device confirmation.
+3. **IndexedDB:** existing storage code prefers real IndexedDB; the majority of browser regression harness tests mock localStorage. Persistent storage under real Safari/PWA contexts, and switching between them, were not verified in this execution.
+4. **Emoji:** Unicode emoji appearance depends on the OS font, language, emoji sequences, and device. Desktop Chromium checks only the currently available font; other platforms may render them differently.
+5. **Imported images:** JPEG/PNG/WebP decoding follows browser support; HEIC/HEIF decoding is not guaranteed. The 30 MB input cap, 960 × 640 canvas size, and browser storage quotas still apply.
+6. **Bucket boundaries:** only fully enclosed manually drawn pen strokes form reliable fill boundaries; freehand gaps can leak color in blank/template pages. The special photo rule prevents bucket flooding the photo background.
 
-Test command:
+## Manual acceptance checklist for iPhone Safari
 
-```bash
-python tests/smoke_test.py
-python tests/user_outline_test.py
-```
+1. Visit `https://abinadwan.github.io/kids-paint/` and refresh after deployment.
+2. Choose **Emoji**, select a symbol, tap on the illustration, change tool size and try undo/redo.
+3. Use **Import a photo** from the gallery; place an emoji and a recolored vector stamp above it.
+4. Choose **Save to Photos**, then choose **Save Image** in the iOS sharing sheet; verify that the result appears in Photos. If the share sheet is unavailable, locate the downloaded PNG in Files and save it to Photos manually.
+5. Use **Save**, reopen the artwork, and confirm all decorative overlays are retained.
+6. Use **Share → Add to Home Screen** to install; open while online and confirm offline-readiness. Enable Airplane Mode, reopen, and test drawing and PNG export.
+7. Check English and Arabic `README` language links, screenshots, footer, and MIT license.
 
-## Not tested / qualifications
-
-- **NOT TESTED:** actual navigation to a deployed GitHub Pages URL from this test environment (administrator network restriction).
-- **NOT TESTED:** opening the app directly as a `file://` resource in Chromium here (navigation restriction).
-- **NOT TESTED:** real IndexedDB persistence. The automated test uses a mocked localStorage fallback.
-- **NOT TESTED:** physical iPhone/Android touch input. Touchscreen input was simulated by Chromium.
-- **NOT TESTED:** accessibility assessment with a screen reader.
-- **LIMITATION:** only pen lines that actually close a region isolate bucket paint. Spray particles do not form boundaries. Existing saved drawings without a stored pen mask still open, but pre-upgrade pen strokes cannot be reconstructed reliably as boundaries.
-- **LIMITATION:** each bucket fill is computed pixel-by-pixel in a 960×640 canvas; responsiveness of very low-powered phones should be checked manually.
-
-## Suggested production verification
-
-1. Open the live GitHub Pages URL and force-refresh after deployment.
-2. Choose Cat, select a color, and tap inside its face; verify the face fills and outline remains. Then tap the white background and verify the background can also be colored.
-3. Try Butterfly, House and Sun; then select Spray Paint, tap and drag on the picture to verify the stippled effect.
-4. Draw a closed freehand circle, bucket-fill inside, then test Save → refresh → Open on iOS Safari and Android Chrome, confirming persistent IndexedDB where available.
-5. Test Export PNG and open the downloaded file on iOS and desktop.
-6. Switch languages mid-drawing, check RTL/LTR and that color stays intact.
-
-This report distinguishes tests executed from tests not executed. It is not a claim of complete production certification. Spray tests ran in Chromium via simulated mouse input, not a physical stylus or spray-device integration.
-
-## Cache busting
-
-The production HTML uses versioned CSS/JS query parameters (`?v=3.1.0`) so browsers request the current script and stylesheet after deployment. This does not substitute for live GitHub Pages verification.
-
-
-## Visual identity / UX refresh (2026-11-09)
-
-- Added the approved bilingual banner to the page and README.
-- Added an original mascot-based multi-resolution `favicon.ico`, a header icon and Apple touch icon.
-- Improved tool sizing and grouping, touch-target dimensions, focus treatment, responsive layout, selected-template states, and a clear jump-to-canvas link.
-- Kept painting, undo/redo and persistence logic unchanged except for two new translated hero labels.
-- Static and Chromium responsive tests for this refresh are reported separately in execution logs; a physical iPhone Safari test remains NOT TESTED.
-
-## Version 4.0 additions — tested locally (Chromium)
-
-- `tests/photo_stamps_test.py`: six stamp shapes, per-stamp size and custom color; undo/redo; Arabic/English UI; local PNG photo import and proportional image fit; bucket protection against covering the imported photo; fill inside a freehand closed region above the photo; clear/eraser preserve photo; PNG export composites background and stamps; local save/reload with simulated localStorage; 320/375/390/768/1280 px viewport checks; no uncaught JavaScript exceptions.
-- Existing `tests/smoke_test.py` and `tests/user_outline_test.py` also pass without regressions.
-- Browser test harness mocks localStorage on about:blank. **Real IndexedDB, real GitHub Pages deployment, and hardware Safari/iPhone were not verified** in this environment (localhost and test origin are administrator-blocked).
-- Imported image persistence uses browser JPEG compression; saved colors may differ slightly from the original image. Photo files are resized to 960×640 pixels with letterboxing, without altering the source file.
-
-## PWA / offline install update — 2026-11-09
-
-- PASS: Web manifest valid JSON with same-scope `./` launch and 192×192/512×512 actual PNG icons.
-- PASS: `sw.js` / `pwa.js` syntax check (`node --check`).
-- PASS: service-worker mocked-runtime regression for install precache list, navigation fallback for offline query URLs, cache cleanup, scope protection, and cached JS/CSS/icons (`node tests/service_worker_unit.js`).
-- PASS: Chromium in-memory DOM tests for the bilingual install guide, 320/390/768/1280px layouts, 14 templates and drawing tool (`python tests/install_ui_test.py`).
-- NOT VERIFIED: true Service Worker installation and offline launch on a real web origin or physical iPhone/Android. Sandbox Chromium blocks all localhost navigation (`net::ERR_BLOCKED_BY_ADMINISTRATOR`). Test the deployed GitHub Pages URL on a device after publication.
-- NOTE: PWA data can be partitioned from Safari browser storage; do not promise automatic migration of saved artwork. Export PNG before deleting any app/browser data.
+**Status:** Ready for live-device acceptance testing; no claim of physical-device or production GitHub Pages verification is made here.

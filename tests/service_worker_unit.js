@@ -27,16 +27,16 @@ vm.runInNewContext(fs.readFileSync(path.join(root,'sw.js'),'utf8'),context);
 function event(type,request){let job;const e={request,waitUntil(p){job=p},respondWith(p){job=p}};listeners[type](e);return job}
 (async()=>{
  await event('install');
- assert(db.has('kids-paint-shell-v4.1.0'));
- const cache=db.get('kids-paint-shell-v4.1.0');
- for(const item of ['','index.html','manifest.webmanifest','style.css?v=4.1.0','drawing.js?v=4.1.0','assets/icon-192.png','assets/icon-512.png']){
+ assert(db.has('kids-paint-shell-v4.2.0'));
+ const cache=db.get('kids-paint-shell-v4.2.0');
+ for(const item of ['','index.html','manifest.webmanifest','style.css?v=4.2.0','drawing.js?v=4.2.0','assets/icon-192.png','assets/icon-512.png']){
   assert(await cache.match(scope+item), `Missing ${item}`);
  }
  db.set('kids-paint-shell-older',new Cache());await event('activate');assert(!db.has('kids-paint-shell-older'));
  states.offline=true;
  const nav={url:scope+'?source=pwa',method:'GET',mode:'navigate'};
  const output=await event('fetch',nav);assert(output && output.ok, 'Offline navigation fallback');
- const css={url:scope+'style.css?v=4.1.0',method:'GET',mode:'cors'};
+ const css={url:scope+'style.css?v=4.2.0',method:'GET',mode:'cors'};
  assert((await event('fetch',css)).ok,'Offline static asset');
  assert(!event('fetch',{url:'https://example.invalid/other',method:'GET',mode:'cors'}),'SW respects scope');
  console.log('PASS: offline navigation, precache assets, scope isolation, activation cleanup');

@@ -18,7 +18,7 @@
       heroCaption: 'اختر رسمة، امسك اللون، وابدأ إبداعك!', startPainting: 'ابدأ التلوين',
       title: 'عالم التلوين', subtitle: 'صبغ بضغطة، أو ارسم بالقلم والبخاخ', workspace: 'لوحة الرسم',
       workspaceHint: 'ارسم شكلًا مغلقًا بالقلم، ثم اضغط داخله بالدلو لصبغه دون تلوين الخلفية', offline: 'يعمل دون إنترنت',
-      tools: 'الأدوات', bucket: 'دلو الصبغ', brush: 'قلم الرسم', spray: 'بخاخ الألوان', eraser: 'ممحاة', stamp: 'الأختام', stampShapes: 'اختر شكل الختم', stampHint: 'اختر لونًا وحجمًا، ثم اضغط على اللوحة', heart: 'قلب', star: 'نجمة', stampButterfly: 'فراشة', stampFlower: 'زهرة', moon: 'هلال', smile: 'وجه مبتسم', stampPlaced: 'تم وضع الختم', colors: 'الألوان', shades: 'درجات اللون', customColor: 'لون مخصص', lime: 'ليموني', white: 'أبيض', size: 'حجم الأداة', importPhoto: 'استيراد صورة من الاستديو', photoPrivacy: 'الصورة تبقى على جهازك دون رفعها للإنترنت', photoImported: 'تم استيراد الصورة. ارسم أو ضع الأختام عليها!', photoInvalid: 'تعذر قراءة الصورة. اختر صورة مدعومة بحجم أقل من 30 ميغابايت', photoImportFailed: 'فشل استيراد الصورة. جرّب صورة بصيغة أخرى', photoFillNeedsBorder: 'ارسم شكلًا مغلقًا أولًا، ثم استخدم الدلو داخله حتى لا تختفي الصورة',
+      tools: 'الأدوات', bucket: 'دلو الصبغ', brush: 'قلم الرسم', spray: 'بخاخ الألوان', eraser: 'ممحاة', stamp: 'الأختام', stampShapes: 'اختر شكل الختم', stampHint: 'اختر لونًا وحجمًا، ثم اضغط على اللوحة', heart: 'قلب', star: 'نجمة', stampButterfly: 'فراشة', stampFlower: 'زهرة', moon: 'هلال', smile: 'وجه مبتسم', stampPlaced: 'تم وضع الختم', emojiTool: 'إيموجي', emojiShapes: 'اختر الإيموجي', emojiHint: 'اختر رمزًا وحجمًا، ثم اضغط على الصورة. يحتفظ الإيموجي بألوانه الأصلية.', emojiPlaced: 'تمت إضافة الإيموجي', saveToPhotos: 'حفظ في الصور', galleryShareTitle: 'رسمتي من عالم التلوين', galleryShared: 'اختر «حفظ الصورة» من نافذة المشاركة لإضافتها للاستديو', galleryDownloaded: 'تم تنزيل PNG. افتح الملف واحفظه في تطبيق الصور من قائمة المشاركة.', galleryCancelled: 'تم إلغاء المشاركة', colors: 'الألوان', shades: 'درجات اللون', customColor: 'لون مخصص', lime: 'ليموني', white: 'أبيض', size: 'حجم الأداة', importPhoto: 'استيراد صورة من الاستديو', photoPrivacy: 'الصورة تبقى على جهازك دون رفعها للإنترنت', photoImported: 'تم استيراد الصورة. ارسم أو ضع الأختام عليها!', photoInvalid: 'تعذر قراءة الصورة. اختر صورة مدعومة بحجم أقل من 30 ميغابايت', photoImportFailed: 'فشل استيراد الصورة. جرّب صورة بصيغة أخرى', photoFillNeedsBorder: 'ارسم شكلًا مغلقًا أولًا، ثم استخدم الدلو داخله حتى لا تختفي الصورة',
       undo: 'تراجع', redo: 'إعادة', clear: 'مسح الألوان', save: 'حفظ', export: 'تصدير PNG',
       templates: 'رسومات جاهزة', templatesHint: 'اختر رسمة جاهزة، أو ارسم شكلًا مغلقًا بالقلم ثم اصبغ داخله بالدلو',
       savedArtworks: 'رسوماتي المحفوظة', savedHint: 'تُحفظ على هذا الجهاز فقط، وليست في حساب سحابي',
@@ -47,7 +47,7 @@
       heroCaption: 'Pick a picture, choose a color, and make something wonderful!', startPainting: 'Start coloring',
       title: 'Kids Paint', subtitle: 'Tap to fill, draw with a pen, or spray paint', workspace: 'Drawing canvas',
       workspaceHint: 'Draw a closed shape with the pen, then tap inside with the bucket to fill just that shape', offline: 'Works offline',
-      tools: 'Tools', bucket: 'Paint bucket', brush: 'Drawing pen', spray: 'Spray paint', eraser: 'Eraser', stamp: 'Stamps', stampShapes: 'Pick a stamp', stampHint: 'Choose a color and size, then tap the canvas', heart: 'Heart', star: 'Star', stampButterfly: 'Butterfly', stampFlower: 'Flower', moon: 'Crescent moon', smile: 'Smiley face', stampPlaced: 'Stamp placed', colors: 'Colors', shades: 'Color shades', customColor: 'Custom color', lime: 'Lime', white: 'White', size: 'Tool size', importPhoto: 'Import a photo', photoPrivacy: 'Your photo stays on your device; nothing is uploaded', photoImported: 'Photo imported! Draw or add stamps on top', photoInvalid: 'Cannot read this image. Choose a supported image under 30 MB', photoImportFailed: 'Could not import the image. Try another image format', photoFillNeedsBorder: 'Draw a closed shape first; bucket fill cannot cover the entire photo',
+      tools: 'Tools', bucket: 'Paint bucket', brush: 'Drawing pen', spray: 'Spray paint', eraser: 'Eraser', stamp: 'Stamps', stampShapes: 'Pick a stamp', stampHint: 'Choose a color and size, then tap the canvas', heart: 'Heart', star: 'Star', stampButterfly: 'Butterfly', stampFlower: 'Flower', moon: 'Crescent moon', smile: 'Smiley face', stampPlaced: 'Stamp placed', emojiTool: 'Emoji', emojiShapes: 'Choose an emoji', emojiHint: 'Pick an emoji and size, then tap the canvas. Emoji use their original colors.', emojiPlaced: 'Emoji added', saveToPhotos: 'Save to Photos', galleryShareTitle: 'My Kids Paint artwork', galleryShared: 'Choose Save Image in the share sheet to add it to Photos', galleryDownloaded: 'PNG downloaded. Open it and use Share → Save Image to add it to Photos.', galleryCancelled: 'Sharing cancelled', colors: 'Colors', shades: 'Color shades', customColor: 'Custom color', lime: 'Lime', white: 'White', size: 'Tool size', importPhoto: 'Import a photo', photoPrivacy: 'Your photo stays on your device; nothing is uploaded', photoImported: 'Photo imported! Draw or add stamps on top', photoInvalid: 'Cannot read this image. Choose a supported image under 30 MB', photoImportFailed: 'Could not import the image. Try another image format', photoFillNeedsBorder: 'Draw a closed shape first; bucket fill cannot cover the entire photo',
       undo: 'Undo', redo: 'Redo', clear: 'Clear colors', save: 'Save', export: 'Export PNG',
       templates: 'Coloring pages', templatesHint: 'Choose a picture, or draw a closed shape with the pen and fill inside it with the bucket',
       savedArtworks: 'My saved drawings', savedHint: 'Saved on this device only — not synced to a cloud account',
@@ -79,6 +79,16 @@
   const photoCanvas = el('photoCanvas');
   const photoCtx = photoCanvas.getContext('2d');
   const STAMPS = ['heart', 'star', 'stampButterfly', 'stampFlower', 'moon', 'smile'];
+  // Native Unicode emoji are intentionally separate from recolorable vector stamps.
+  // Their colors follow the operating system's emoji font (iOS / Android / desktop).
+  const EMOJIS = [
+    ['😀', 'ضحكة', 'Smile'], ['😍', 'إعجاب', 'Heart eyes'], ['🥳', 'حفلة', 'Party'],
+    ['😎', 'نظارة', 'Cool'], ['🥰', 'حب', 'Lovely'], ['❤️', 'قلب', 'Heart'],
+    ['💖', 'قلب لامع', 'Sparkling heart'], ['⭐', 'نجمة', 'Star'], ['🌈', 'قوس قزح', 'Rainbow'],
+    ['🦋', 'فراشة', 'Butterfly'], ['🐱', 'قطة', 'Cat'], ['🐶', 'كلب', 'Dog'],
+    ['🌸', 'زهرة', 'Blossom'], ['🌻', 'عباد الشمس', 'Sunflower'], ['🚀', 'صاروخ', 'Rocket'],
+    ['⚽', 'كرة قدم', 'Football'], ['🍕', 'بيتزا', 'Pizza'], ['🎉', 'احتفال', 'Confetti']
+  ];
   const templateCanvas = el('templateCanvas');
   const paintCtx = paintCanvas.getContext('2d', { willReadFrequently: true });
   const templateCtx = templateCanvas.getContext('2d');
@@ -89,7 +99,7 @@
   const strokeCtx = strokeCanvas.getContext('2d', { willReadFrequently: true });
   const state = {
     lang: 'ar', template: 'cat', tool: 'bucket', color: PALETTE[0][0], size: 12,
-    stamp: 'heart', colorFamily: 0, photoActive: false,
+    stamp: 'heart', emoji: '😀', colorFamily: 0, photoActive: false,
     pointer: null, lastPoint: null, history: [], historyIndex: 0,
     savedId: null, savedName: null, statusKey: 'ready', statusVars: {},
     storageMode: 'none', db: null, previewUrls: []
@@ -129,6 +139,7 @@
     renderPalette();
     renderShades();
     renderStampPicker();
+    renderEmojiPicker();
     renderTemplatePicker();
     updateToolButtons();
     message(state.statusKey, state.statusVars);
@@ -448,19 +459,53 @@
       parent.append(btn);
     });
   }
+  function renderEmojiPicker() {
+    const parent = el('emojiPicker');
+    parent.replaceChildren();
+    for (const [symbol, arName, enName] of EMOJIS) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'emoji-choice';
+      button.textContent = symbol;
+      button.title = state.lang === 'ar' ? arName : enName;
+      button.setAttribute('aria-label', button.title);
+      button.setAttribute('aria-pressed', String(state.emoji === symbol));
+      button.addEventListener('click', () => {
+        state.emoji = symbol;
+        chooseTool('emoji');
+        renderEmojiPicker();
+      });
+      parent.append(button);
+    }
+  }
+  function placeEmoji(point) {
+    // Emoji glyphs draw onto the paint layer, not the pen-boundary layer.
+    // Thus bucket fills cannot mistake colored emoji details for closed pen outlines.
+    const size = Math.max(48, state.size * 4.1);
+    paintCtx.save();
+    paintCtx.globalCompositeOperation = 'source-over';
+    paintCtx.font = `${size}px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif`;
+    paintCtx.textAlign = 'center';
+    paintCtx.textBaseline = 'middle';
+    paintCtx.fillText(state.emoji, point.x, point.y, size * 1.55);
+    paintCtx.restore();
+    commitHistory();
+    message('emojiPlaced');
+  }
   function updateToolButtons() {
     paintCanvas.dataset.mode = state.tool;
     el('stampPanel').hidden = state.tool !== 'stamp';
+    el('emojiPanel').hidden = state.tool !== 'emoji';
     el('brushSize').disabled = state.tool === 'bucket';
     el('brushSizeOutput').textContent = state.tool === 'bucket' ? '—' : String(state.size);
-    for (const tool of ['bucket', 'brush', 'spray', 'eraser', 'stamp']) {
-      const button = el(tool === 'bucket' ? 'bucketTool' : tool === 'brush' ? 'brushTool' : tool === 'spray' ? 'sprayTool' : tool === 'eraser' ? 'eraserTool' : 'stampTool');
+    for (const tool of ['bucket', 'brush', 'spray', 'eraser', 'stamp', 'emoji']) {
+      const button = el(tool === 'bucket' ? 'bucketTool' : tool === 'brush' ? 'brushTool' : tool === 'spray' ? 'sprayTool' : tool === 'eraser' ? 'eraserTool' : tool === 'stamp' ? 'stampTool' : 'emojiTool');
       button.classList.toggle('is-active', tool === state.tool);
       button.setAttribute('aria-pressed', String(tool === state.tool));
     }
   }
   function chooseTool(tool) {
-    if (!['bucket', 'brush', 'spray', 'eraser', 'stamp'].includes(tool)) return;
+    if (!['bucket', 'brush', 'spray', 'eraser', 'stamp', 'emoji'].includes(tool)) return;
     state.tool = tool; updateToolButtons(); message('toolSelected', { tool: t(tool) });
   }
   function placeStamp(point) {
@@ -657,6 +702,7 @@
     e.preventDefault();
     if (state.tool === 'bucket') { bucketFill(coords(e)); return; }
     if (state.tool === 'stamp') { placeStamp(coords(e)); return; }
+    if (state.tool === 'emoji') { placeEmoji(coords(e)); return; }
     state.pointer = e.pointerId;
     state.lastPoint = coords(e);
     try { paintCanvas.setPointerCapture(e.pointerId); } catch (_) { /* unusual input device */ }
@@ -738,6 +784,35 @@
       setTimeout(() => URL.revokeObjectURL(url), 15_000);
       message('exported');
     } catch (error) { console.error('PNG export:', error); message('exportFailed'); }
+  }
+
+  async function saveToPhotos() {
+    // Web apps cannot silently write to the iOS Photos library. The Web Share
+    // sheet lets the child/parent explicitly choose "Save Image". Other browsers
+    // receive a regular PNG download, which can be saved to Photos manually.
+    try {
+      if (typeof navigator.share === 'function' && typeof navigator.canShare === 'function') {
+        // Synchronous creation keeps the user gesture active for Safari's share sheet.
+        const dataURL = composeImage().toDataURL('image/png');
+        const bytes = atob(dataURL.split(',')[1]);
+        const data = new Uint8Array(bytes.length);
+        for (let i = 0; i < bytes.length; i++) data[i] = bytes.charCodeAt(i);
+        const filenamePNG = `${filename(state.savedName || 'kids-paint')}-${new Date().toISOString().slice(0,10)}.png`;
+        const file = new File([data], filenamePNG, {type: 'image/png'});
+        if (navigator.canShare({files: [file]})) {
+          await navigator.share({files: [file], title: t('galleryShareTitle')});
+          message('galleryShared');
+          return;
+        }
+      }
+      await exportPNG();
+      message('galleryDownloaded');
+    } catch (error) {
+      if (error && error.name === 'AbortError') { message('galleryCancelled'); return; }
+      console.warn('Photo share unavailable; downloading PNG instead:', error);
+      try { await exportPNG(); message('galleryDownloaded'); }
+      catch (_) { message('exportFailed'); }
+    }
   }
 
   /* IndexedDB for binary artwork; localStorage data-URL fallback if IDB is blocked. */
@@ -948,6 +1023,7 @@
     el('sprayTool').addEventListener('click', () => chooseTool('spray'));
     el('eraserTool').addEventListener('click', () => chooseTool('eraser'));
     el('stampTool').addEventListener('click', () => chooseTool('stamp'));
+    el('emojiTool').addEventListener('click', () => chooseTool('emoji'));
     el('customColor').addEventListener('input', e => updateSelectedColor(e.target.value, -1));
     el('importPhotoBtn').addEventListener('click', () => el('photoInput').click());
     el('photoInput').addEventListener('change', async e => {
@@ -962,6 +1038,7 @@
     el('redoBtn').addEventListener('click', redo);
     el('clearBtn').addEventListener('click', clearPaint);
     el('exportBtn').addEventListener('click', exportPNG);
+    el('saveToPhotosBtn').addEventListener('click', saveToPhotos);
     el('saveBtn').addEventListener('click', openSaveDialog);
     el('cancelSave').addEventListener('click', () => el('saveDialog').close());
     el('saveForm').addEventListener('submit', event => {

@@ -57,3 +57,12 @@ The approved bilingual Kids Paint banner and matching app icons are included wit
 **الخصوصية:** لا تُرسل الصور إلى الإنترنت. المعالجة والحفظ محليان، وقد يمتلئ تخزين المتصفح عند حفظ صور كثيرة. استخدم تصدير PNG للاحتفاظ بنسخة خارج المتصفح. استيراد صيغ HEIC/HEIF يعتمد على دعم المتصفح، والحد الأقصى لحجم ملف الاستيراد 30 ميغابايت.
 
 **English:** Import a photo from your gallery and draw, spray, or place colorable vector stamps on top. The photograph is a separate background and is not affected by Eraser/Clear. Use the bucket only inside closed pen outlines on imported photos. Pick among six stamp shapes, 12 color families, five shades each, or a custom color. Everything is processed locally. Images over 30 MB are rejected and HEIC support depends on the browser.
+
+
+## تحديث 4.2 — الإيموجي وحفظ الصور / Emoji & Photos
+
+- **الإيموجي:** اختر أداة «إيموجي»، اختر واحدًا من 18 رمزًا وحدد الحجم ثم اضغط على اللوحة أو الصورة المستوردة. يحتفظ الإيموجي بألوان نظام الجهاز. يمكن التراجع عنه وحفظه وتصديره.
+- **حفظ في الصور:** اضغط «حفظ في الصور». على الآيفون اختر **حفظ الصورة (Save Image)** من قائمة المشاركة إن ظهرت. إن لم يدعم المتصفح مشاركة الصور، سينزّل ملف PNG، ويمكن حفظه يدويًا في الاستديو. الموقع لا يملك صلاحية الحفظ التلقائي في تطبيق «الصور».
+- **التوثيق:** [النسخة العربية](README.ar.md) و[النسخة الإنجليزية الأساسية](README.md).
+
+**English:** Choose the Emoji tool, pick one of 18 native emoji, select a size and tap the picture. For Photos, tap **Save to Photos**, then select **Save Image** in your device's share sheet; a web app cannot silently add images to iOS Photos. If sharing is unavailable, download the PNG and manually save it.

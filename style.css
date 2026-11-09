@@ -212,15 +212,6 @@ dialog::backdrop { background: rgba(30, 25, 52, .45); }
 @media (max-width: 760px) { .tool-panel .tool-buttons { grid-template-columns: repeat(5, minmax(0,1fr)); min-width: 0; } .tool-panel .color-palette { grid-column: auto; grid-template-columns: repeat(12,minmax(0,1fr)); } }
 @media (max-width: 530px) { .tool-panel .tool-buttons { grid-template-columns: repeat(3, minmax(0,1fr)); } .tool-panel .color-palette { grid-template-columns: repeat(6,minmax(0,1fr)); } .photo-import-row .import-button { width: 100%; } .tool-button { min-height: 70px; } }
 @media (max-width: 360px) { .tool-panel .color-palette { gap: 6px; } .stamp-picker { gap: 5px; } }
-/* Project attribution — responsive, keyboard-accessible links. */
-.site-footer { margin-top: 14px; padding: 20px 14px 28px; border-top: 1px solid var(--stroke); text-align: center; color: var(--muted); font-size: .85rem; }
-.site-footer .footer-tagline { margin: 0 0 10px; }
-.site-footer .footer-meta, .site-footer .footer-links { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 18px; }
-.site-footer .footer-meta { line-height: 1.7; }
-.site-footer .footer-links a { color: var(--brand); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
-.site-footer .footer-links a:hover { color: var(--ink); }
-.site-footer .footer-links a:focus-visible { outline: 3px solid var(--brand); outline-offset: 4px; border-radius: 4px; }
-@media (max-width: 530px) { .site-footer .footer-meta { flex-direction: column; gap: 5px; } .site-footer .footer-links { gap: 8px 20px; } }
 
 /* v4.1 PWA: compact app-install action and platform-specific instructions. */
 .hero-actions { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 9px; }
@@ -235,3 +226,31 @@ dialog::backdrop { background: rgba(30, 25, 52, .45); }
 .install-note { background: #f4f0ff; padding: 12px; border-radius: 10px; color: #52457c; }
 @media (max-width: 760px) { .hero-info { flex-wrap: wrap; } .hero-actions { flex: 1 1 auto; justify-content: stretch; } .hero-actions > * { flex: 1 1 135px; } }
 @media (max-width: 530px) { .hero-actions { width: 100%; } .hero-actions > * { flex: 1 1 100%; } .install-cta { width: 100%; } }
+
+/* v4.2 emoji stickers, gallery handoff, and bilingual project footer. */
+.emoji-panel { margin-top: 16px; padding: 12px; background: #fff; border: 1px solid #e6dff4; border-radius: 15px; }
+.emoji-panel[hidden] { display: none !important; }
+.emoji-panel h3 { margin-bottom: 10px; }
+.emoji-picker { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 6px; }
+.emoji-choice { padding: 0; min-width: 0; min-height: 44px; border: 2px solid #e6dfef; border-radius: 11px; background: #fff; font-size: clamp(1.25rem, 2vw, 1.7rem); line-height: 1.3; cursor: pointer; }
+.emoji-choice[aria-pressed="true"] { border-color: #7155d9; background: #f0ebff; box-shadow: inset 0 0 0 1px #7155d9; }
+.emoji-choice:focus-visible { outline: 3px solid #23b5bb; outline-offset: 2px; }
+#paintCanvas[data-mode="emoji"] { cursor: copy; }
+#saveToPhotosBtn { background: #207c65; color: #fff; border-color: #207c65; }
+#saveToPhotosBtn:hover { background: #145c4b; }
+.site-footer { margin-top: 14px; padding: 20px 14px 28px; border-top: 1px solid var(--stroke); text-align: center; color: var(--muted); font-size: .85rem; }
+.site-footer .footer-tagline { margin: 0 0 10px; }
+.site-footer .footer-meta, .site-footer .footer-links { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 18px; }
+.site-footer .footer-meta { line-height: 1.7; }
+.site-footer .footer-links a { color: var(--brand); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.site-footer .footer-links a:hover { color: var(--ink); }
+.site-footer .footer-links a:focus-visible { outline: 3px solid var(--brand); outline-offset: 4px; border-radius: 4px; }
+@media (max-width: 530px) {
+  .site-footer .footer-meta { flex-direction: column; gap: 5px; }
+  .site-footer .footer-links { gap: 8px 20px; }
+  .bottom-actions { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  #exportBtn, #saveToPhotosBtn { grid-column: auto; }
+  .emoji-picker { grid-template-columns: repeat(6, minmax(0,1fr)); gap: 4px; }
+  .emoji-choice { font-size: 1.4rem; }
+}
+@media (max-width: 355px) { .bottom-actions { grid-template-columns: 1fr; } #exportBtn, #saveToPhotosBtn { grid-column: 1; } }
