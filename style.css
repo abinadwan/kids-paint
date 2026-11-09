@@ -291,3 +291,21 @@ dialog::backdrop { background: rgba(30, 25, 52, .45); }
 .update-cta:focus-visible { outline: 3px solid #23b5bb; outline-offset: 3px; }
 .update-status { margin: 10px 0 0; min-height: 1.3em; color: #64748b; font-size: .81rem; line-height: 1.55; overflow-wrap: anywhere; }
 @media (max-width: 400px) { .footer-update { padding: 12px; } .footer-update-top { align-items: stretch; } .footer-version { align-self: center; } .update-cta { width: 100%; } }
+
+/* v4.4.0: portrait, immersive mobile drawing stage and text placement tools. */
+.canvas-stage[data-shape="portrait"] { aspect-ratio: var(--canvas-ratio, 2 / 3); width: min(100%, 650px); margin-inline: auto; }
+.text-panel { margin: 14px 0 4px; padding: 12px; border: 1px solid #e0daf3; background: #faf8ff; border-radius: 14px; }
+.text-panel[hidden] { display: none !important; }
+.text-panel label { display: block; font-weight: 750; font-size: .9rem; color: var(--ink); margin-bottom: 7px; }
+.text-panel textarea { width: 100%; min-height: 70px; padding: 10px 12px; font: inherit; line-height: 1.5; resize: vertical; color: var(--ink); background: white; border: 1px solid #c7bddf; border-radius: 10px; }
+.text-panel textarea:focus-visible { outline: 3px solid #7058d6; outline-offset: 2px; }
+.text-panel .tool-hint { margin-top: 6px; }
+@media (max-width: 760px) and (orientation: portrait) {
+  .canvas-stage[data-shape="portrait"] { width: 100%; height: 85dvh; aspect-ratio: auto; max-width: none; border-radius: 13px; }
+  .canvas-area { width: 100%; }
+  .canvas-stage { margin: 0; }
+  .tool-panel .tool-buttons { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 380px) and (orientation: portrait) {
+  .tool-panel .tool-buttons { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
