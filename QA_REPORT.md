@@ -80,3 +80,10 @@ The production HTML uses versioned CSS/JS query parameters (`?v=3.1.0`) so brows
 - Improved tool sizing and grouping, touch-target dimensions, focus treatment, responsive layout, selected-template states, and a clear jump-to-canvas link.
 - Kept painting, undo/redo and persistence logic unchanged except for two new translated hero labels.
 - Static and Chromium responsive tests for this refresh are reported separately in execution logs; a physical iPhone Safari test remains NOT TESTED.
+
+## Version 4.0 additions — tested locally (Chromium)
+
+- `tests/photo_stamps_test.py`: six stamp shapes, per-stamp size and custom color; undo/redo; Arabic/English UI; local PNG photo import and proportional image fit; bucket protection against covering the imported photo; fill inside a freehand closed region above the photo; clear/eraser preserve photo; PNG export composites background and stamps; local save/reload with simulated localStorage; 320/375/390/768/1280 px viewport checks; no uncaught JavaScript exceptions.
+- Existing `tests/smoke_test.py` and `tests/user_outline_test.py` also pass without regressions.
+- Browser test harness mocks localStorage on about:blank. **Real IndexedDB, real GitHub Pages deployment, and hardware Safari/iPhone were not verified** in this environment (localhost and test origin are administrator-blocked).
+- Imported image persistence uses browser JPEG compression; saved colors may differ slightly from the original image. Photo files are resized to 960×640 pixels with letterboxing, without altering the source file.

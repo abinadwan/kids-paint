@@ -17,6 +17,15 @@ A free, open-source drawing and painting app for kids with **three creative pain
 
 **[Try Kids Paint online](https://abinadwan.github.io/kids-paint/)**
 
+## New in v4.0 — photo drawing, stamps, and color shades
+
+- **Import any gallery image supported by the browser** using **Import a photo / استيراد صورة من الاستديو**. Photos are resized to fit the 960×640 stage without cropping or stretching; drawing is on a **separate layer**, so the eraser and Clear do not change the photograph.
+- **Six stamps / الأختام**: heart, star, butterfly, flower, crescent moon, and smiley face. Pick a shape, a color, and tool size; tap the drawing or imported photo to place it. Stamps support Undo/Redo, Clear, Save/Open, and PNG export.
+- **Expanded colors:** 12 color families, 5 shades per family, plus a custom color picker. Pen, spray, paint bucket, and stamps use the same chosen color.
+- **Photo-aware paint bucket:** fills only user-drawn closed areas on imported photos. It intentionally does **not** flood the whole photo or recolor photographic objects.
+- **Local-first:** photo processing happens in your browser. Photos are not uploaded. Saved photos use resized JPEG encoding in browser storage (IndexedDB when available, localStorage fallback); larger projects may exceed localStorage quotas. Export a PNG to keep your result outside the app.
+- **Limits:** files above 30 MB are rejected; HEIC/HEIF support depends on the browser's image decoder. Physical iPhone/Safari testing is still required.
+
 ## Features
 
 - **Paint Bucket (default for templates):** tap inside an illustrated region or a **closed freehand pen outline** to fill only that area. Both built-in lines and user-drawn pen strokes act as boundaries; pen strokes remain visible. Tapping outside the outline deliberately paints the surrounding background.

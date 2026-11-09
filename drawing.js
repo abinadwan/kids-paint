@@ -11,14 +11,14 @@
   const PALETTE = [
     ['#ff6b6b', 'red'], ['#ff9f43', 'orange'], ['#ffdf55', 'yellow'],
     ['#62be78', 'green'], ['#24b9aa', 'teal'], ['#4f98ec', 'blue'],
-    ['#9164dc', 'purple'], ['#ed7fbe', 'pink'], ['#9d6f4d', 'brown'], ['#30394c', 'black']
+    ['#9164dc', 'purple'], ['#ed7fbe', 'pink'], ['#9d6f4d', 'brown'], ['#91c944', 'lime'], ['#ffffff', 'white'], ['#30394c', 'black']
   ];
   const WORDS = {
     ar: {
       heroCaption: 'اختر رسمة، امسك اللون، وابدأ إبداعك!', startPainting: 'ابدأ التلوين',
       title: 'عالم التلوين', subtitle: 'صبغ بضغطة، أو ارسم بالقلم والبخاخ', workspace: 'لوحة الرسم',
       workspaceHint: 'ارسم شكلًا مغلقًا بالقلم، ثم اضغط داخله بالدلو لصبغه دون تلوين الخلفية', offline: 'يعمل دون إنترنت',
-      tools: 'الأدوات', bucket: 'دلو الصبغ', brush: 'قلم الرسم', spray: 'بخاخ الألوان', eraser: 'ممحاة', colors: 'الألوان', size: 'حجم الأداة',
+      tools: 'الأدوات', bucket: 'دلو الصبغ', brush: 'قلم الرسم', spray: 'بخاخ الألوان', eraser: 'ممحاة', stamp: 'الأختام', stampShapes: 'اختر شكل الختم', stampHint: 'اختر لونًا وحجمًا، ثم اضغط على اللوحة', heart: 'قلب', star: 'نجمة', stampButterfly: 'فراشة', stampFlower: 'زهرة', moon: 'هلال', smile: 'وجه مبتسم', stampPlaced: 'تم وضع الختم', colors: 'الألوان', shades: 'درجات اللون', customColor: 'لون مخصص', lime: 'ليموني', white: 'أبيض', size: 'حجم الأداة', importPhoto: 'استيراد صورة من الاستديو', photoPrivacy: 'الصورة تبقى على جهازك دون رفعها للإنترنت', photoImported: 'تم استيراد الصورة. ارسم أو ضع الأختام عليها!', photoInvalid: 'تعذر قراءة الصورة. اختر صورة مدعومة بحجم أقل من 30 ميغابايت', photoImportFailed: 'فشل استيراد الصورة. جرّب صورة بصيغة أخرى', photoFillNeedsBorder: 'ارسم شكلًا مغلقًا أولًا، ثم استخدم الدلو داخله حتى لا تختفي الصورة',
       undo: 'تراجع', redo: 'إعادة', clear: 'مسح الألوان', save: 'حفظ', export: 'تصدير PNG',
       templates: 'رسومات جاهزة', templatesHint: 'اختر رسمة جاهزة، أو ارسم شكلًا مغلقًا بالقلم ثم اصبغ داخله بالدلو',
       savedArtworks: 'رسوماتي المحفوظة', savedHint: 'تُحفظ على هذا الجهاز فقط، وليست في حساب سحابي',
@@ -47,7 +47,7 @@
       heroCaption: 'Pick a picture, choose a color, and make something wonderful!', startPainting: 'Start coloring',
       title: 'Kids Paint', subtitle: 'Tap to fill, draw with a pen, or spray paint', workspace: 'Drawing canvas',
       workspaceHint: 'Draw a closed shape with the pen, then tap inside with the bucket to fill just that shape', offline: 'Works offline',
-      tools: 'Tools', bucket: 'Paint bucket', brush: 'Drawing pen', spray: 'Spray paint', eraser: 'Eraser', colors: 'Colors', size: 'Tool size',
+      tools: 'Tools', bucket: 'Paint bucket', brush: 'Drawing pen', spray: 'Spray paint', eraser: 'Eraser', stamp: 'Stamps', stampShapes: 'Pick a stamp', stampHint: 'Choose a color and size, then tap the canvas', heart: 'Heart', star: 'Star', stampButterfly: 'Butterfly', stampFlower: 'Flower', moon: 'Crescent moon', smile: 'Smiley face', stampPlaced: 'Stamp placed', colors: 'Colors', shades: 'Color shades', customColor: 'Custom color', lime: 'Lime', white: 'White', size: 'Tool size', importPhoto: 'Import a photo', photoPrivacy: 'Your photo stays on your device; nothing is uploaded', photoImported: 'Photo imported! Draw or add stamps on top', photoInvalid: 'Cannot read this image. Choose a supported image under 30 MB', photoImportFailed: 'Could not import the image. Try another image format', photoFillNeedsBorder: 'Draw a closed shape first; bucket fill cannot cover the entire photo',
       undo: 'Undo', redo: 'Redo', clear: 'Clear colors', save: 'Save', export: 'Export PNG',
       templates: 'Coloring pages', templatesHint: 'Choose a picture, or draw a closed shape with the pen and fill inside it with the bucket',
       savedArtworks: 'My saved drawings', savedHint: 'Saved on this device only — not synced to a cloud account',
@@ -76,6 +76,9 @@
 
   const el = (id) => document.getElementById(id);
   const paintCanvas = el('paintCanvas');
+  const photoCanvas = el('photoCanvas');
+  const photoCtx = photoCanvas.getContext('2d');
+  const STAMPS = ['heart', 'star', 'stampButterfly', 'stampFlower', 'moon', 'smile'];
   const templateCanvas = el('templateCanvas');
   const paintCtx = paintCanvas.getContext('2d', { willReadFrequently: true });
   const templateCtx = templateCanvas.getContext('2d');
@@ -86,6 +89,7 @@
   const strokeCtx = strokeCanvas.getContext('2d', { willReadFrequently: true });
   const state = {
     lang: 'ar', template: 'cat', tool: 'bucket', color: PALETTE[0][0], size: 12,
+    stamp: 'heart', colorFamily: 0, photoActive: false,
     pointer: null, lastPoint: null, history: [], historyIndex: 0,
     savedId: null, savedName: null, statusKey: 'ready', statusVars: {},
     storageMode: 'none', db: null, previewUrls: []
@@ -123,6 +127,8 @@
     el('colorPalette').setAttribute('aria-label', t('colors'));
     el('templatePicker').setAttribute('aria-label', t('templates'));
     renderPalette();
+    renderShades();
+    renderStampPicker();
     renderTemplatePicker();
     updateToolButtons();
     message(state.statusKey, state.statusVars);
@@ -308,14 +314,15 @@
     ctx.restore();
   }
   function chooseTemplate(id) {
-    if (!DRAWERS[id] || id === state.template) return;
-    if (hasPaint() && !window.confirm(t('switchQuestion'))) return;
+    if (!DRAWERS[id] || (id === state.template && !state.photoActive)) return;
+    if (hasArtwork() && !window.confirm(t('switchQuestion'))) return;
     state.template = id;
     state.tool = id === 'blank' ? 'brush' : 'bucket';
     updateToolButtons();
     state.savedId = null; state.savedName = null;
     paintCtx.clearRect(0, 0, W, H);
     strokeCtx.clearRect(0, 0, W, H);
+    photoCtx.clearRect(0, 0, W, H); state.photoActive = false;
     renderOutline(templateCtx, id);
     resetHistory();
     renderTemplatePicker();
@@ -339,34 +346,128 @@
       parent.append(button);
     }
   }
+  function blendColors(hex, target, factor) {
+    const source = [1,3,5].map(i => parseInt(hex.slice(i, i + 2), 16));
+    const other = [1,3,5].map(i => parseInt(target.slice(i, i + 2), 16));
+    return '#' + source.map((v, i) => Math.round(v * (1 - factor) + other[i] * factor).toString(16).padStart(2, '0')).join('');
+  }
+  function shadesFor(hex) {
+    return [blendColors(hex, '#ffffff', .76), blendColors(hex, '#ffffff', .43), hex,
+      blendColors(hex, '#000000', .23), blendColors(hex, '#000000', .48)];
+  }
+  function updateSelectedColor(color, family = state.colorFamily) {
+    state.color = color.toLowerCase(); state.colorFamily = family;
+    if (state.tool === 'eraser') state.tool = 'brush';
+    renderPalette(); renderShades(); renderStampPicker(); updateToolButtons();
+    el('customColor').value = state.color;
+    message('selectedColor', { color: state.color });
+  }
   function renderPalette() {
     const parent = el('colorPalette'); parent.replaceChildren();
-    for (const [color, name] of PALETTE) {
+    PALETTE.forEach(([color, name], index) => {
       const swatch = document.createElement('button');
       swatch.className = 'color-swatch'; swatch.type = 'button'; swatch.style.backgroundColor = color;
       swatch.dataset.color = color;
       swatch.setAttribute('aria-label', t('colorName', { color: t(name) }));
-      swatch.setAttribute('aria-pressed', String(color === state.color));
-      swatch.addEventListener('click', () => {
-        state.color = color; if (state.tool === 'eraser') state.tool = state.template === 'blank' ? 'brush' : 'bucket';
-        renderPalette(); updateToolButtons(); message('selectedColor', { color: t(name) });
-      });
+      swatch.setAttribute('aria-pressed', String(state.colorFamily === index));
+      swatch.addEventListener('click', () => updateSelectedColor(color, index));
       parent.append(swatch);
+    });
+  }
+  function renderShades() {
+    const parent = el('shadePalette'); parent.replaceChildren();
+    if (state.colorFamily < 0) return;
+    shadesFor(PALETTE[state.colorFamily][0]).forEach((color, i) => {
+      const swatch = document.createElement('button');
+      swatch.type = 'button'; swatch.className = 'shade-swatch'; swatch.style.backgroundColor = color;
+      swatch.setAttribute('aria-label', t('colorName', { color }));
+      swatch.setAttribute('aria-pressed', String(state.color === color));
+      swatch.addEventListener('click', () => updateSelectedColor(color));
+      parent.append(swatch);
+    });
+  }
+
+  // Vector stamps use the chosen pigment, not OS-specific multicolor emoji.
+  function drawStamp(ctx, id, point, size, color) {
+    ctx.save();
+    ctx.translate(point.x, point.y); ctx.scale(size / 100, size / 100);
+    ctx.fillStyle = color; ctx.strokeStyle = color === '#ffffff' ? '#576078' : 'rgba(41,34,76,.42)';
+    ctx.lineWidth = 3.2; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    const shape = (build) => { ctx.beginPath(); build(); ctx.fill(); ctx.stroke(); };
+    if (id === 'heart') {
+      shape(() => {
+        ctx.moveTo(0, 40); ctx.bezierCurveTo(-58, 6, -56, -39, -23, -38);
+        ctx.bezierCurveTo(-10, -38, -2, -31, 0, -22);
+        ctx.bezierCurveTo(9, -46, 48, -49, 50, -17);
+        ctx.bezierCurveTo(52, 6, 25, 27, 0, 40); ctx.closePath();
+      });
+    } else if (id === 'star') {
+      shape(() => {
+        for (let i = 0; i < 10; i++) {
+          const a = -Math.PI / 2 + i * Math.PI / 5;
+          const r = i % 2 ? 22 : 47;
+          const x = Math.cos(a) * r, y = Math.sin(a) * r;
+          if (!i) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        } ctx.closePath();
+      });
+    } else if (id === 'stampButterfly') {
+      shape(() => { ctx.moveTo(-3, -5); ctx.bezierCurveTo(-58, -65, -63, 0, -26, 11); ctx.bezierCurveTo(-56, 57, -7, 59, -3, 7); ctx.closePath(); });
+      shape(() => { ctx.moveTo(3, -5); ctx.bezierCurveTo(58, -65, 63, 0, 26, 11); ctx.bezierCurveTo(56, 57, 7, 59, 3, 7); ctx.closePath(); });
+      ctx.beginPath(); ctx.ellipse(0, 4, 5, 32, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-2,-24); ctx.quadraticCurveTo(-11,-44,-20,-40);
+      ctx.moveTo(2,-24); ctx.quadraticCurveTo(11,-44,20,-40); ctx.stroke();
+    } else if (id === 'stampFlower') {
+      for (let i = 0; i < 6; i++) {
+        ctx.save(); ctx.rotate(i * Math.PI / 3);
+        ctx.beginPath(); ctx.ellipse(0, -24, 17, 23, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); ctx.restore();
+      }
+      ctx.beginPath(); ctx.arc(0, 0, 12, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    } else if (id === 'moon') {
+      shape(() => { ctx.moveTo(20, -46); ctx.bezierCurveTo(-35, -45, -52, 24, -1, 47); ctx.bezierCurveTo(-33, 4, -1, -25, 20, -46); ctx.closePath(); });
+    } else if (id === 'smile') {
+      ctx.beginPath(); ctx.arc(0, 0, 44, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.save(); ctx.fillStyle = '#ffffff';
+      for (const x of [-16, 16]) { ctx.beginPath(); ctx.arc(x, -12, 5.5, 0, Math.PI * 2); ctx.fill(); }
+      ctx.restore();
+      ctx.strokeStyle = '#37435e'; ctx.lineWidth = 4.5;
+      ctx.beginPath(); ctx.arc(0, 2, 25, .12 * Math.PI, .88 * Math.PI); ctx.stroke();
     }
+    ctx.restore();
+  }
+  function renderStampPicker() {
+    const parent = el('stampPicker'); parent.replaceChildren();
+    STAMPS.forEach(id => {
+      const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'stamp-choice';
+      btn.setAttribute('aria-label', t(id)); btn.setAttribute('aria-pressed', String(state.stamp === id));
+      const preview = document.createElement('canvas'); preview.width = 68; preview.height = 68;
+      preview.setAttribute('aria-hidden', 'true');
+      drawStamp(preview.getContext('2d'), id, {x:34,y:34}, 62, state.color);
+      const text = document.createElement('span'); text.textContent = t(id);
+      btn.append(preview, text);
+      btn.addEventListener('click', () => { state.stamp = id; chooseTool('stamp'); renderStampPicker(); });
+      parent.append(btn);
+    });
   }
   function updateToolButtons() {
     paintCanvas.dataset.mode = state.tool;
+    el('stampPanel').hidden = state.tool !== 'stamp';
     el('brushSize').disabled = state.tool === 'bucket';
     el('brushSizeOutput').textContent = state.tool === 'bucket' ? '—' : String(state.size);
-    for (const tool of ['bucket', 'brush', 'spray', 'eraser']) {
-      const button = el(tool === 'bucket' ? 'bucketTool' : tool === 'brush' ? 'brushTool' : tool === 'spray' ? 'sprayTool' : 'eraserTool');
+    for (const tool of ['bucket', 'brush', 'spray', 'eraser', 'stamp']) {
+      const button = el(tool === 'bucket' ? 'bucketTool' : tool === 'brush' ? 'brushTool' : tool === 'spray' ? 'sprayTool' : tool === 'eraser' ? 'eraserTool' : 'stampTool');
       button.classList.toggle('is-active', tool === state.tool);
       button.setAttribute('aria-pressed', String(tool === state.tool));
     }
   }
   function chooseTool(tool) {
-    if (!['bucket', 'brush', 'spray', 'eraser'].includes(tool)) return;
+    if (!['bucket', 'brush', 'spray', 'eraser', 'stamp'].includes(tool)) return;
     state.tool = tool; updateToolButtons(); message('toolSelected', { tool: t(tool) });
+  }
+  function placeStamp(point) {
+    const size = Math.max(28, state.size * 4);
+    drawStamp(paintCtx, state.stamp, point, size, state.color);
+    drawStamp(strokeCtx, state.stamp, point, size, '#000000');
+    commitHistory(); message('stampPlaced');
   }
 
   /* The pen boundary mask is stored as alpha-only bytes to keep mobile undo history small.
@@ -415,6 +516,7 @@
     if (state.pointer !== null || state.historyIndex >= state.history.length - 1) return;
     state.historyIndex++; restoreHistory(); message('redone');
   }
+  function hasArtwork() { return hasPaint() || state.photoActive; }
   function hasPaint() {
     const pixels = paintCtx.getImageData(0, 0, W, H).data;
     for (let i = 3; i < pixels.length; i += 4) if (pixels[i]) return true;
@@ -486,6 +588,8 @@
       if (y < H - 1) push(idx + W);
     }
 
+    // Imported photos remain visible: only fill closed pen regions on top.
+    if (state.photoActive && touchesEdge) { message('photoFillNeedsBorder'); return; }
     const data = paintCtx.getImageData(0, 0, W, H);
     const value = state.color;
     const r = parseInt(value.slice(1, 3), 16);
@@ -552,6 +656,7 @@
     if (state.pointer !== null || e.isPrimary === false || (e.pointerType === 'mouse' && e.button !== 0)) return;
     e.preventDefault();
     if (state.tool === 'bucket') { bucketFill(coords(e)); return; }
+    if (state.tool === 'stamp') { placeStamp(coords(e)); return; }
     state.pointer = e.pointerId;
     state.lastPoint = coords(e);
     try { paintCanvas.setPointerCapture(e.pointerId); } catch (_) { /* unusual input device */ }
@@ -607,6 +712,7 @@
     const out = document.createElement('canvas'); out.width = W; out.height = H;
     const context = out.getContext('2d');
     context.fillStyle = '#ffffff'; context.fillRect(0, 0, W, H);
+    if (state.photoActive) context.drawImage(photoCanvas, 0, 0);
     context.drawImage(paintCanvas, 0, 0);
     context.drawImage(templateCanvas, 0, 0);
     return out;
@@ -670,10 +776,11 @@
         }
         if (action === 'get') { const raw = localStorage.getItem(STORAGE_PREFIX + id); return raw ? JSON.parse(raw) : null; }
         if (action === 'put') {
-          const { paintBlob, strokeBlob, ...metadata } = record;
+          const { paintBlob, strokeBlob, photoBlob, ...metadata } = record;
+          const photoDataUrl = record.photoDataUrl || (photoBlob ? await blobToDataURL(photoBlob) : null);
           const paintDataUrl = record.paintDataUrl || await blobToDataURL(paintBlob);
           const strokeDataUrl = record.strokeDataUrl || (strokeBlob ? await blobToDataURL(strokeBlob) : null);
-          localStorage.setItem(STORAGE_PREFIX + record.id, JSON.stringify({ ...metadata, paintDataUrl, strokeDataUrl }));
+          localStorage.setItem(STORAGE_PREFIX + record.id, JSON.stringify({ ...metadata, paintDataUrl, strokeDataUrl, photoDataUrl }));
           return record.id;
         }
         if (action === 'delete') { localStorage.removeItem(STORAGE_PREFIX + id); return; }
@@ -708,12 +815,13 @@
     try {
       const paintBlob = await toBlob(paintCanvas);
       const strokeBlob = await toBlob(strokeCanvas);
+      const photoBlob = state.photoActive ? await toBlob(photoCanvas, 'image/jpeg', .86) : null;
       const previewCanvas = document.createElement('canvas'); previewCanvas.width = 300; previewCanvas.height = 200;
       previewCanvas.getContext('2d').drawImage(composeImage(), 0, 0, 300, 200);
       const preview = previewCanvas.toDataURL('image/jpeg', .8);
       const id = state.savedId || (typeof window.crypto?.randomUUID === 'function' ? window.crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`);
       await database.request('put', null, {
-        id, name: name.slice(0, 60), template: state.template, preview, paintBlob, strokeBlob,
+        id, name: name.slice(0, 60), template: state.template, preview, paintBlob, strokeBlob, photoBlob,
         updatedAt: new Date().toISOString()
       });
       state.savedId = id; state.savedName = name;
@@ -726,11 +834,43 @@
       const img = new Image(); img.onload = () => resolve(img); img.onerror = () => reject(new Error('Could not decode image')); img.src = src;
     });
   }
+  async function importPhoto(file) {
+    if (!file) return;
+    // Browser-native decoding covers the formats the user's gallery actually supports.
+    if ((!file.type.startsWith('image/') && !/\.(png|jpe?g|webp|gif|heic|heif|avif|bmp)$/i.test(file.name)) || file.size > 30 * 1024 * 1024) {
+      message('photoInvalid'); return;
+    }
+    let sourceUrl = null;
+    try {
+      sourceUrl = URL.createObjectURL(file);
+      const img = await imageFrom(sourceUrl);
+      if (!img.naturalWidth || !img.naturalHeight) throw new Error('Empty image');
+      if (hasArtwork() && !window.confirm(t('switchQuestion'))) return;
+      // Resize onto the fixed drawing stage without stretching or cropping the source.
+      // The original file is not modified, stored remotely, or sent over the network.
+      const scale = Math.min(W / img.naturalWidth, H / img.naturalHeight);
+      const width = Math.max(1, Math.round(img.naturalWidth * scale));
+      const height = Math.max(1, Math.round(img.naturalHeight * scale));
+      photoCtx.clearRect(0, 0, W, H);
+      photoCtx.fillStyle = '#ffffff'; photoCtx.fillRect(0, 0, W, H);
+      photoCtx.drawImage(img, (W - width) / 2, (H - height) / 2, width, height);
+      state.photoActive = true;
+      state.template = 'blank'; state.tool = 'brush';
+      state.savedId = null; state.savedName = null;
+      paintCtx.clearRect(0, 0, W, H); strokeCtx.clearRect(0, 0, W, H);
+      renderOutline(templateCtx, 'blank'); renderTemplatePicker(); updateToolButtons();
+      resetHistory(); message('photoImported');
+      el('canvasStage').scrollIntoView({behavior:'smooth',block:'nearest'});
+    } catch (error) {
+      console.error('Photo import:', error); message('photoImportFailed');
+    } finally { if (sourceUrl) URL.revokeObjectURL(sourceUrl); }
+  }
+
   async function openArtwork(id) {
     try {
       const record = await database.request('get', id);
       if (!record || !DRAWERS[record.template]) throw new Error('Invalid saved artwork');
-      if (hasPaint() && !window.confirm(t('switchQuestion'))) return;
+      if (hasArtwork() && !window.confirm(t('switchQuestion'))) return;
       const url = record.paintBlob ? URL.createObjectURL(record.paintBlob) : record.paintDataUrl;
       let img;
       try { img = await imageFrom(url); } finally { if (record.paintBlob) URL.revokeObjectURL(url); }
@@ -742,11 +882,20 @@
         try { restoredPen = await imageFrom(outlineURL); }
         finally { if (record.strokeBlob) URL.revokeObjectURL(outlineURL); }
       }
+      let restoredPhoto = null;
+      if (record.photoBlob || record.photoDataUrl) {
+        const photoURL = record.photoBlob ? URL.createObjectURL(record.photoBlob) : record.photoDataUrl;
+        try { restoredPhoto = await imageFrom(photoURL); }
+        finally { if (record.photoBlob) URL.revokeObjectURL(photoURL); }
+      }
       state.template = record.template; state.tool = record.template === 'blank' ? 'brush' : 'bucket';
       updateToolButtons(); state.savedId = record.id; state.savedName = record.name;
       paintCtx.clearRect(0, 0, W, H); paintCtx.drawImage(img, 0, 0, W, H);
       strokeCtx.clearRect(0, 0, W, H);
       if (restoredPen) strokeCtx.drawImage(restoredPen, 0, 0, W, H);
+      photoCtx.clearRect(0, 0, W, H);
+      if (restoredPhoto) photoCtx.drawImage(restoredPhoto, 0, 0, W, H);
+      state.photoActive = !!restoredPhoto;
       renderOutline(templateCtx, state.template); resetHistory(); renderTemplatePicker();
       message('loaded');
     } catch (error) { console.error('Artwork load:', error); message('loadFailed'); }
@@ -798,6 +947,13 @@
     el('brushTool').addEventListener('click', () => chooseTool('brush'));
     el('sprayTool').addEventListener('click', () => chooseTool('spray'));
     el('eraserTool').addEventListener('click', () => chooseTool('eraser'));
+    el('stampTool').addEventListener('click', () => chooseTool('stamp'));
+    el('customColor').addEventListener('input', e => updateSelectedColor(e.target.value, -1));
+    el('importPhotoBtn').addEventListener('click', () => el('photoInput').click());
+    el('photoInput').addEventListener('change', async e => {
+      const file = e.target.files?.[0]; e.target.value = '';
+      if (file) await importPhoto(file);
+    });
     el('brushSize').addEventListener('input', e => {
       state.size = Number(e.target.value); el('brushSizeOutput').textContent = String(state.size);
       message('sizeSelected', { size: state.size });

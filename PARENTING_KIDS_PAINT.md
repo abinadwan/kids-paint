@@ -45,3 +45,15 @@ There are **13 built-in pictures plus a blank page**, an Arabic/English toggle, 
 يعرض الموقع البنر الرسمي المعتمد «عالم التلوين للأطفال»، مع أيقونة خاصة للتبويب وشاشة الهاتف. يتم تحميل الملفات من داخل المشروع بدون خدمات صور خارجية.
 
 The approved bilingual Kids Paint banner and matching app icons are included with the static site.
+
+## الجديد في 4.0 | New in 4.0
+
+**استيراد الصور:** اضغط «استيراد صورة من الاستديو» واختر صورة. تظهر الصورة خلف الرسم؛ استخدم القلم أو البخاخ أو الأختام للتزيين. الممحاة تمسح رسوماتك فقط، وليس الصورة الأصلية. لملء مساحة بالدلو فوق صورة، ارسم حولها أولًا شكلًا مغلقًا بالقلم. لا يحوّل التطبيق الصور الفوتوغرافية تلقائيًا إلى رسومات بخطوط سوداء.
+
+**الأختام:** اختر أداة «الأختام» ثم قلبًا أو نجمة أو فراشة أو زهرة أو هلالًا أو وجهًا مبتسمًا. غيّر اللون والحجم واضغط المكان المرغوب. يمكنك التراجع أو إعادة الاختام وحفظ الصورة وتصديرها.
+
+**الألوان:** توجد 12 عائلة لونية وخمس درجات لكل منها، إضافة إلى محدد لون مخصص.
+
+**الخصوصية:** لا تُرسل الصور إلى الإنترنت. المعالجة والحفظ محليان، وقد يمتلئ تخزين المتصفح عند حفظ صور كثيرة. استخدم تصدير PNG للاحتفاظ بنسخة خارج المتصفح. استيراد صيغ HEIC/HEIF يعتمد على دعم المتصفح، والحد الأقصى لحجم ملف الاستيراد 30 ميغابايت.
+
+**English:** Import a photo from your gallery and draw, spray, or place colorable vector stamps on top. The photograph is a separate background and is not affected by Eraser/Clear. Use the bucket only inside closed pen outlines on imported photos. Pick among six stamp shapes, 12 color families, five shades each, or a custom color. Everything is processed locally. Images over 30 MB are rejected and HEIC support depends on the browser.
