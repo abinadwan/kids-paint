@@ -38,7 +38,7 @@ def run():
         page.on('dialog', lambda d: d.accept())
         load_app(page)
         # Free draw, no illustration boundaries.
-        page.locator('.template-item').last.click()
+        page.locator('.template-item').first.click()
         line_loop(page, [(150, 110), (450, 110), (450, 300), (150, 300), (150, 110)])
         black = pixel(page, 240, 176)
         assert black[:3] == [48, 57, 76] or (black[3] > 200 and max(black[:3]) < 80), black
@@ -120,7 +120,7 @@ def run():
         gapped.on('pageerror', lambda e: errors.append(str(e)))
         gapped.on('dialog', lambda d: d.accept())
         load_app(gapped)
-        gapped.locator('.template-item').last.click()
+        gapped.locator('.template-item').first.click()
         line_loop(gapped, [(150, 110), (450, 110), (450, 300), (150, 300), (150, 160)])
         gapped.locator('#bucketTool').click()
         gapped.locator('.color-swatch').first.click()
