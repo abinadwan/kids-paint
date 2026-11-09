@@ -309,3 +309,17 @@ dialog::backdrop { background: rgba(30, 25, 52, .45); }
 @media (max-width: 380px) and (orientation: portrait) {
   .tool-panel .tool-buttons { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+
+
+/* v4.4.1 — stable screen layout, no accidental touch-page zoom.
+   Keep browser accessibility zoom available via browser/OS settings. */
+html { width:100%; max-width:100%; overflow-x:clip; -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+body { width:100%; max-width:100%; overflow-x:clip; }
+.app-shell { max-width:100%; min-width:0; touch-action:pan-y; overscroll-behavior-x:none; }
+.canvas-area, .drawing-layout, .workspace-card, .tool-panel { min-width:0; }
+img, canvas { max-width:100%; }
+.canvas-stage, #paintCanvas { touch-action:none; }
+@media (max-width:760px) {
+  /* At 16px or above, input focus does not auto-enlarge Safari's page. */
+  input:not([type="range"]), textarea, select { font-size:16px; }
+}
