@@ -53,3 +53,9 @@ Code syntax checked with Node.js (`drawing.js`, `sw.js`). The tests passed local
 - Same version: up-to-date feedback. Offline/error: retry guidance. Different version: explicit confirmation warns about unsaved drawings before a reload.
 - Update requests Service Worker revalidation but does not clear IndexedDB/localStorage. Reinstall is unnecessary.
 - Added Service Worker unit coverage for version network routing and retaining non-shell caches. A physical device and deployed-site test are still required to verify installed iOS updates.
+
+## v4.4.0 — Portrait canvas and text tool
+
+Tested locally in Chromium at 320×740, 390×844, 428×926, and 1280×900. On portrait phones, the drawing stage measured 85% of viewport height with intrinsically portrait canvas dimensions; desktop retained 960×640. New pages start blank with the pen selected. Arabic/English text placement, size/color selection, Undo/Redo, local Save/Open, and switching to template art passed in browser emulation without JavaScript exceptions.
+
+Cross-device persistence checks confirmed a 960×640 legacy landscape drawing opens on the phone without stretching and a new mobile portrait drawing retains its original dimensions on desktop. Physical iOS Safari, keyboard overlays and browser toolbar changes remain unverified. Text is rasterized into artwork rather than remaining a separate editable text object.
