@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#7058d6">
+  <meta name="app-version" content="4.3.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="عالم التلوين">
@@ -12,9 +13,9 @@
   <title>عالم التلوين | Kids Paint</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico?v=4.0.0">
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=4.0.0">
-  <link rel="stylesheet" href="style.css?v=4.2.1">
+  <link rel="stylesheet" href="style.css?v=4.3.0">
   <script src="drawing.js?v=4.2.0" defer></script>
-  <script src="pwa.js?v=4.2.1" defer></script>
+  <script src="pwa.js?v=4.3.0" defer></script>
 </head>
 <body>
   <div class="app-shell">
@@ -146,6 +147,13 @@
         <img src="assets/app-icon.png" width="44" height="44" alt="" aria-hidden="true">
         <span data-pwa-ar="ثبّت عالم التلوين واستخدمه دون إنترنت" data-pwa-en="Install Kids Paint for offline use">ثبّت عالم التلوين واستخدمه دون إنترنت</span>
         <button type="button" class="install-cta" id="installAppBtn" data-pwa-ar="ثبّت التطبيق" data-pwa-en="Install app">ثبّت التطبيق</button>
+      </div>
+      <div class="footer-update">
+        <div class="footer-update-top">
+          <span class="footer-version"><span data-pwa-ar="الإصدار" data-pwa-en="Version">الإصدار</span> <bdi id="appVersionLabel">4.3.0</bdi></span>
+          <button type="button" id="checkUpdateBtn" class="update-cta" data-pwa-ar="تحديث التطبيق" data-pwa-en="Update app">تحديث التطبيق</button>
+        </div>
+        <p id="updateStatus" class="update-status" role="status" aria-live="polite" aria-atomic="true" data-pwa-ar="اضغط للتحقق من توفر إصدار أحدث." data-pwa-en="Tap to check for a newer version.">اضغط للتحقق من توفر إصدار أحدث.</p>
       </div>
       <p class="footer-tagline" data-i18n="footer">Kids Paint — مساحة آمنة للإبداع دون حساب أو إعلانات</p>
       <div class="footer-meta">
