@@ -36,6 +36,12 @@ function event(type,request){let job;const e={request,waitUntil(p){job=p},respon
  const versionResult=await event('fetch',versionReq);
  assert(versionResult && versionResult.ok && versionResult.source===versionReq.url,'Version metadata fetched from network');
  assert(!(await cache.match(versionReq)),'Version metadata never cached in offline shell');
+ // Online navigation of Color Lab must not overwrite the cached drawing home page.
+ const homeBefore=await cache.match(scope);
+ const onlineLabReq={url:scope+'color-lab.html',method:'GET',mode:'navigate'};
+ assert((await event('fetch',onlineLabReq)).ok,'Online Color Lab navigation');
+ const homeAfter=await cache.match(scope);
+ assert(homeAfter && homeAfter.source===homeBefore.source,'Color Lab navigation cannot overwrite home cache');
  db.set('unrelated-cache',new Cache());
  db.set('kids-paint-shell-older',new Cache());await event('activate');assert(!db.has('kids-paint-shell-older'));
  assert(db.has('unrelated-cache'),'Non-shell storage kept');
@@ -47,6 +53,9 @@ function event(type,request){let job;const e={request,waitUntil(p){job=p},respon
  const labNav={url:scope+'color-lab.html',method:'GET',mode:'navigate'};
  const labOffline=await event('fetch',labNav);
  assert(labOffline && labOffline.ok,'Color Lab loads offline via precache');
+ assert(labOffline.source===scope+'color-lab.html','Offline Color Lab must load its own HTML');
+ const homeOffline=await event('fetch',{url:scope,method:'GET',mode:'navigate'});
+ assert(homeOffline && homeOffline.source===scope,'Offline home must show drawing HTML, not Color Lab');
  const vendorAsset={url:scope+'vendor/spectral.min.js?v=3.0.0',method:'GET',mode:'cors'};
  assert((await event('fetch',vendorAsset)).ok,'Pigment library loads offline');
  const css={url:scope+'style.css?v=4.5.0',method:'GET',mode:'cors'};
