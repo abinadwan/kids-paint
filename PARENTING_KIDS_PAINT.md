@@ -66,3 +66,9 @@ The approved bilingual Kids Paint banner and matching app icons are included wit
 - **التوثيق:** [النسخة العربية](README.ar.md) و[النسخة الإنجليزية الأساسية](README.md).
 
 **English:** Choose the Emoji tool, pick one of 18 native emoji, select a size and tap the picture. For Photos, tap **Save to Photos**, then select **Save Image** in your device's share sheet; a web app cannot silently add images to iOS Photos. If sharing is unavailable, download the PNG and manually save it.
+
+## v4.4.0 — Mobile portrait and text / الطولي والكتابة
+
+عند فتح التطبيق على الجوال في الوضع الطولي، يبدأ برسم حر على صفحة فارغة، مع لوحة تأخذ نحو 85٪ من ارتفاع الشاشة. اختر «كتابة»، وأدخل النص، وحدد اللون والحجم، ثم المس المكان المطلوب لإضافة النص. لتغييره تراجع ثم ضع النص في موضع جديد. الرسومات المحفوظة قديمًا تبقى بمقاسها الأفقي الأصلي.
+
+On a phone, new work starts on a blank, portrait page with the pen active. Choose Text, enter a caption, pick a color and size, and tap the desired placement. Undo to reposition. Older saved landscape documents keep their original shape.
