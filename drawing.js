@@ -15,6 +15,7 @@
   ];
   const WORDS = {
     ar: {
+      heroCaption: 'اختر رسمة، امسك اللون، وابدأ إبداعك!', startPainting: 'ابدأ التلوين',
       title: 'عالم التلوين', subtitle: 'صبغ بضغطة، أو ارسم بالقلم والبخاخ', workspace: 'لوحة الرسم',
       workspaceHint: 'ارسم شكلًا مغلقًا بالقلم، ثم اضغط داخله بالدلو لصبغه دون تلوين الخلفية', offline: 'يعمل دون إنترنت',
       tools: 'الأدوات', bucket: 'دلو الصبغ', brush: 'قلم الرسم', spray: 'بخاخ الألوان', eraser: 'ممحاة', colors: 'الألوان', size: 'حجم الأداة',
@@ -43,6 +44,7 @@
       storageMode: 'تخزين محلي',
     },
     en: {
+      heroCaption: 'Pick a picture, choose a color, and make something wonderful!', startPainting: 'Start coloring',
       title: 'Kids Paint', subtitle: 'Tap to fill, draw with a pen, or spray paint', workspace: 'Drawing canvas',
       workspaceHint: 'Draw a closed shape with the pen, then tap inside with the bucket to fill just that shape', offline: 'Works offline',
       tools: 'Tools', bucket: 'Paint bucket', brush: 'Drawing pen', spray: 'Spray paint', eraser: 'Eraser', colors: 'Colors', size: 'Tool size',

@@ -1,4 +1,4 @@
-# Kids Paint — دليل الصبغ للأطفال | Parent Guide
+# Kids Paint — دليل عالم التلوين للأطفال | Parent Guide
 
 ## بالعربية
 
@@ -38,3 +38,10 @@
 There are **13 built-in pictures plus a blank page**, an Arabic/English toggle, Undo/Redo, local Save/Open/Delete and PNG export. The app has no accounts, ads, analytics or uploads. Local browser storage is not a backup; export a PNG to keep or share a drawing. The bucket also fills **closed shapes drawn by the child with the pen**. Choose Free Draw, draw a fully closed circle or rectangle, then select the bucket and tap inside; only the enclosed region fills. Open outlines with gaps allow paint to spread into the background. Spray marks are not barriers. Original line-art remains visible on top of paint. Older saved drawings still load; old pen marks may need to be redrawn to become recognized boundaries.
 
 **Source license:** [MIT](LICENSE) — © 2026 `abinadwan`.
+
+
+## هوية المشروع | Branding
+
+يعرض الموقع البنر الرسمي المعتمد «عالم التلوين للأطفال»، مع أيقونة خاصة للتبويب وشاشة الهاتف. يتم تحميل الملفات من داخل المشروع بدون خدمات صور خارجية.
+
+The approved bilingual Kids Paint banner and matching app icons are included with the static site.

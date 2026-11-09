@@ -1,4 +1,4 @@
-# Kids Paint | عالم الصبغ للأطفال
+# Kids Paint | عالم التلوين للأطفال
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 ![Arabic + English](https://img.shields.io/badge/Languages-Arabic%20%7C%20English-blue)
@@ -6,6 +6,10 @@
 ![Offline ready](https://img.shields.io/badge/App-Offline%20Ready-purple)
 ![No dependencies](https://img.shields.io/badge/Dependencies-None-brightgreen)
 [![Live website](https://img.shields.io/badge/Live-GitHub%20Pages-7058d6)](https://abinadwan.github.io/kids-paint/)
+
+![Kids Paint — عالم التلوين للأطفال](assets/kids-paint-banner.webp)
+
+*Paint, spray, and create — صبغ، ارسم، وابتكر.*
 
 A free, open-source drawing and painting app for kids with **three creative painting tools**: **Drawing Pen** for smooth strokes, **Spray Paint** for a scattered mist effect, and **Paint Bucket** for one-tap fills inside the supplied outlines **or closed shapes you draw with the pen** (including the background). An Eraser removes paint without erasing the outlines.
 
@@ -50,11 +54,24 @@ Keep `index.html`, `style.css`, and `drawing.js` together and open **`index.html
 - **Save** stores editable artwork in your current browser profile. It is not backed up online, does not sync to other devices, and may disappear if browser data is cleared.
 - **Export PNG** downloads a standard picture to share or keep outside the app. Exported PNGs are flattened rather than editable layers.
 
+## Branding and app icon
+
+The approved bilingual Kids Paint banner is displayed in the website hero and this README.
+
+| Asset | Usage |
+| --- | --- |
+| `assets/kids-paint-banner.webp` | Optimized approved banner for the web and README |
+| `assets/app-icon.png` | Matching icon in the website header |
+| `favicon.ico` | Multi-resolution browser favicon |
+| `apple-touch-icon.png` | Home screen icon for iPhone / iPad |
+
+The banner and icon ship locally with the app, so neither requires an external image service.
+
 ## Source files
 
 | Path | Purpose |
 | --- | --- |
-| `index.html` | Accessible bilingual UI, painting area, galleries and save dialog |
+| `index.html` | Accessible bilingual UI, approved hero banner, painting area, galleries and save dialog |
 | `style.css` | Responsive styling, mobile and desktop layouts |
 | `drawing.js` | Built-in outlines and freehand boundary mask, region fill, pen/spray/eraser, translations, history, local storage and export |
 | `tests/smoke_test.py` | Browser smoke/regression checks using Chromium and Playwright |

@@ -3,17 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#fcf7f0">
+  <meta name="theme-color" content="#7058d6">
   <meta name="description" content="Kids Paint — an offline Arabic/English paint-bucket coloring game for children.">
   <title>عالم التلوين | Kids Paint</title>
-  <link rel="stylesheet" href="style.css?v=3.1.0">
-  <script src="drawing.js?v=3.1.0" defer></script>
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=3.2.0">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=3.2.0">
+  <link rel="stylesheet" href="style.css?v=3.2.0">
+  <script src="drawing.js?v=3.2.0" defer></script>
 </head>
 <body>
   <div class="app-shell">
     <header class="app-header">
       <div class="brand">
-        <span class="brand-icon" aria-hidden="true">🎨</span>
+        <img class="brand-icon" src="assets/app-icon.png" width="64" height="64" alt="" aria-hidden="true">
         <div>
           <h1 data-i18n="title">عالم التلوين</h1>
           <p data-i18n="subtitle">صبغ بضغطة، أو ارسم بالقلم والبخاخ</p>
@@ -25,11 +27,19 @@
       </nav>
     </header>
 
+    <section class="hero-section" aria-label="Kids Paint — عالم التلوين للأطفال">
+      <img class="hero-art" src="assets/kids-paint-banner.webp" width="1400" height="467" alt="Kids Paint — عالم التلوين للأطفال: دلو ألوان وفرشاة ولوحة رسم برسوم مبهجة" fetchpriority="high">
+      <div class="hero-info">
+        <p id="heroCaption" data-i18n="heroCaption">اختر رسمة، امسك اللون، وابدأ إبداعك!</p>
+        <a class="hero-cta" href="#workspaceTitle"><span data-i18n="startPainting">ابدأ التلوين</span><span aria-hidden="true">↘</span></a>
+      </div>
+    </section>
+
     <main>
       <section class="workspace-card" aria-labelledby="workspaceTitle">
         <div class="section-bar">
           <div>
-            <h2 id="workspaceTitle" data-i18n="workspace">لوحة الرسم</h2>
+            <h2 id="workspaceTitle" tabindex="-1" data-i18n="workspace">لوحة الرسم</h2>
             <p class="muted" data-i18n="workspaceHint">اختر القلم أو البخاخ أو الدلو، ثم اضغط أو اسحب داخل اللوحة</p>
           </div>
           <span class="offline-label" data-i18n="offline">يعمل دون إنترنت</span>

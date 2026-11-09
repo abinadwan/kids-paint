@@ -71,3 +71,12 @@ This report distinguishes tests executed from tests not executed. It is not a cl
 ## Cache busting
 
 The production HTML uses versioned CSS/JS query parameters (`?v=3.1.0`) so browsers request the current script and stylesheet after deployment. This does not substitute for live GitHub Pages verification.
+
+
+## Visual identity / UX refresh (2026-11-09)
+
+- Added the approved bilingual banner to the page and README.
+- Added an original mascot-based multi-resolution `favicon.ico`, a header icon and Apple touch icon.
+- Improved tool sizing and grouping, touch-target dimensions, focus treatment, responsive layout, selected-template states, and a clear jump-to-canvas link.
+- Kept painting, undo/redo and persistence logic unchanged except for two new translated hero labels.
+- Static and Chromium responsive tests for this refresh are reported separately in execution logs; a physical iPhone Safari test remains NOT TESTED.
