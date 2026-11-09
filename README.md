@@ -28,6 +28,23 @@ Actual screenshots of the web interface captured in Chromium (not physical iPhon
 <img src="docs/screenshots/mobile.webp" alt="Kids Paint Arabic mobile interface with the emoji picker" width="390">
 
 
+
+## New in v4.5.0 — Color Lab / Phase 2A
+
+The new **[Color Lab](color-lab.html)** is a separate, bilingual, mobile-friendly page connected to the drawing editor. Its first release combines **free pigment-mixing** with **four educational challenges**, with no timer, attempt limit or penalty.
+
+- **Mix pigments:** tap the red, yellow or blue paint tubes to add drops to an animated cup. Start with up to **two pigment types** and **12 drops total**, and undo the last drop or empty the cup. Changing the proportions changes the resulting shade.
+- **Realistic-looking approximation:** the mixer uses an offline, pinned copy of **Spectral.js 3.0.0**, a Kubelka–Munk-inspired approximation of paint mixing, rather than averaging RGB numbers. Colors shown on a screen are not guaranteed to match real paint formulas.
+- **Challenges:** create **green, orange, purple and yellow-dominant light green** using the same mixer as free play. Targets are generated from achievable recipes. Judge closeness using perceptual **OKLab** distance and award up to three stars; players can retry indefinitely. Pilot thresholds may need tuning with children.
+- **Hints and learning:** short explanations after mixing; challenge hints guide the child toward ingredients and proportions.
+- **Color notebook:** save up to **24 mixtures** with their drop recipes to this device using localStorage, and restore any recipe later. Best star results are also stored locally. No account, backend or image upload.
+- **Use in drawing:** after mixing, tap **Use in drawing** to return to the existing coloring page with the new color selected for the brush and other color tools.
+- **Offline:** the PWA Service Worker precaches the lab HTML/CSS/JS and local pigment-mixing library. Each page has an independent offline navigation entry.
+
+**Open-source rights:** Spectral.js is © 2025 **Ronald van Wijnen**, MIT license. The exact 3.0.0 source and original license are retained at [vendor/spectral.min.js](vendor/spectral.min.js) and [licenses/spectral-MIT.txt](licenses/spectral-MIT.txt). Full attribution is in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The game code remains under Kids Paint's existing MIT license.
+
+**Scope:** Phase 2A intentionally excludes white/black tinting, three-color recipes and the future RGB light lab; those are planned for later stages.
+
 ## New in v4.4.0 — immersive portrait editor and text
 
 - **85% mobile portrait canvas:** on a new page in phone portrait mode (screen width up to 760px), the drawing stage fills 85% of the viewport height. It uses a genuine portrait-resolution bitmap, not a stretched 960×640 landscape image. New desktop pages remain 960×640.
@@ -127,6 +144,8 @@ python tests/emoji_gallery_test.py
 python tests/install_ui_test.py
 python tests/portrait_text_test.py
 python tests/mobile_zoom_test.py
+node tests/color_lab_unit.js
+python tests/color_lab_browser_test.py
 node tests/service_worker_unit.js
 ```
 
