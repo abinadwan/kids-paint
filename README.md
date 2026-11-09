@@ -9,11 +9,13 @@
 ![External runtime](https://img.shields.io/badge/External%20runtime%20requests-0-34a853)
 [![Website](https://img.shields.io/badge/Live-GitHub%20Pages-238d75)](https://abinadwan.github.io/kids-paint/)
 
-![Official Kids Paint banner — عالم التلوين للأطفال](assets/kids-paint-banner.webp)
+![Kids Paint — Drawing, Pigment Lab and World of Light RGB](assets/kids-paint-platform-banner.webp)
 
 **Paint, spray, stamp, add emoji, and create.** Kids Paint is a free, open-source, bilingual drawing and coloring web app for kids. It works in modern mobile and desktop browsers, supports adding photos from your gallery, and can be installed on a phone's home screen for offline use after the first successful app-shell download.
 
 **Live app:** https://abinadwan.github.io/kids-paint/
+
+**Three experiences:** [Drawing & Coloring](https://abinadwan.github.io/kids-paint/) · [Pigment Lab](https://abinadwan.github.io/kids-paint/color-lab.html) · [World of Light RGB](https://abinadwan.github.io/kids-paint/color-lab.html?lab=light). One bilingual, installable and offline-capable app.
 
 ## Screenshots
 
@@ -28,6 +30,13 @@ Actual screenshots of the web interface captured in Chromium (not physical iPhon
 <img src="docs/screenshots/mobile.webp" alt="Kids Paint Arabic mobile interface with the emoji picker" width="390">
 
 
+
+## New in v4.8.0 — approved visuals, unified layout and detailed credits
+
+- **Approved brand artwork:** the README banner above depicts all three platform services. Separate approved, matching **3:1 WebP banners** introduce the Pigment Lab and World of Light tabs within the existing Color Lab page.
+- **Matching page headers:** the logo, page navigation and **العربية / English** controls on Drawing and Color Lab now share one CSS file, [assets/site-header.css](assets/site-header.css), with matching button dimensions, mobile breakpoints and alignment.
+- **Credits moved out of the child-facing footer:** full bilingual details on the MIT project license, Spectral.js (Ronald van Wijnen), code sources and approved banner artwork are in [Licenses, Attribution & Asset Credits](docs/LICENSING_AND_CREDITS.md). The original [LICENSE](LICENSE), [Spectral.js MIT license](licenses/spectral-MIT.txt) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) remain intact.
+- **PWA offline assets updated:** both lab banners, the README banner and shared header styles are included in the cached application shell. All previous drawings, notebooks and challenge stars are preserved. Both pages keep the bottom version indicator and Update app button.
 
 ## New in v4.7.0 — World of Light RGB (Phase 2C)
 
@@ -152,7 +161,8 @@ The Service Worker caches the HTML, CSS, JavaScript, banner, manifest, and icons
 | `color-lab.html`, `color-lab.css`, `color-lab.js`, `color-lab-core.js` | The new Color Lab page, interactive experience, and testable common mixing logic |
 | `vendor/spectral.min.js`, `licenses/spectral-MIT.txt`, `THIRD_PARTY_NOTICES.md` | Pinned open-source pigment engine and preserved copyright notices |
 | `manifest.webmanifest` | App name, scope, display mode, icon references |
-| `assets/` | Approved banner, website/app icons, PWA icons |
+| `assets/` | Three approved banners, shared responsive header CSS, website and PWA icons |
+| `docs/LICENSING_AND_CREDITS.md` | Complete bilingual license and visual-asset credits |
 | `docs/screenshots/` | Browser screenshots for this README |
 | `README.ar.md` | Full Arabic documentation |
 | `PARENTING_KIDS_PAINT.md` | Parent-facing guide |
@@ -184,6 +194,8 @@ node tests/service_worker_unit.js
 Some tests use an in-memory browser page and mocked localStorage; they do **not** prove device-specific iOS photo-library behavior. See [QA_REPORT.md](QA_REPORT.md).
 
 ## License and contribution
+
+See [Licenses, Attribution & Asset Credits](docs/LICENSING_AND_CREDITS.md) for detailed copyright, source-license and image attribution information.
 
 Copyright © 2026 **abinadwan**. Licensed under the [MIT License](LICENSE), which permits use, modification, and distribution (including commercially) provided the license and copyright notice are retained. See the [GitHub repository](https://github.com/abinadwan/kids-paint) for source, issues, and contributions.
 
