@@ -102,7 +102,7 @@ def run():
         page.locator('#saveForm button[type=submit]').click()
         page.wait_for_selector('.saved-card')
         assert len(page.evaluate('window.__dumpStorage()'))>=1
-        page.locator('.template-item').first.click()
+        page.locator('.template-item').nth(1).click()
         assert canvas_pixel(page,'photoCanvas',160,320)[3]==0
         page.locator('.saved-card-actions button').first.click()
         page.wait_for_function("document.querySelector('#photoCanvas').getContext('2d').getImageData(160,320,1,1).data[3] > 0")
