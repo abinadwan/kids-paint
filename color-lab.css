@@ -265,3 +265,46 @@ a{color:inherit}h1,h2,h3,p{margin:0}p{line-height:1.6}small{font-size:.78rem}
 @media(prefers-reduced-motion:reduce){
   .light-glow,.light-blend,.lab-type-tab{transition:none!important}
 }
+
+
+/* v4.8.0 — approved sibling banners and consistent section geometry.
+   The page header, navigation and language buttons are owned by assets/site-header.css. */
+.experience-banner{
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:auto;
+  aspect-ratio:1600 / 533;
+  object-fit:cover;
+  border-radius:18px;
+  margin:0 auto 18px;
+  box-shadow:0 5px 20px rgba(49,36,98,.08);
+}
+.lab-intro,.light-intro{
+  padding:clamp(12px,2.1vw,20px);
+  border-radius:23px;
+}
+.lab-intro h1,.light-intro h1{
+  font-size:clamp(1.18rem,3.3vw,1.7rem);
+  line-height:1.35;
+  margin:3px 0 7px;
+}
+.lab-intro .mode-switch,.light-intro .light-mode-switch{
+  width:min(540px,100%);
+  margin:17px auto 0;
+  gap:9px;
+}
+.lab-intro .mode-switch button,.light-intro .light-mode-switch button{
+  min-height:52px;
+  border-radius:14px;
+  padding:9px 8px;
+  font-size:.91rem;
+}
+.lab-copyright{font-weight:750;font-size:.82rem;color:#64718c;margin:6px 0}
+.lab-footer{max-width:1100px;margin-inline:auto}
+@media(max-width:600px){
+  .experience-banner{margin-bottom:11px;border-radius:13px}
+  .lab-intro,.light-intro{padding:10px 10px 15px;border-radius:19px}
+  .lab-intro h1,.light-intro h1{font-size:1.18rem}
+  .lab-intro .mode-switch,.light-intro .light-mode-switch{margin-top:13px}
+}
