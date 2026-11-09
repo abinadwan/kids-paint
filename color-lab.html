@@ -4,16 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#7058d6">
-  <meta name="app-version" content="4.6.0">
+  <meta name="app-version" content="4.7.0">
   <meta name="description" content="Kids Paint Color Lab — mix paint-like pigments and solve friendly color challenges.">
   <title>مختبر الألوان | Kids Paint</title>
   <link rel="icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="color-lab.css?v=4.6.0">
+  <link rel="stylesheet" href="color-lab.css?v=4.7.0">
   <script src="vendor/spectral.min.js?v=3.0.0" defer></script>
   <script src="color-lab-core.js?v=4.6.0" defer></script>
-  <script src="color-lab.js?v=4.6.0" defer></script>
+  <script src="color-lab.js?v=4.7.0" defer></script>
+  <script src="light-lab-core.js?v=4.7.0" defer></script>
+  <script src="light-lab.js?v=4.7.0" defer></script>
 </head>
 <body>
   <div class="lab-shell">
@@ -33,6 +35,11 @@
     </header>
 
     <main id="main">
+      <div class="lab-type-tabs" role="tablist" aria-label="مختبر الأصباغ أو عالم الضوء / Pigment or light">
+        <button id="pigmentTab" class="lab-type-tab active" type="button" role="tab" aria-selected="true" aria-controls="pigmentLab" data-light-t="pigmentTab">مختبر الأصباغ</button>
+        <button id="lightTab" class="lab-type-tab light-tab" type="button" role="tab" aria-selected="false" aria-controls="lightLab" data-light-t="lightTab">عالم الضوء RGB</button>
+      </div>
+      <div id="pigmentLab" role="tabpanel" aria-labelledby="pigmentTab">
       <section class="lab-intro" aria-labelledby="labTitle">
         <div class="intro-symbols" aria-hidden="true"><span>✦</span><span>●</span><span>✦</span></div>
         <p class="eyebrow" data-t="eyebrow">تجربة جديدة من عالم التلوين</p>
@@ -160,13 +167,117 @@
         <p class="notebook-guide" data-t="notebookGuide">اضغط «جرّب» لاستعادة الوصفة، أو «احذف» لإزالة اللون من الدفتر.</p>
         <div id="savedColors" class="saved-colors"></div>
       </section>
+      </div>
+      <div id="lightLab" class="light-lab" role="tabpanel" aria-labelledby="lightTab" hidden>
+        <section class="light-intro" aria-labelledby="lightTitle">
+          <div class="light-intro-stars" aria-hidden="true">✦ · ✧ · ✦</div>
+          <p class="light-eyebrow" data-light-t="introSmall">رحلة إلى عالم الضوء</p>
+          <h1 id="lightTitle" data-light-t="introTitle">عالم الضوء الملوّن</h1>
+          <p data-light-t="introDesc">أشعل المصابيح الثلاثة وشاهد كيف تصنع الأضواء ألوانًا جديدة!</p>
+          <p class="light-education" data-light-t="difference">معلومة: مزج الضوء يختلف عن مزج الأصباغ؛ اجتماع الأحمر والأخضر هنا يصنع الأصفر.</p>
+          <div class="light-mode-switch" role="group" aria-label="Light modes">
+            <button id="lightFreeBtn" type="button" class="active" aria-pressed="true" data-light-t="free">تجربة حرة</button>
+            <button id="lightChallengesBtn" type="button" aria-pressed="false" data-light-t="challenges">تحديات الضوء</button>
+          </div>
+        </section>
+
+        <section id="lightChallengesPanel" class="light-challenges" aria-labelledby="lightChallengesTitle" hidden>
+          <div class="light-heading">
+            <div><p class="light-eyebrow" data-light-t="sixChallenges">٦ تحديات دون مؤقت</p><h2 id="lightChallengesTitle" data-light-t="challengeTitle">طابق الضوء المطلوب</h2></div>
+            <strong id="lightStars">0 / 18 ★</strong>
+          </div>
+          <div id="lightChallengePicker" class="light-challenge-picker"></div>
+          <div class="light-target">
+            <div><p data-light-t="target">اللون المطلوب</p><strong id="lightTargetName"></strong></div>
+            <div id="lightTargetSwatch" class="light-target-swatch" role="img" aria-label="Target light color"></div>
+          </div>
+        </section>
+
+        <section class="light-workspace" aria-labelledby="lightWorkspaceTitle">
+          <div class="light-heading">
+            <div><p class="light-eyebrow" data-light-t="experiment">التجربة</p><h2 id="lightWorkspaceTitle" data-light-t="workspaceTitle">امزج أشعة الضوء</h2></div>
+            <span class="light-badge" data-light-t="noTime">بدون وقت</span>
+          </div>
+          <div id="lightStage" class="light-stage" aria-label="RGB color mixing preview" role="img">
+            <span class="light-spark" aria-hidden="true">✧</span>
+            <div id="lightGlowRed" class="light-glow glow-red" aria-hidden="true"></div>
+            <div id="lightGlowGreen" class="light-glow glow-green" aria-hidden="true"></div>
+            <div id="lightGlowBlue" class="light-glow glow-blue" aria-hidden="true"></div>
+            <div class="light-led led-red" aria-hidden="true"><span></span></div>
+            <div class="light-led led-green" aria-hidden="true"><span></span></div>
+            <div class="light-led led-blue" aria-hidden="true"><span></span></div>
+            <div id="lightBlend" class="light-blend" aria-hidden="true"></div>
+            <p class="light-stage-label" data-light-t="mixingZone">منطقة التقاء الأضواء</p>
+          </div>
+          <div class="light-control-grid">
+            <div class="light-control red-control">
+              <label for="lightRedRange" data-light-t="redLight">الضوء الأحمر</label>
+              <div class="light-range-line">
+                <input id="lightRedRange" type="range" min="0" max="100" step="5" value="0" aria-label="Red light intensity">
+                <output id="lightRedValue" for="lightRedRange">0%</output>
+              </div>
+            </div>
+            <div class="light-control green-control">
+              <label for="lightGreenRange" data-light-t="greenLight">الضوء الأخضر</label>
+              <div class="light-range-line">
+                <input id="lightGreenRange" type="range" min="0" max="100" step="5" value="0" aria-label="Green light intensity">
+                <output id="lightGreenValue" for="lightGreenRange">0%</output>
+              </div>
+            </div>
+            <div class="light-control blue-control">
+              <label for="lightBlueRange" data-light-t="blueLight">الضوء الأزرق</label>
+              <div class="light-range-line">
+                <input id="lightBlueRange" type="range" min="0" max="100" step="5" value="0" aria-label="Blue light intensity">
+                <output id="lightBlueValue" for="lightBlueRange">0%</output>
+              </div>
+            </div>
+          </div>
+          <div class="light-presets">
+            <button id="lightAllOffBtn" type="button" data-light-t="allOff">أطفئ الأنوار</button>
+            <button id="lightAllOnBtn" type="button" data-light-t="allOn">شغّل الثلاثة</button>
+          </div>
+          <p id="lightLearning" class="light-learning" role="status" aria-live="polite" data-light-t="learningStart">جرّب تشغيل الضوء الأحمر والأخضر معًا. ماذا تتوقع؟</p>
+          <div class="light-result">
+            <div id="lightResultSwatch" class="light-result-swatch"></div>
+            <div class="light-result-info">
+              <p class="light-eyebrow" data-light-t="result">اللون الناتج</p>
+              <strong id="lightColorName">أسود</strong>
+              <bdi id="lightResultHex">#000000</bdi>
+            </div>
+            <div class="light-result-buttons">
+              <button id="lightSaveBtn" type="button" data-light-t="save">احفظ اللون</button>
+              <button id="lightUseBtn" type="button" data-light-t="use">استخدمه في الرسم</button>
+            </div>
+          </div>
+          <div id="lightChallengeActions" class="light-challenge-actions" hidden>
+            <button id="lightCheckBtn" type="button" data-light-t="check">تحقق من اللون</button>
+            <button id="lightHintBtn" type="button" data-light-t="hint">تلميح</button>
+            <p id="lightFeedback" role="status" aria-live="polite"></p>
+          </div>
+          <p id="lightStatus" class="light-status" role="status" aria-live="polite"></p>
+        </section>
+        <section class="light-notebook" aria-labelledby="lightNotebookTitle">
+          <div class="light-heading"><div><p class="light-eyebrow" data-light-t="savedSmall">اكتشافاتك</p>
+            <h2 id="lightNotebookTitle" data-light-t="notebookTitle">دفتر أضوائي</h2></div>
+            <span id="lightSavedCount">0 / 24</span>
+          </div>
+          <p class="light-notebook-hint" data-light-t="savedLocally">شدة الأضواء والنجوم تُحفظ على جهازك فقط، بشكل مستقل عن دفتر الأصباغ.</p>
+          <div id="lightSavedList" class="light-saved-list"></div>
+        </section>
+      </div>
     </main>
 
     <footer class="lab-footer">
       <p><span data-t="poweredBy">مزج الأصباغ التقريبي بواسطة</span> <a href="https://github.com/rvanwijnen/spectral.js" target="_blank" rel="noopener noreferrer">Spectral.js</a> · MIT © 2025 Ronald van Wijnen</p>
       <p><a href="THIRD_PARTY_NOTICES.md" data-t="licenseLink">حقوق المكتبات والتراخيص</a> · <a href="README.ar.md" data-t="aboutProject">عن المشروع</a></p>
-      <p><span data-t="versionLabel">الإصدار</span> <bdi>4.6.0</bdi> · <button id="labUpdateBtn" type="button" data-t="checkUpdates">التحقق من التحديثات</button></p>
-      <p id="labUpdateStatus" class="muted" role="status" aria-live="polite"></p>
+      <div class="lab-update-panel">
+        <div class="lab-update-top">
+          <span class="lab-version"><span data-t="versionLabel">الإصدار</span> <bdi id="labVersionLabel">4.7.0</bdi></span>
+          <button id="labUpdateBtn" type="button" data-t="checkUpdates">تحديث التطبيق</button>
+        </div>
+        <p id="labUpdateStatus" role="status" aria-live="polite" data-t="updateHelp">اضغط للتحقق من توفر إصدار أحدث.</p>
+        <p id="labOfflineStatus" class="lab-offline-status" role="status" aria-live="polite" data-t="offlineChecking">جارٍ التحقق من جاهزية العمل دون إنترنت…</p>
+      </div>
     </footer>
   </div>
 </body>
