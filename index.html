@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#7058d6">
-  <meta name="app-version" content="4.3.0">
+  <meta name="app-version" content="4.4.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="عالم التلوين">
@@ -13,8 +13,8 @@
   <title>عالم التلوين | Kids Paint</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico?v=4.0.0">
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=4.0.0">
-  <link rel="stylesheet" href="style.css?v=4.3.0">
-  <script src="drawing.js?v=4.2.0" defer></script>
+  <link rel="stylesheet" href="style.css?v=4.4.0">
+  <script src="drawing.js?v=4.4.0" defer></script>
   <script src="pwa.js?v=4.3.0" defer></script>
 </head>
 <body>
@@ -58,10 +58,10 @@
           <aside class="tool-panel" aria-label="Drawing tools" id="toolsPanel">
             <h3 data-i18n="tools">الأدوات</h3>
             <div class="tool-buttons" role="group" data-i18n-aria="tools" aria-label="الأدوات">
-              <button id="bucketTool" class="tool-button is-active" type="button" aria-pressed="true" data-i18n-aria="bucket">
+              <button id="bucketTool" class="tool-button" type="button" aria-pressed="false" data-i18n-aria="bucket">
                 <span aria-hidden="true">🪣</span><span data-i18n="bucket">دلو الصبغ</span>
               </button>
-              <button id="brushTool" class="tool-button" type="button" aria-pressed="false" data-i18n-aria="brush">
+              <button id="brushTool" class="tool-button is-active" type="button" aria-pressed="true" data-i18n-aria="brush">
                 <span aria-hidden="true">🖌️</span><span data-i18n="brush">فرشاة</span>
               </button>
               <button id="sprayTool" class="tool-button" type="button" aria-pressed="false" data-i18n-aria="spray">
@@ -75,6 +75,9 @@
               </button>
               <button id="emojiTool" class="tool-button" type="button" aria-pressed="false" data-i18n-aria="emojiTool">
                 <span aria-hidden="true">😀</span><span data-i18n="emojiTool">إيموجي</span>
+              </button>
+              <button id="textTool" class="tool-button" type="button" aria-pressed="false" data-i18n-aria="textTool">
+                <span aria-hidden="true">T</span><span data-i18n="textTool">كتابة</span>
               </button>
             </div>
 
@@ -90,6 +93,11 @@
               <p class="tool-hint" data-i18n="emojiHint">اختر الرمز والحجم ثم اضغط على الرسم. الإيموجي يحتفظ بألوانه الأصلية.</p>
             </div>
 
+            <div id="textPanel" class="text-panel" hidden>
+              <label for="textInput" data-i18n="textLabel">النص المطلوب</label>
+              <textarea id="textInput" dir="auto" rows="2" maxlength="120" data-i18n-placeholder="textPlaceholder" placeholder="اكتب هنا..."></textarea>
+              <p class="tool-hint" data-i18n="textHint">اختر اللون والحجم ثم اضغط على المكان المطلوب داخل الصورة</p>
+            </div>
             <h3 class="section-spacing" data-i18n="colors">الألوان</h3>
             <div id="colorPalette" class="color-palette" role="group" aria-label="Colors"></div>
             <div class="shade-section">
@@ -150,7 +158,7 @@
       </div>
       <div class="footer-update">
         <div class="footer-update-top">
-          <span class="footer-version"><span data-pwa-ar="الإصدار" data-pwa-en="Version">الإصدار</span> <bdi id="appVersionLabel">4.3.0</bdi></span>
+          <span class="footer-version"><span data-pwa-ar="الإصدار" data-pwa-en="Version">الإصدار</span> <bdi id="appVersionLabel">4.4.0</bdi></span>
           <button type="button" id="checkUpdateBtn" class="update-cta" data-pwa-ar="تحديث التطبيق" data-pwa-en="Update app">تحديث التطبيق</button>
         </div>
         <p id="updateStatus" class="update-status" role="status" aria-live="polite" aria-atomic="true" data-pwa-ar="اضغط للتحقق من توفر إصدار أحدث." data-pwa-en="Tap to check for a newer version.">اضغط للتحقق من توفر إصدار أحدث.</p>
