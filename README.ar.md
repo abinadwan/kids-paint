@@ -125,6 +125,7 @@ python tests/photo_stamps_test.py
 python tests/emoji_gallery_test.py
 python tests/install_ui_test.py
 python tests/portrait_text_test.py
+python tests/mobile_zoom_test.py
 node tests/service_worker_unit.js
 ```
 
