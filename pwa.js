@@ -1,4 +1,4 @@
-/* Kids Paint PWA v4.3.0: install + safe, on-demand application update checks. */
+/* Kids Paint PWA v4.4.1: install, safe update checks, and stable touch gestures. */
 (() => {
   'use strict';
   const button = document.getElementById('installAppBtn');
@@ -32,6 +32,13 @@
   }
   translate();
   new MutationObserver(translate).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+
+  // iOS Safari gesture events would otherwise zoom the entire coloring app.
+  // Single-finger scrolling, drawing and native accessibility controls remain.
+  const preventPagePinch = e => { if (e.cancelable) e.preventDefault(); };
+  for (const name of ['gesturestart', 'gesturechange']) {
+    document.addEventListener(name, preventPagePinch, { passive: false });
+  }
 
   if (isInstalled()) {
     button.hidden = true;
