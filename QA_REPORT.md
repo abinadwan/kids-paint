@@ -45,3 +45,11 @@ Code syntax checked with Node.js (`drawing.js`, `sw.js`). The tests passed local
 - Chromium/Android uses `beforeinstallprompt.prompt()` on direct user click when the browser provides it; browser confirmation is still required.
 - iOS Safari cannot invoke automatic installation: use Safari Share → Add to Home Screen. The UI explicitly states this limitation.
 - Tests: Chromium in-memory views at 320/390/768/1280px, native prompt mock and Android fallback; Service Worker unit cache test. Physical Safari installation and deployed Pages propagation require device verification.
+
+## v4.3.0 — In-app update check
+
+- Footer shows current page version; update button fetches cache-busted `version.json` with `no-store`.
+- Service Worker routes release metadata to the network, not its cache. App shell gets a new cache key.
+- Same version: up-to-date feedback. Offline/error: retry guidance. Different version: explicit confirmation warns about unsaved drawings before a reload.
+- Update requests Service Worker revalidation but does not clear IndexedDB/localStorage. Reinstall is unnecessary.
+- Added Service Worker unit coverage for version network routing and retaining non-shell caches. A physical device and deployed-site test are still required to verify installed iOS updates.
