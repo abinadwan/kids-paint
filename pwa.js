@@ -154,10 +154,16 @@
       const cache=await caches.open(name);
       const root=new URL('./',document.baseURI);
       const required=[
-        './index.html','./color-lab.html',
-        './drawing.js?v=4.5.0','./pwa.js?v=4.7.0',
-        './color-lab.js?v=4.7.0','./light-lab-core.js?v=4.7.0',
-        './light-lab.js?v=4.7.0','./vendor/spectral.min.js?v=3.0.0'
+        './','./index.html','./manifest.webmanifest',
+        './style.css?v=4.5.0','./drawing.js?v=4.5.0','./pwa.js?v=4.7.0',
+        './color-lab.html','./color-lab.css?v=4.7.0',
+        './color-lab-core.js?v=4.6.0','./color-lab.js?v=4.7.0',
+        './light-lab-core.js?v=4.7.0','./light-lab.js?v=4.7.0',
+        './vendor/spectral.min.js?v=3.0.0',
+        './THIRD_PARTY_NOTICES.md','./licenses/spectral-MIT.txt',
+        './assets/kids-paint-banner.webp','./assets/app-icon.png',
+        './assets/icon-192.png','./assets/icon-512.png',
+        './apple-touch-icon.png','./favicon.ico'
       ];
       for(const file of required){
         if(!(await cache.match(new URL(file,root).href)))throw new Error('File missing from offline shell: '+file);
