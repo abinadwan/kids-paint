@@ -1,4 +1,4 @@
-/* Kids Paint PWA v4.4.1: install, safe update checks, and stable touch gestures. */
+/* Kids Paint PWA v4.7.0: install, safe update checks, and stable touch gestures. */
 (() => {
   'use strict';
   const button = document.getElementById('installAppBtn');
@@ -144,10 +144,40 @@
     }
   });
 
+  // "Ready offline" must mean every required file is actually precached.
+  async function verifyOffline(){
+    if(!('caches' in window)||!('serviceWorker' in navigator)||!window.isSecureContext)return;
+    let ok=false;
+    try {
+      const name='kids-paint-shell-v4.7.0';
+      if(!(await caches.keys()).includes(name))throw new Error('New shell not cached yet');
+      const cache=await caches.open(name);
+      const root=new URL('./',document.baseURI);
+      const required=[
+        './index.html','./color-lab.html',
+        './drawing.js?v=4.5.0','./pwa.js?v=4.7.0',
+        './color-lab.js?v=4.7.0','./light-lab-core.js?v=4.7.0',
+        './light-lab.js?v=4.7.0','./vendor/spectral.min.js?v=3.0.0'
+      ];
+      for(const file of required){
+        if(!(await cache.match(new URL(file,root).href)))throw new Error('File missing from offline shell: '+file);
+      }
+      ok=true;
+    }catch(error){console.warn('Offline cache not complete:',error);}
+    readyLabel.dataset.pwaAr=ok
+      ?'صفحة الرسم ومختبر الأصباغ وعالم الضوء جاهزة دون إنترنت.'
+      :'ملفات العمل دون إنترنت لم تكتمل؛ اتصل بالإنترنت ثم حدّث التطبيق.';
+    readyLabel.dataset.pwaEn=ok
+      ?'Drawing, Pigment Lab and World of Light are ready offline.'
+      :'Offline files are not fully cached yet; connect and update the app.';
+    readyLabel.hidden=false;
+    translate();
+  }
   if ('serviceWorker' in navigator && window.isSecureContext) {
     navigator.serviceWorker.register('./sw.js', { scope: './', updateViaCache: 'none' })
       .then(() => navigator.serviceWorker.ready)
-      .then(() => { readyLabel.hidden = false; })
-      .catch(error => console.warn('Offline installation unavailable:', error));
+      .then(verifyOffline)
+      .catch(error => {console.warn('Offline installation unavailable:',error);verifyOffline();});
+    navigator.serviceWorker.addEventListener('controllerchange',verifyOffline);
   }
 })();
