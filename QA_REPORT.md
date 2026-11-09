@@ -59,3 +59,7 @@ python tests/smoke_test.py
 6. Switch languages mid-drawing, check RTL/LTR and that color stays intact.
 
 This report distinguishes tests executed from tests not executed. It is not a claim of complete production certification. Spray tests ran in Chromium via simulated mouse input, not a physical stylus or spray-device integration.
+
+## Cache busting
+
+The production HTML uses versioned CSS/JS query parameters (`?v=3.0.0`) so browsers request the current script and stylesheet after deployment. This does not substitute for live GitHub Pages verification.
