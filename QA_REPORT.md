@@ -1,49 +1,42 @@
 # Kids Paint — QA Report
 
-Date: 2026-11-08
+Date: **2026-11-09**. Scope: Paint Bucket upgrade, eight new vector templates, bilingual UI, updated documentation, MIT license.
 
-## Delivered files
+## Tested and passed (Chromium)
 
-- `index.html`: application layout, inline save dialog, and accessible controls.
-- `style.css`: independent responsive design (no remote resources).
-- `drawing.js`: working vector templates, 2-layer Canvas drawing, Pointer Events, drawing history, bilingual interface, local artwork storage, and PNG export.
-- `README.md`: accurate technical and usage documentation.
-- `PARENTING_KIDS_PAINT.md`: bilingual parent-friendly instructions.
-- `tests/smoke_test.py`: optional Chromium smoke tests using Playwright (test dependency only).
+- JavaScript syntax checking via `node --check drawing.js`.
+- App initialization with **14 pages**, default bucket mode on illustrated pages.
+- Arabic/English switching, RTL/LTR layout and translated bucket label.
+- Single-click flood fill on an enclosed sample region in all **13** illustrated pages.
+- Undo and Redo for those 13 fill actions.
+- Open/background region rejection (prevents unintended background painting).
+- Repainting a previously filled region with another color and undoing/redoing the color.
+- Optional brush and eraser; original outline remains intact.
+- PNG image download with valid signature, 960×640 resolution, white background and colored pixels.
+- Saving, clearing and reopening art with the mocked localStorage fallback.
+- Local-storage persistence and deletion across document reload-equivalent tests.
+- Free Draw selecting Brush; bucket refusing an open region.
+- Responsive viewports at 320, 375, 768, 1024 and 1440px, without horizontal overflow.
+- Synthetic touchscreen tap fill at those viewport sizes.
+- No uncaught JavaScript exceptions during the smoke test.
 
-The broken `diagnostic.html` from earlier attempts was not carried over because it was not reliable and is not needed to run the app.
+## Not tested
 
-## Verified PASS
+- Real GitHub Pages deployment/navigation from the isolated test environment.
+- Direct `file://` navigation (blocked by browser environment policy).
+- Genuine IndexedDB persistence (automated tests use a **mocked localStorage fallback**).
+- Physical iPhone, iPad or Android touchscreen behavior.
+- Screen-reader accessibility auditing.
+- Performance on very low-powered mobile devices.
 
-Performed automated Chromium smoke tests using the actual HTML/CSS/JavaScript source (via injected document content, see environment restriction below):
+## How to run
 
-1. App initialization, six coloring template thumbnails, and original line art.
-2. Arabic and English interface switch, including RTL/LTR direction.
-3. Mouse drawing and rendered paint pixels.
-4. Correct Undo and Redo of a completed brush stroke.
-5. Eraser removes user coloring while template remains unchanged.
-6. PNG export downloads a file with the standard PNG signature and nonzero content.
-7. Named artwork Save, Clear, and Open with simulated `localStorage` backing.
-8. Saved gallery and language preference reappear after recreating the page with retained mock storage; artwork Delete works.
-9. Chromium synthetic touchscreen tap produces a visible dot at 375px viewport.
-10. No uncaught JavaScript exceptions in these scenarios.
-11. Horizontal overflow checks at 320, 375, 768, 1024, and 1440 CSS pixels — passed.
-12. `node --check drawing.js` — passed.
+```bash
+python tests/smoke_test.py
+```
 
-## NOT TESTED in this environment
+The smoke runner injects the **unchanged app HTML/CSS/JavaScript** into Chromium in an `about:blank` document because this test environment blocks page navigation. This is still browser-executed functional testing, but it is not identical to deployment or device testing.
 
-- Opening `index.html` directly using `file://` in an ordinary browser; the provided Chromium environment returns `ERR_BLOCKED_BY_ADMINISTRATOR` even for file and localhost navigations.
-- Actual IndexedDB persistence under a normal website origin (the browser restrictions forced testing with `localStorage` simulation).
-- Physical Android/iOS touch devices and stylus hardware.
-- Firefox and Safari browser behavior.
-- Performance and quota limits on low-memory mobile devices or under large galleries.
+## Known limitation
 
-**Test method restriction:** The smoke test loads the actual `index.html` markup into Chromium using `page.set_content`, then inserts the actual unmodified CSS and JS file contents and provides an in-memory `localStorage` stand-in. This allows browser execution of the drawing logic and download events. It does **not** prove native file loading, the actual IndexedDB backend, or real device touch behavior.
-
-## Usage and constraints
-
-The delivered runtime files have no external imports or cloud dependencies. Keep `index.html`, `style.css`, and `drawing.js` together and open `index.html`. `Save` stores an editable drawing in the current browser; `Export PNG` downloads an image. Storage can be unavailable in private or restrictive browser contexts, and user data can be lost if browser site data is cleared. There is no cloud sync, background autosave, or PNG-to-editable-project import.
-
-## Suggested final manual acceptance
-
-In Chrome or Edge on a user machine, double-click `index.html` with the internet disconnected; draw by mouse, switch language, export PNG, save a named drawing, close/reopen the file, and reopen the saved drawing. Repeat the touch and export flow on an actual phone or tablet before publishing as a production-ready kids app.
+The bucket is a bounded pixel flood fill. It does not fill decorative segments with open outlines and rejects regions that reach the outside border. This avoids accidental full-canvas spills.
