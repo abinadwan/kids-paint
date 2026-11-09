@@ -16,10 +16,10 @@
   const WORDS = {
     ar: {
       title: 'عالم التلوين', subtitle: 'صبغ بضغطة، أو ارسم بالقلم والبخاخ', workspace: 'لوحة الرسم',
-      workspaceHint: 'اختر القلم أو البخاخ أو الدلو، ثم اضغط أو اسحب داخل اللوحة', offline: 'يعمل دون إنترنت',
+      workspaceHint: 'ارسم شكلًا مغلقًا بالقلم، ثم اضغط داخله بالدلو لصبغه دون تلوين الخلفية', offline: 'يعمل دون إنترنت',
       tools: 'الأدوات', bucket: 'دلو الصبغ', brush: 'قلم الرسم', spray: 'بخاخ الألوان', eraser: 'ممحاة', colors: 'الألوان', size: 'حجم الأداة',
       undo: 'تراجع', redo: 'إعادة', clear: 'مسح الألوان', save: 'حفظ', export: 'تصدير PNG',
-      templates: 'رسومات جاهزة', templatesHint: 'اختر رسمة جاهزة للصّبغ بضغطة واحدة، أو صفحة للرسم الحر',
+      templates: 'رسومات جاهزة', templatesHint: 'اختر رسمة جاهزة، أو ارسم شكلًا مغلقًا بالقلم ثم اصبغ داخله بالدلو',
       savedArtworks: 'رسوماتي المحفوظة', savedHint: 'تُحفظ على هذا الجهاز فقط، وليست في حساب سحابي',
       footer: 'Kids Paint — مساحة آمنة للإبداع دون حساب أو إعلانات',
       nameDrawing: 'اسم الرسمة', nameLabel: 'اكتب اسم رسمة مميزًا', cancel: 'إلغاء',
@@ -44,10 +44,10 @@
     },
     en: {
       title: 'Kids Paint', subtitle: 'Tap to fill, draw with a pen, or spray paint', workspace: 'Drawing canvas',
-      workspaceHint: 'Choose the pen, spray or bucket, then tap or drag on the canvas', offline: 'Works offline',
+      workspaceHint: 'Draw a closed shape with the pen, then tap inside with the bucket to fill just that shape', offline: 'Works offline',
       tools: 'Tools', bucket: 'Paint bucket', brush: 'Drawing pen', spray: 'Spray paint', eraser: 'Eraser', colors: 'Colors', size: 'Tool size',
       undo: 'Undo', redo: 'Redo', clear: 'Clear colors', save: 'Save', export: 'Export PNG',
-      templates: 'Coloring pages', templatesHint: 'Choose a picture to paint with one tap, or draw freely on a blank page',
+      templates: 'Coloring pages', templatesHint: 'Choose a picture, or draw a closed shape with the pen and fill inside it with the bucket',
       savedArtworks: 'My saved drawings', savedHint: 'Saved on this device only — not synced to a cloud account',
       footer: 'Kids Paint — a private, ad-free space to create',
       nameDrawing: 'Drawing name', nameLabel: 'Give your drawing a name', cancel: 'Cancel',
@@ -77,6 +77,11 @@
   const templateCanvas = el('templateCanvas');
   const paintCtx = paintCanvas.getContext('2d', { willReadFrequently: true });
   const templateCtx = templateCanvas.getContext('2d');
+  // Track only freehand pen outlines, independently from fills and spray pigment.
+  // The visible paint canvas remains the combined artwork for backwards compatibility.
+  const strokeCanvas = document.createElement('canvas');
+  strokeCanvas.width = W; strokeCanvas.height = H;
+  const strokeCtx = strokeCanvas.getContext('2d', { willReadFrequently: true });
   const state = {
     lang: 'ar', template: 'cat', tool: 'bucket', color: PALETTE[0][0], size: 12,
     pointer: null, lastPoint: null, history: [], historyIndex: 0,
@@ -308,6 +313,7 @@
     updateToolButtons();
     state.savedId = null; state.savedName = null;
     paintCtx.clearRect(0, 0, W, H);
+    strokeCtx.clearRect(0, 0, W, H);
     renderOutline(templateCtx, id);
     resetHistory();
     renderTemplatePicker();
@@ -361,8 +367,25 @@
     state.tool = tool; updateToolButtons(); message('toolSelected', { tool: t(tool) });
   }
 
-  /* A bounded snapshot history: initial state and one entry after each completed action. */
-  function snapshot() { return paintCtx.getImageData(0, 0, W, H); }
+  /* The pen boundary mask is stored as alpha-only bytes to keep mobile undo history small.
+     Both the visible paint and the stroke mask must time-travel together. */
+  function snapshot() {
+    const alpha = strokeCtx.getImageData(0, 0, W, H).data;
+    const outline = new Uint8Array(W * H);
+    for (let i = 0; i < outline.length; i++) outline[i] = alpha[4 * i + 3];
+    return { paint: paintCtx.getImageData(0, 0, W, H), outline };
+  }
+  function restoreStrokeMask(outline) {
+    const restored = strokeCtx.createImageData(W, H);
+    for (let i = 0; i < outline.length; i++) {
+      const j = i * 4;
+      restored.data[j] = 0;
+      restored.data[j + 1] = 0;
+      restored.data[j + 2] = 0;
+      restored.data[j + 3] = outline[i];
+    }
+    strokeCtx.putImageData(restored, 0, 0);
+  }
   function resetHistory() { state.history = [snapshot()]; state.historyIndex = 0; updateHistoryButtons(); }
   function commitHistory() {
     state.history = state.history.slice(0, state.historyIndex + 1);
@@ -372,8 +395,10 @@
     updateHistoryButtons();
   }
   function restoreHistory() {
+    const saved = state.history[state.historyIndex];
     paintCtx.clearRect(0, 0, W, H);
-    paintCtx.putImageData(state.history[state.historyIndex], 0, 0);
+    paintCtx.putImageData(saved.paint, 0, 0);
+    restoreStrokeMask(saved.outline);
     updateHistoryButtons();
   }
   function updateHistoryButtons() {
@@ -397,21 +422,27 @@
     if (state.pointer !== null || !hasPaint()) return;
     if (!window.confirm(t('clearedQuestion'))) return;
     paintCtx.clearRect(0, 0, W, H);
+    strokeCtx.clearRect(0, 0, W, H);
     commitHistory(); message('cleared');
   }
   function coords(event) {
     const r = paintCanvas.getBoundingClientRect();
     return { x: (event.clientX - r.left) * W / r.width, y: (event.clientY - r.top) * H / r.height };
   }
-  // Flood-fill template regions by using line-art alpha as a boundary mask.
-  // Unlike the previous version, the external/background region is also paintable.
-  // This matters for children: tapping the white background should not look broken.
+  // Flood fill respects both built-in template outlines AND hand-drawn pen strokes.
+  // Spray particles and existing fill colors are deliberately not barriers.
+  // The outside/background region remains paintable when tapped intentionally.
   function bucketFill(point) {
     if (state.pointer !== null) return;
     let sx = Math.floor(point.x), sy = Math.floor(point.y);
     if (sx < 0 || sy < 0 || sx >= W || sy >= H) return;
     const ink = templateCtx.getImageData(0, 0, W, H).data;
-    const isLine = (x, y) => ink[((y * W + x) * 4) + 3] >= 52;
+    const penInk = strokeCtx.getImageData(0, 0, W, H).data;
+    const barriers = new Uint8Array(W * H);
+    for (let i = 0; i < barriers.length; i++) {
+      barriers[i] = ink[i * 4 + 3] >= 52 || penInk[i * 4 + 3] >= 24 ? 1 : 0;
+    }
+    const isLine = (x, y) => barriers[y * W + x] !== 0;
     if (isLine(sx, sy)) {
       // Resolve a near-outline tap to the nearest fillable pixel.
       let nearest = null;
@@ -439,7 +470,7 @@
     visited[seed] = 1;
     queue[tail++] = seed;
     const push = idx => {
-      if (visited[idx] || ink[idx * 4 + 3] >= 52) return;
+      if (visited[idx] || barriers[idx]) return;
       visited[idx] = 1;
       queue[tail++] = idx;
     };
@@ -501,11 +532,19 @@
     paintCtx.lineWidth = state.size;
     paintCtx.strokeStyle = state.tool === 'eraser' ? '#000000' : state.color;
     paintCtx.fillStyle = paintCtx.strokeStyle;
+    // Spray never updates the outline mask. The eraser removes outline pixels too.
+    strokeCtx.globalCompositeOperation = state.tool === 'eraser' ? 'destination-out' : 'source-over';
+    strokeCtx.lineCap = 'round'; strokeCtx.lineJoin = 'round';
+    strokeCtx.lineWidth = state.size;
+    strokeCtx.strokeStyle = '#000000'; strokeCtx.fillStyle = '#000000';
   }
   function pointDot(point) {
     paintCtx.beginPath();
     paintCtx.arc(point.x, point.y, state.size / 2, 0, Math.PI * 2);
     paintCtx.fill();
+    strokeCtx.beginPath();
+    strokeCtx.arc(point.x, point.y, state.size / 2, 0, Math.PI * 2);
+    strokeCtx.fill();
   }
   function onPointerDown(e) {
     if (state.pointer !== null || e.isPrimary === false || (e.pointerType === 'mouse' && e.button !== 0)) return;
@@ -517,6 +556,7 @@
     if (state.tool === 'spray') sprayAt(state.lastPoint);
     else { prepareTool(); pointDot(state.lastPoint); }
     paintCtx.globalCompositeOperation = 'source-over';
+    strokeCtx.globalCompositeOperation = 'source-over';
   }
   function onPointerMove(e) {
     if (e.pointerId !== state.pointer) return;
@@ -537,10 +577,13 @@
       } else {
         paintCtx.beginPath(); paintCtx.moveTo(state.lastPoint.x, state.lastPoint.y);
         paintCtx.lineTo(p.x, p.y); paintCtx.stroke();
+        strokeCtx.beginPath(); strokeCtx.moveTo(state.lastPoint.x, state.lastPoint.y);
+        strokeCtx.lineTo(p.x, p.y); strokeCtx.stroke();
       }
       state.lastPoint = p;
     }
     paintCtx.globalCompositeOperation = 'source-over';
+    strokeCtx.globalCompositeOperation = 'source-over';
   }
   function onPointerEnd(e, cancelled = false) {
     if (e.pointerId !== state.pointer) return;
@@ -625,9 +668,10 @@
         }
         if (action === 'get') { const raw = localStorage.getItem(STORAGE_PREFIX + id); return raw ? JSON.parse(raw) : null; }
         if (action === 'put') {
-          const { paintBlob, ...metadata } = record;
-          const dataUrl = record.paintDataUrl || await blobToDataURL(paintBlob);
-          localStorage.setItem(STORAGE_PREFIX + record.id, JSON.stringify({ ...metadata, paintDataUrl: dataUrl }));
+          const { paintBlob, strokeBlob, ...metadata } = record;
+          const paintDataUrl = record.paintDataUrl || await blobToDataURL(paintBlob);
+          const strokeDataUrl = record.strokeDataUrl || (strokeBlob ? await blobToDataURL(strokeBlob) : null);
+          localStorage.setItem(STORAGE_PREFIX + record.id, JSON.stringify({ ...metadata, paintDataUrl, strokeDataUrl }));
           return record.id;
         }
         if (action === 'delete') { localStorage.removeItem(STORAGE_PREFIX + id); return; }
@@ -661,12 +705,13 @@
   async function saveArtwork(name) {
     try {
       const paintBlob = await toBlob(paintCanvas);
+      const strokeBlob = await toBlob(strokeCanvas);
       const previewCanvas = document.createElement('canvas'); previewCanvas.width = 300; previewCanvas.height = 200;
       previewCanvas.getContext('2d').drawImage(composeImage(), 0, 0, 300, 200);
       const preview = previewCanvas.toDataURL('image/jpeg', .8);
       const id = state.savedId || (typeof window.crypto?.randomUUID === 'function' ? window.crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`);
       await database.request('put', null, {
-        id, name: name.slice(0, 60), template: state.template, preview, paintBlob,
+        id, name: name.slice(0, 60), template: state.template, preview, paintBlob, strokeBlob,
         updatedAt: new Date().toISOString()
       });
       state.savedId = id; state.savedName = name;
@@ -687,9 +732,19 @@
       const url = record.paintBlob ? URL.createObjectURL(record.paintBlob) : record.paintDataUrl;
       let img;
       try { img = await imageFrom(url); } finally { if (record.paintBlob) URL.revokeObjectURL(url); }
+      let restoredPen = null;
+      // Older saved artworks do not have a stroke mask. They still open normally,
+      // but their previously drawn pen strokes cannot be retroactively identified.
+      if (record.strokeBlob || record.strokeDataUrl) {
+        const outlineURL = record.strokeBlob ? URL.createObjectURL(record.strokeBlob) : record.strokeDataUrl;
+        try { restoredPen = await imageFrom(outlineURL); }
+        finally { if (record.strokeBlob) URL.revokeObjectURL(outlineURL); }
+      }
       state.template = record.template; state.tool = record.template === 'blank' ? 'brush' : 'bucket';
       updateToolButtons(); state.savedId = record.id; state.savedName = record.name;
       paintCtx.clearRect(0, 0, W, H); paintCtx.drawImage(img, 0, 0, W, H);
+      strokeCtx.clearRect(0, 0, W, H);
+      if (restoredPen) strokeCtx.drawImage(restoredPen, 0, 0, W, H);
       renderOutline(templateCtx, state.template); resetHistory(); renderTemplatePicker();
       message('loaded');
     } catch (error) { console.error('Artwork load:', error); message('loadFailed'); }
