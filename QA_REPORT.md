@@ -88,3 +88,14 @@ Cross-device persistence checks confirmed a 960×640 legacy landscape drawing op
 - Updated permanent Node and browser regression tests, and PWA app-shell cache. Full Chromium/physical iPhone Safari regression was not run during this connector session, so real-device sign-off remains outstanding.
 - Kept both previous localStorage keys intact; expanded notebook from 24 to 48 and added recipe-based duplicate detection, individual deletion and validation of stored data.
 - Preserved Ronald van Wijnen MIT rights notices; no new third-party libraries were added.
+
+
+## v4.7.0 — World of Light RGB / shared PWA
+
+- Added original additive RGB engine with linear light intensities, sRGB encoding, OKLab comparison and six reachable challenge recipes.
+- Added light-tab interface inside the existing Color Lab page: three interactive sliders, RGB stage, six untimed light challenges, separate 24-entry notebook, separate stars and HEX handoff to Drawing.
+- Verified primary identities: red+green=yellow, green+blue=cyan, red+blue=magenta, full RGB=white, all off=black; all exact targets earn three stars.
+- Executed in-memory JavaScript DOM integration simulation: **19 assertions passed** covering both tabs, keeping light state on tab changes, mix colors, correct independent storage, star earning, Arabic-to-English conversion, deleting only a light entry, and handing light HEX to Drawing.
+- Both Drawing and Color Lab now have a bottom version indicator and Update app button for 4.7.0. Offline status checks full cached assets, not only SW registration success.
+- Added permanent Node and Chromium regression files. Real browser/iPhone execution is not established in this connector session; tests require local/CI run and physical-device follow-up.
+- No external third-party library added; retained Spectral.js MIT © 2025 Ronald van Wijnen rights and original license for pigment-only mixing.
