@@ -1,61 +1,78 @@
-# Kids Paint | عالم التلوين
+# Kids Paint | عالم الصبغ للأطفال
 
-A lightweight, bilingual (Arabic / English) drawing and coloring application for children. It uses only HTML, CSS, and JavaScript. No account, backend, tracking, external images, or internet connection is required.
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+![Arabic + English](https://img.shields.io/badge/Languages-Arabic%20%7C%20English-blue)
+![Vanilla JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-f7df1e?logo=javascript&logoColor=black)
+![Offline ready](https://img.shields.io/badge/App-Offline%20Ready-purple)
+![No dependencies](https://img.shields.io/badge/Dependencies-None-brightgreen)
+[![Live website](https://img.shields.io/badge/Live-GitHub%20Pages-7058d6)](https://abinadwan.github.io/kids-paint/)
 
-## Open the app
+A free, open-source **paint-by-tap** app for kids. Choose a color, tap **inside an enclosed shape**, and the **Paint Bucket** instantly fills that region. Freehand Brush and Eraser are also available.
 
-1. Keep `index.html`, `style.css`, and `drawing.js` together in the same directory.
-2. Double-click `index.html` to open it in a modern browser. It also works when hosted on a static web server.
-3. Choose **العربية** or **English** from the header. Arabic is the default for first-time visitors.
+**بالعربية:** اختر لونًا ثم اضغط داخل مساحة مغلقة في الرسمة لتصبغها بالكامل بضغطة واحدة. الفرشاة متوفرة للرسم الحر.
 
-The runtime uses no CDN, web fonts, network calls, or build step. All coloring templates are drawn as vectors by `drawing.js`.
+**[Try Kids Paint online](https://abinadwan.github.io/kids-paint/)**
 
 ## Features
 
-- Arabic and English interface with live RTL/LTR direction switching; language preference stored locally when storage is available.
-- Six pages: cat, fish, apples, lion, pencil, and a blank canvas.
-- Freehand brush and eraser using Pointer Events (mouse, pen/stylus, touch); stroke positions account for CSS scaling.
-- Adjustable brush size, ten selectable colors, bounded Undo/Redo history (21 completed actions plus the initial state), and keyboard shortcuts: Ctrl/Cmd+Z for Undo, Ctrl/Cmd+Shift+Z or Ctrl/Cmd+Y for Redo.
-- Separate paint and outline layers: **Clear colors** and **Eraser** affect only the child's coloring, not the original illustration.
-- **Export PNG** produces a downloadable 960 × 640 image containing a white background, user coloring, and the original outline.
-- **Save** opens a name dialog and stores editable artwork in this browser. Saved drawings can be reopened or deleted in the gallery.
-- Data is stored in IndexedDB where available. If IndexedDB is unavailable, the app tries localStorage, which has tighter capacity limits. If both are blocked, PNG export still works.
-- Mobile and desktop layouts, accessible button labels and keyboard focus indicators.
+- **Paint Bucket (default)** — fill a closed area with a single mouse click or touch. The outline blocks the paint. The bucket deliberately refuses open areas connected to the outside background.
+- **14 pages** — 13 built-in line-art illustrations plus one blank Free Draw page: Cat, Fish, Apples, Lion, Pencil, Butterfly, Flower, House, Rocket, Car, Turtle, Ice Cream, Sun, and Free Draw.
+- **Arabic + English** — language toggle switches RTL/LTR and saves the preference when browser storage is available.
+- **Brush and Eraser** — optional smooth strokes for mouse, touch and stylus; adjustable brush size and 10 colors.
+- **Undo/Redo** — undo bucket fills and brush strokes; Clear Colors preserves the original illustration.
+- **Local artworks** — save, reopen and delete drawings in the browser (IndexedDB preferred, localStorage fallback).
+- **Export PNG** — downloads a 960 × 640 image combining a white background, paint and the original line-art.
+- **Offline and privacy-first** — no accounts, advertisements, analytics, external fonts, image CDNs, tracking, network API calls, build tools, or runtime dependencies.
 
-## Saving vs. exporting
+## Try it
 
-**Save** keeps an editable drawing inside the current browser profile. It is *not* a file download or cloud backup and can be lost if site data is cleared or private browsing ends.
+Go to **https://abinadwan.github.io/kids-paint/**. If Pages is not enabled yet, use **Settings → Pages → Deploy from branch → main → /(root)**.
 
-**Export PNG** downloads a standard image. It is the recommended way to preserve or share the finished picture outside the app. PNG exports are flattened images, not editable multi-layer projects.
+To run locally, keep `index.html`, `style.css` and `drawing.js` in one directory and open `index.html` in a modern browser; no installation is required.
 
-The selected template is saved alongside the user's coloring. Selecting a different template when coloring exists asks for confirmation; unsaved coloring will be discarded if confirmed. A saved drawing can be opened from the gallery.
+### How to paint with one tap
 
-## Files
+1. Select a picture under **Coloring pages / رسومات جاهزة**.
+2. Choose a color and leave **Paint Bucket / دلو الصبغ** selected.
+3. Tap **inside** a closed area (not on the outline). Tap again with a different color to recolor it.
+4. Use Undo / Redo, Save, or Export PNG.
+5. For freehand drawing, choose **Free Draw**, where Brush is automatically selected.
 
-| File | Purpose |
+**Limit:** The bucket fills *bounded* regions only; it intentionally refuses the outside background and decorative regions with gaps. Choose Brush for drawing in open areas. Brush size affects Brush and Eraser, not Bucket.
+
+## Save versus Export PNG
+
+- **Save** keeps editable artwork in this browser profile. It does not sync or back up to the cloud; saved projects can disappear when browser data is cleared.
+- **Export PNG** downloads a standard standalone picture that can be shared or kept outside the application. PNG images are flattened, not editable multi-layer projects.
+
+## Repository files
+
+| Path | Purpose |
 | --- | --- |
-| `index.html` | Semantic page structure, buttons, galleries, save dialog |
-| `style.css` | Responsive, touch-friendly interface |
-| `drawing.js` | Templates, Canvas drawing, bilingual strings, history, IndexedDB fallback, PNG export |
-| `PARENTING_KIDS_PAINT.md` | Practical instructions for parents and children |
+| `index.html` | Accessible bilingual UI, canvas, galleries and save dialog |
+| `style.css` | Responsive mobile and desktop layout |
+| `drawing.js` | Built-in vector templates, Paint Bucket, brush/eraser, history, local storage, image export |
+| `tests/smoke_test.py` | Chromium smoke/regression checks |
+| `PARENTING_KIDS_PAINT.md` | Arabic/English parent and child instructions |
+| `QA_REPORT.md` | Tests executed and known limitations |
+| `LICENSE` | MIT open-source license |
 
-## Privacy and limitations
+## Testing
 
-- No user accounts, ads, telemetry, analytics, or automatic uploads.
-- Local browser storage is not a reliable backup and may be unavailable or quota-limited; use **Export PNG** regularly.
-- Drawing is single-pointer at a time; intentional multi-touch drawing is not supported.
-- The eraser removes colored strokes, not the outline template.
-- Saving large collections in browsers that only provide localStorage can exhaust the available space. The app will display an error if saving fails.
-- Browser/OS file download behavior varies. On some mobile devices PNG may be offered in the browser's downloads or share UI.
+With Playwright (Python) and Chromium installed:
 
-## Manual QA checklist
+```bash
+python tests/smoke_test.py
+```
 
-1. Open `index.html` with the network disconnected; confirm the template and color palette appear.
-2. Draw a line and single dot using a mouse or touch. Repeat after resizing the window.
-3. Change colors and brush size; test Eraser, Undo, and Redo.
-4. Clear your colors and confirm the template remains.
-5. Switch Arabic/English without losing the drawing; reload and verify the selected language persists when storage is available.
-6. Export PNG and open it outside the browser; confirm white background, coloring, and template.
-7. Save a named drawing, reload, open it from the gallery, and delete it.
+The automated environment used actual Chromium but injected the unchanged application sources into an `about:blank` document because navigation to local file/HTTP URLs was blocked. It simulated the localStorage fallback. It **does not** validate real IndexedDB persistence, physical-device touch, `file://` navigation, or live GitHub Pages deployment. See [QA_REPORT.md](QA_REPORT.md).
 
-Use a browser-based test runner for automated checks; simply reading the source cannot verify real touch and download behavior.
+## Privacy, limitations, contributions
+
+Your artwork stays in your browser unless you deliberately export/share it. No personal information is collected. Local browser storage has quotas and is not a reliable backup. This is a single-pointer application. Pixel-based flood fill at 960×640 may need further optimization on low-powered devices.
+
+Bug reports and pull requests are welcome.
+
+## License
+
+Released under the [MIT License](LICENSE), © 2026 `abinadwan`. You may use, modify and distribute the code, including commercially, as long as the copyright notice and license remain included.
