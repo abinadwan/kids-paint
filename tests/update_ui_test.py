@@ -14,6 +14,7 @@ def prepare(page):
     html = (ROOT / 'index.html').read_text('utf-8')
     html = re.sub(r'<link\b[^>]*>', '', html)
     html = re.sub(r'<script\b[^>]*></script>', '', html)
+    html = html.replace('<head>', '<head><base href="https://abinadwan.github.io/kids-paint/">', 1)
     page.set_content(html)
     page.add_style_tag(content=(ROOT / 'style.css').read_text('utf-8'))
     page.evaluate("""() => {
