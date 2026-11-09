@@ -27,9 +27,9 @@ vm.runInNewContext(fs.readFileSync(path.join(root,'sw.js'),'utf8'),context);
 function event(type,request){let job;const e={request,waitUntil(p){job=p},respondWith(p){job=p}};listeners[type](e);return job}
 (async()=>{
  await event('install');
- assert(db.has('kids-paint-shell-v4.6.0'));
- const cache=db.get('kids-paint-shell-v4.6.0');
- for(const item of ['','index.html','manifest.webmanifest','style.css?v=4.5.0','drawing.js?v=4.5.0','color-lab.html','color-lab.css?v=4.6.0','color-lab-core.js?v=4.6.0','color-lab.js?v=4.6.0','vendor/spectral.min.js?v=3.0.0','THIRD_PARTY_NOTICES.md','licenses/spectral-MIT.txt','assets/icon-192.png','assets/icon-512.png']){
+ assert(db.has('kids-paint-shell-v4.7.0'));
+ const cache=db.get('kids-paint-shell-v4.7.0');
+ for(const item of ['','index.html','manifest.webmanifest','style.css?v=4.5.0','drawing.js?v=4.5.0','color-lab.html','color-lab.css?v=4.7.0','color-lab-core.js?v=4.6.0','color-lab.js?v=4.7.0','light-lab-core.js?v=4.7.0','light-lab.js?v=4.7.0','vendor/spectral.min.js?v=3.0.0','THIRD_PARTY_NOTICES.md','licenses/spectral-MIT.txt','assets/icon-192.png','assets/icon-512.png']){
   assert(await cache.match(scope+item), `Missing ${item}`);
  }
  const versionReq={url:scope+'version.json?check=123',method:'GET',mode:'cors'};
