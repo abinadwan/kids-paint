@@ -79,3 +79,10 @@ On a phone, new work starts on a blank, portrait page with the pen active. Choos
 **العربية:** افتح «مختبر الألوان» من شريط الصفحات. الطفل يضغط على أنابيب الأحمر والأصفر والأزرق لإضافة قطرات إلى الكأس، ثم يشاهد اللون الناتج. يوجد «مختبر حر» وأربعة تحديات بلا مؤقت أو عقوبات. يمكنه طلب تلميح وحفظ ألوانه في «دفتر ألواني»، أو إرسال اللون إلى لوحة الرسم. في المرحلة الأولى للمختبر يُمزج لونان حتى 12 قطرة. النجوم والدفتر محفوظة محليًا على الجهاز نفسه. المزج محاكاة رقمية تقريبية للأصباغ، وليس تعليمات لخلط دهانات كيميائية حقيقية.
 
 **English:** Choose Color Lab from the page navigation. Children add drops of red, yellow or blue to an animated cup, then explore the result. Free mode and four untimed, unlimited-attempt challenges are available, with friendly hints. Saved mixes and star progress remain on this device only. Kids can transfer a mixed color back to Drawing. The simulation approximates pigment mixing rather than predicting exact physical paints.
+
+
+## Phase 2B — More colors / المرحلة الثانية: صانع الدرجات (v4.6.0)
+
+في المختبر أصبح بالإمكان مزج الأحمر والأصفر والأزرق مع الأبيض للتفتيح والأسود للتغميق، حتى 18 قطرة. تتوزع 12 تحديًا على 3 مراحل بدون وقت أو عقوبات. دفتر الألوان يحفظ 48 وصفة ويمكن استعادتها أو حذفها. ألوان ونجوم الإصدار السابق محفوظة. المزج تقريب تعليمي لا يطابق بالضرورة الدهانات الواقعية.
+
+Kids now mix red, yellow and blue with white and black in an 18-drop cup. There are 12 untimed challenges, 48 notebook slots and no attempt penalties. Previous notebook entries and stars remain stored locally.
