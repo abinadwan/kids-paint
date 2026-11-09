@@ -1147,6 +1147,12 @@
     state.lang = restoreLanguage();
     await database.init();
     setLanguage(state.lang, false);
+    // Safe handoff from Color Lab. No image data is sent or uploaded.
+    const labColor = new URLSearchParams(window.location.search).get('labColor');
+    if (labColor && /^[0-9a-f]{6}$/i.test(labColor)) {
+      updateSelectedColor('#' + labColor.toLowerCase(), -1);
+      chooseTool('brush');
+    }
   }
   init().catch(error => { console.error('Kids Paint initialization failed', error); message('saveFailed'); });
 })();
