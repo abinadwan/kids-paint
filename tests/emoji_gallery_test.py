@@ -23,7 +23,7 @@ def run():
         assert page.locator('#emojiPanel').is_visible()
         assert page.locator('.emoji-choice').count()==18
         assert page.locator('#brushSize').is_enabled()
-        page.locator('.template-item').last.click() # Blank page.
+        page.locator('.template-item').first.click() # Blank page now starts the picker.
         page.locator('#emojiTool').click()
         page.locator('#brushSize').fill('28')
         page.locator('.emoji-choice').nth(8).click() # rainbow
