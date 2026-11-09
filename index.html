@@ -12,9 +12,9 @@
   <title>عالم التلوين | Kids Paint</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico?v=4.0.0">
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=4.0.0">
-  <link rel="stylesheet" href="style.css?v=4.2.0">
+  <link rel="stylesheet" href="style.css?v=4.2.1">
   <script src="drawing.js?v=4.2.0" defer></script>
-  <script src="pwa.js?v=4.2.0" defer></script>
+  <script src="pwa.js?v=4.2.1" defer></script>
 </head>
 <body>
   <div class="app-shell">
@@ -38,7 +38,6 @@
         <p id="heroCaption" data-i18n="heroCaption">اختر رسمة، امسك اللون، وابدأ إبداعك!</p>
         <div class="hero-actions">
           <a class="hero-cta" href="#workspaceTitle"><span data-i18n="startPainting">ابدأ التلوين</span><span aria-hidden="true">↘</span></a>
-          <button type="button" class="install-cta" id="installAppBtn" data-pwa-ar="ثبّت التطبيق" data-pwa-en="Install app">ثبّت التطبيق</button>
         </div>
       </div>
       <p id="offlineReady" class="offline-ready" hidden data-pwa-ar="جاهز للعمل دون إنترنت بعد أول تحميل" data-pwa-en="Ready for offline use after the first download">جاهز للعمل دون إنترنت بعد أول تحميل</p>
@@ -143,6 +142,11 @@
       </section>
     </main>
     <footer class="site-footer">
+      <div class="footer-install">
+        <img src="assets/app-icon.png" width="44" height="44" alt="" aria-hidden="true">
+        <span data-pwa-ar="ثبّت عالم التلوين واستخدمه دون إنترنت" data-pwa-en="Install Kids Paint for offline use">ثبّت عالم التلوين واستخدمه دون إنترنت</span>
+        <button type="button" class="install-cta" id="installAppBtn" data-pwa-ar="ثبّت التطبيق" data-pwa-en="Install app">ثبّت التطبيق</button>
+      </div>
       <p class="footer-tagline" data-i18n="footer">Kids Paint — مساحة آمنة للإبداع دون حساب أو إعلانات</p>
       <div class="footer-meta">
         <span><span data-i18n="copyright">حقوق النشر</span> © 2026 <bdi>abinadwan</bdi></span>
@@ -165,13 +169,17 @@
       </div>
     </form>
   </dialog>
-  <dialog id="installDialog" aria-labelledby="installDialogTitle">
+  <dialog id="installDialog" class="install-sheet" aria-labelledby="installDialogTitle">
+    <div class="install-sheet-handle" aria-hidden="true"></div>
     <div class="install-dialog-body">
-      <h2 id="installDialogTitle" data-pwa-ar="ثبّت عالم التلوين على الجوال" data-pwa-en="Install Kids Paint on your phone">ثبّت عالم التلوين على الجوال</h2>
-      <p data-pwa-ar="على الآيفون (Safari): مشاركة ← إضافة إلى الشاشة الرئيسية ← فتح كتطبيق ← إضافة." data-pwa-en="On iPhone (Safari): Share → Add to Home Screen → Open as Web App → Add.">على الآيفون (Safari): مشاركة ← إضافة إلى الشاشة الرئيسية ← فتح كتطبيق ← إضافة.</p>
-      <p data-pwa-ar="على أندرويد (Chrome): القائمة ⋮ ← تثبيت التطبيق أو إضافة إلى الشاشة الرئيسية." data-pwa-en="On Android (Chrome): Menu ⋮ → Install app or Add to Home Screen.">على أندرويد (Chrome): القائمة ⋮ ← تثبيت التطبيق أو إضافة إلى الشاشة الرئيسية.</p>
-      <p class="install-note" data-pwa-ar="بعد تثبيت التطبيق افتحه مرة بالإنترنت وانتظر رسالة الجاهزية. بعدها تعمل أدوات الرسم دون اتصال. الرسومات محفوظة على هذا الجهاز فقط؛ صدّر PNG للاحتفاظ بنسخة." data-pwa-en="After installing, open the app online once and wait for the ready message. Drawing tools then work offline. Artwork is stored only on this device; export PNG for a backup.">بعد تثبيت التطبيق افتحه مرة بالإنترنت وانتظر رسالة الجاهزية. بعدها تعمل أدوات الرسم دون اتصال. الرسومات محفوظة على هذا الجهاز فقط؛ صدّر PNG للاحتفاظ بنسخة.</p>
-      <div class="dialog-actions"><button type="button" class="action-button primary" id="closeInstallDialog" data-pwa-ar="فهمت" data-pwa-en="Got it">فهمت</button></div>
+      <div class="install-sheet-header">
+        <h2 id="installDialogTitle" data-pwa-ar="تثبيت عالم التلوين" data-pwa-en="Install Kids Paint">تثبيت عالم التلوين</h2>
+        <button type="button" class="install-sheet-close" id="closeInstallDialog" aria-label="Close / إغلاق" data-pwa-ar="إغلاق" data-pwa-en="Close">إغلاق</button>
+      </div>
+      <p id="iosInstallSteps" data-install-platform="ios" hidden data-pwa-ar="على الآيفون: افتح الموقع في Safari، واضغط قائمة الصفحة أسفل الشاشة ← مشاركة ← إضافة إلى الشاشة الرئيسية، ثم اختر فتح كتطبيق واضغط إضافة. آبل لا تسمح بالتثبيت المباشر من زر الموقع." data-pwa-en="On iPhone: open in Safari, tap the page menu at the bottom → Share → Add to Home Screen, enable Open as Web App, then tap Add. iOS does not allow one-tap website installation.">على الآيفون: افتح الموقع في Safari، واضغط قائمة الصفحة أسفل الشاشة ← مشاركة ← إضافة إلى الشاشة الرئيسية، ثم اختر فتح كتطبيق واضغط إضافة. آبل لا تسمح بالتثبيت المباشر من زر الموقع.</p>
+      <p id="androidInstallSteps" data-install-platform="android" hidden data-pwa-ar="على أندرويد: اضغط قائمة Chrome ‏⋮، ثم تثبيت التطبيق أو إضافة إلى الشاشة الرئيسية. وإذا ظهر إشعار التثبيت الرسمي فوافق عليه." data-pwa-en="On Android: open Chrome's ⋮ menu and choose Install app or Add to Home Screen. If Chrome shows its install prompt, confirm the installation.">على أندرويد: اضغط قائمة Chrome ‏⋮، ثم تثبيت التطبيق أو إضافة إلى الشاشة الرئيسية. وإذا ظهر إشعار التثبيت الرسمي فوافق عليه.</p>
+      <p id="desktopInstallSteps" data-install-platform="desktop" hidden data-pwa-ar="على الكمبيوتر: افتح الموقع في Chrome أو Edge، ثم اختر تثبيت التطبيق من قائمة المتصفح، إذا كان الخيار متاحًا." data-pwa-en="On desktop: open the site in Chrome or Edge and choose Install app from the browser menu, when available.">على الكمبيوتر: افتح الموقع في Chrome أو Edge، ثم اختر تثبيت التطبيق من قائمة المتصفح، إذا كان الخيار متاحًا.</p>
+      <p class="install-note" data-pwa-ar="بعد الإضافة، افتح التطبيق مرة وأنت متصل بالإنترنت لتجهيز وضع عدم الاتصال. احفظ رسوماتك المهمة بصيغة PNG." data-pwa-en="After adding, launch once while online to prepare offline mode. Export important drawings as PNG.">بعد الإضافة، افتح التطبيق مرة وأنت متصل بالإنترنت لتجهيز وضع عدم الاتصال. احفظ رسوماتك المهمة بصيغة PNG.</p>
     </div>
   </dialog>
 </body>
