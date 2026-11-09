@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#7058d6">
+  <meta name="app-version" content="4.5.0">
+  <meta name="description" content="Kids Paint Color Lab — mix paint-like pigments and solve friendly color challenges.">
+  <title>مختبر الألوان | Kids Paint</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="color-lab.css?v=4.5.0">
+  <script src="vendor/spectral.min.js?v=3.0.0" defer></script>
+  <script src="color-lab-core.js?v=4.5.0" defer></script>
+  <script src="color-lab.js?v=4.5.0" defer></script>
+</head>
+<body>
+  <div class="lab-shell">
+    <header class="lab-header">
+      <a class="brand" href="./index.html" aria-label="Kids Paint — عالم التلوين">
+        <img src="assets/app-icon.png" width="50" height="50" alt="">
+        <span><strong data-t="brand">عالم التلوين</strong><small>Kids Paint</small></span>
+      </a>
+      <nav class="app-nav" aria-label="Pages / الصفحات">
+        <a href="./index.html" data-t="painting">لوحة الرسم</a>
+        <a class="selected" href="./color-lab.html" aria-current="page" data-t="lab">مختبر الألوان</a>
+      </nav>
+      <div class="language-actions" role="group" aria-label="Language / اللغة">
+        <button id="langAr" type="button" aria-pressed="true">عربي</button>
+        <button id="langEn" type="button" aria-pressed="false">English</button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="lab-intro" aria-labelledby="labTitle">
+        <div class="intro-symbols" aria-hidden="true"><span>✦</span><span>●</span><span>✦</span></div>
+        <p class="eyebrow" data-t="eyebrow">تجربة جديدة من عالم التلوين</p>
+        <h1 id="labTitle" data-t="title">مختبر الألوان السحري</h1>
+        <p data-t="subtitle">أضف القطرات، شاهد الألوان تمتزج، واكتشف لونًا جديدًا!</p>
+        <div class="mode-switch" role="group" aria-label="Play modes / أوضاع اللعب">
+          <button type="button" id="freeModeBtn" class="active" aria-pressed="true" data-t="freeMode">المختبر الحر</button>
+          <button type="button" id="challengeModeBtn" aria-pressed="false" data-t="challengeMode">تحديات الألوان</button>
+        </div>
+      </section>
+
+      <section id="challengeSection" class="challenge-panel" aria-labelledby="challengeTitle" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-t="fourChallenges">٤ تحديات بدون مؤقت</p>
+            <h2 id="challengeTitle" data-t="challengeTitle">اصنع اللون المطلوب!</h2>
+          </div>
+          <span class="no-clock" data-t="noClock">بدون وقت أو عقوبات</span>
+        </div>
+        <div id="challengePicker" class="challenge-picker" role="group" aria-label="Choose a challenge / اختر تحديًا"></div>
+        <div class="target-card">
+          <div class="target-copy">
+            <p class="eyebrow" data-t="targetColor">اللون المطلوب</p>
+            <h3 id="challengeName">اصنع الأخضر</h3>
+            <p id="challengeDescription" class="muted" data-t="tryMix">اكتشف بنفسك أي قطرات تحتاجها.</p>
+          </div>
+          <div id="targetSwatch" class="target-swatch" role="img" aria-label="Target color / اللون المطلوب"></div>
+        </div>
+      </section>
+
+      <section class="lab-workspace" aria-labelledby="mixTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-t="yourExperiment">تجربتك</p>
+            <h2 id="mixTitle" data-t="mixTitle">هيا نخلط الألوان!</h2>
+          </div>
+          <span class="hint-chip" data-t="chooseTwo">لونان في كل تجربة</span>
+        </div>
+
+        <div class="color-shelf" id="colorShelf" role="group" aria-label="Pigment tubes / أنابيب الألوان">
+          <button class="pigment" type="button" data-pigment="red">
+            <span class="paint-tube tube-red" aria-hidden="true"><span class="tube-cap"></span><span class="tube-body"></span></span>
+            <strong data-t="red">أحمر</strong><small id="redCount" class="drop-count">0</small>
+            <span class="add-mark" aria-hidden="true">+</span>
+          </button>
+          <button class="pigment" type="button" data-pigment="yellow">
+            <span class="paint-tube tube-yellow" aria-hidden="true"><span class="tube-cap"></span><span class="tube-body"></span></span>
+            <strong data-t="yellow">أصفر</strong><small id="yellowCount" class="drop-count">0</small>
+            <span class="add-mark" aria-hidden="true">+</span>
+          </button>
+          <button class="pigment" type="button" data-pigment="blue">
+            <span class="paint-tube tube-blue" aria-hidden="true"><span class="tube-cap"></span><span class="tube-body"></span></span>
+            <strong data-t="blue">أزرق</strong><small id="blueCount" class="drop-count">0</small>
+            <span class="add-mark" aria-hidden="true">+</span>
+          </button>
+        </div>
+        <p class="shelf-instruction" data-t="tapTube">اضغط على أي أنبوب لإضافة قطرة إلى الكأس.</p>
+
+        <div class="mix-playground">
+          <div class="cup-wrap">
+            <div id="mixCup" class="mix-cup empty" role="img" aria-label="Mixing cup / كأس المزج">
+              <div class="cup-measure" aria-hidden="true"><span></span><span></span><span></span></div>
+              <div id="liquid" class="liquid"></div>
+              <div class="cup-shine"></div>
+            </div>
+            <div class="cup-foot"></div>
+            <div id="sparkleEffect" class="cup-sparkle" aria-hidden="true">✦ ✧ ✦</div>
+            <p id="cupLabel" class="cup-caption" data-t="emptyCup">الكأس ينتظر أول قطرة!</p>
+          </div>
+          <div class="mix-description">
+            <p class="eyebrow" data-t="theRecipe">وصفة اللون</p>
+            <h3 id="dropSummary" data-t="noDrops">لم تضف قطرات بعد</h3>
+            <p id="dropLimit" class="muted" data-t="maxTwelve">يمكنك إضافة 12 قطرة كحد أقصى.</p>
+            <p id="mixLearning" class="learning-card" data-t="learningStart">هل تعلم؟ تغيير عدد القطرات يغير درجة اللون الناتج!</p>
+            <div class="mix-actions">
+              <button type="button" id="undoDropBtn" class="outlined" disabled data-t="undoDrop">↶ تراجع عن قطرة</button>
+              <button type="button" id="resetMixBtn" class="outlined" disabled data-t="emptyCupButton">إفراغ الكأس</button>
+            </div>
+          </div>
+        </div>
+        <div class="color-result" id="colorResult" aria-live="polite">
+          <div id="resultSwatch" class="result-swatch empty-result"></div>
+          <div class="result-info">
+            <p class="eyebrow" data-t="discovery">اكتشافك الجديد</p>
+            <strong id="resultName" data-t="waiting">بانتظار المزج...</strong>
+            <span id="resultHex">—</span>
+          </div>
+          <div class="result-actions">
+            <button type="button" id="saveColorBtn" disabled data-t="saveColor">احفظ اللون</button>
+            <button type="button" id="paintColorBtn" disabled class="main-action" data-t="useInPainting">استخدمه في الرسم</button>
+          </div>
+        </div>
+
+        <div id="challengeActions" class="challenge-actions" hidden>
+          <button id="checkChallengeBtn" class="main-action" type="button" data-t="checkColor" disabled>تحقق من اللون</button>
+          <button id="hintBtn" class="outlined" type="button" data-t="hint">أعطني تلميحًا</button>
+          <p id="challengeFeedback" class="challenge-feedback" role="status" aria-live="polite"></p>
+        </div>
+        <p id="labStatus" class="lab-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="discoveries" aria-labelledby="collectionTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-t="discoveriesEyebrow">ذكريات من المختبر</p>
+            <h2 id="collectionTitle" data-t="collection">دفتر ألواني</h2>
+          </div>
+          <span id="savedCount" class="saved-count">0 / 24</span>
+        </div>
+        <p class="muted" data-t="saveLocal">الألوان والنجوم تُحفظ على هذا الجهاز فقط.</p>
+        <div id="savedColors" class="saved-colors"></div>
+      </section>
+    </main>
+
+    <footer class="lab-footer">
+      <p><span data-t="poweredBy">مزج الأصباغ التقريبي بواسطة</span> <a href="https://github.com/rvanwijnen/spectral.js" target="_blank" rel="noopener noreferrer">Spectral.js</a> · MIT © 2025 Ronald van Wijnen</p>
+      <p><a href="THIRD_PARTY_NOTICES.md" data-t="licenseLink">حقوق المكتبات والتراخيص</a> · <a href="README.ar.md" data-t="aboutProject">عن المشروع</a></p>
+      <p><span data-t="versionLabel">الإصدار</span> <bdi>4.5.0</bdi> · <button id="labUpdateBtn" type="button" data-t="checkUpdates">التحقق من التحديثات</button></p>
+      <p id="labUpdateStatus" class="muted" role="status" aria-live="polite"></p>
+    </footer>
+  </div>
+</body>
+</html>
