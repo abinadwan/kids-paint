@@ -1,11 +1,11 @@
 # Kids Paint — QA Report
 
 Date: **2026-11-09**  
-Scope: add Drawing Pen and Spray Paint tools, fix background Paint Bucket behavior, preserve bilingual UI, 14 pages, save/export, MIT licensing.
+Scope: recognize freehand pen-drawn closed shapes as bucket-fill boundaries without regressing built-in templates, brush/spray/eraser, bilingual UI, save/export, or MIT licensing.
 
 ## Summary
 
-This update provides **Drawing Pen**, **Spray Paint** (scattered transparent particles), **Paint Bucket** (tap-to-fill), and **Eraser**. The bucket now colors both enclosed illustration regions **and the external background**, eliminating the previous silent refusal on edge-connected regions. Original outlines remain visible. The app still offers **14 pages (13 illustrations + a blank page)**.
+The bucket now recognizes **both template outlines and user-drawn pen strokes**, so a closed hand-drawn rectangle or circle can be filled without coloring the surrounding background. A separate offscreen pen-boundary mask is synchronized with brush strokes, erasing, history and local artwork saves. Background fills still work when tapping outside. The application retains 14 pages and its existing tools.
 
 ## Verified tests
 
@@ -31,12 +31,20 @@ Executed in Chromium using the unchanged HTML/CSS/JavaScript inserted into an `a
 | Paint Bucket can fill the blank canvas background, and Undo reverses it | PASS |
 | 320, 375, 768, 1024, 1440 px viewports; no horizontal overflow | PASS |
 | Synthetic touchscreen tap paints a closed region at these viewport sizes | PASS |
+| A user-drawn closed rectangle fills only inside its pen outline | PASS |
+| Closed shape pen border remains visible after bucket fill | PASS |
+| Hand-drawn boundary persists through Undo/Redo and recoloring | PASS |
+| New saved drawing retains the pen boundary after clear/reopen (mocked localStorage) | PASS |
+| Older saved drawing without mask loads safely | PASS |
+| Open shape allows color to escape to background (expected) | PASS |
+| Downloaded PNG includes user-created pen outline and enclosed fill | PASS |
 | Uncaught browser JS exceptions during tests | NONE |
 
 Test command:
 
 ```bash
 python tests/smoke_test.py
+python tests/user_outline_test.py
 ```
 
 ## Not tested / qualifications
@@ -46,7 +54,7 @@ python tests/smoke_test.py
 - **NOT TESTED:** real IndexedDB persistence. The automated test uses a mocked localStorage fallback.
 - **NOT TESTED:** physical iPhone/Android touch input. Touchscreen input was simulated by Chromium.
 - **NOT TESTED:** accessibility assessment with a screen reader.
-- **LIMITATION:** decorative lines that do not form closed paths cannot isolate a separate paint region. Background painting is now allowed. Freehand pen strokes are not treated as bucket boundaries.
+- **LIMITATION:** only pen lines that actually close a region isolate bucket paint. Spray particles do not form boundaries. Existing saved drawings without a stored pen mask still open, but pre-upgrade pen strokes cannot be reconstructed reliably as boundaries.
 - **LIMITATION:** each bucket fill is computed pixel-by-pixel in a 960×640 canvas; responsiveness of very low-powered phones should be checked manually.
 
 ## Suggested production verification
@@ -54,7 +62,7 @@ python tests/smoke_test.py
 1. Open the live GitHub Pages URL and force-refresh after deployment.
 2. Choose Cat, select a color, and tap inside its face; verify the face fills and outline remains. Then tap the white background and verify the background can also be colored.
 3. Try Butterfly, House and Sun; then select Spray Paint, tap and drag on the picture to verify the stippled effect.
-4. Test Save → refresh → Open on iOS Safari and Android Chrome, confirming persistent IndexedDB where available.
+4. Draw a closed freehand circle, bucket-fill inside, then test Save → refresh → Open on iOS Safari and Android Chrome, confirming persistent IndexedDB where available.
 5. Test Export PNG and open the downloaded file on iOS and desktop.
 6. Switch languages mid-drawing, check RTL/LTR and that color stays intact.
 
@@ -62,4 +70,4 @@ This report distinguishes tests executed from tests not executed. It is not a cl
 
 ## Cache busting
 
-The production HTML uses versioned CSS/JS query parameters (`?v=3.0.0`) so browsers request the current script and stylesheet after deployment. This does not substitute for live GitHub Pages verification.
+The production HTML uses versioned CSS/JS query parameters (`?v=3.1.0`) so browsers request the current script and stylesheet after deployment. This does not substitute for live GitHub Pages verification.
