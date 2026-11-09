@@ -2,12 +2,23 @@
 (() => {
   'use strict';
 
-  const W = 960;
-  const H = 640;
-  const MAX_HISTORY = 22;
+  // Portrait on mobile is a real portrait canvas, not a stretched landscape bitmap.
+  // Capture the stage's physical aspect after responsive CSS has been applied.
+  const MOBILE_PORTRAIT = window.matchMedia('(max-width: 760px) and (orientation: portrait)').matches;
+  const stage = document.getElementById('canvasStage');
+  if (MOBILE_PORTRAIT) stage.dataset.shape = 'portrait';
+  const stageBounds = stage.getBoundingClientRect();
+  let W = MOBILE_PORTRAIT ? 560 : 960;
+  let H = MOBILE_PORTRAIT
+    ? Math.max(720, Math.min(1560, Math.round(W * stageBounds.height / Math.max(1, stageBounds.width))))
+    : 640;
+  const DEFAULT_W = W;
+  const DEFAULT_H = H;
+  const MAX_HISTORY = MOBILE_PORTRAIT ? 16 : 22;
   const STORAGE_PREFIX = 'kids-paint-art-';
   const LANGUAGE_KEY = 'kids-paint-language';
-  const TEMPLATES = ['cat', 'fish', 'apple', 'lion', 'pencil', 'butterfly', 'flower', 'house', 'rocket', 'car', 'turtle', 'icecream', 'sun', 'blank'];
+  const TEMPLATES = ['cat', 'fish', 'apple', 'lion', 'pencil', 'butterfly', 'flower', 'house', 'rocket', 'car', 'turtle', 'icecream', 'sun'];
+  TEMPLATES.unshift('blank');
   const PALETTE = [
     ['#ff6b6b', 'red'], ['#ff9f43', 'orange'], ['#ffdf55', 'yellow'],
     ['#62be78', 'green'], ['#24b9aa', 'teal'], ['#4f98ec', 'blue'],
@@ -18,6 +29,7 @@
       heroCaption: 'اختر رسمة، امسك اللون، وابدأ إبداعك!', startPainting: 'ابدأ التلوين',
       title: 'عالم التلوين', subtitle: 'صبغ بضغطة، أو ارسم بالقلم والبخاخ', workspace: 'لوحة الرسم',
       workspaceHint: 'ارسم شكلًا مغلقًا بالقلم، ثم اضغط داخله بالدلو لصبغه دون تلوين الخلفية', offline: 'يعمل دون إنترنت',
+      textTool: 'كتابة', textLabel: 'النص المطلوب', textPlaceholder: 'اكتب هنا...', textHint: 'اختر اللون والحجم ثم اضغط على المكان المطلوب داخل الصورة', textRequired: 'اكتب نصًا أولًا، ثم اختر مكانه على اللوحة', textPlaced: 'تمت إضافة النص إلى الصورة',
       tools: 'الأدوات', bucket: 'دلو الصبغ', brush: 'قلم الرسم', spray: 'بخاخ الألوان', eraser: 'ممحاة', stamp: 'الأختام', stampShapes: 'اختر شكل الختم', stampHint: 'اختر لونًا وحجمًا، ثم اضغط على اللوحة', heart: 'قلب', star: 'نجمة', stampButterfly: 'فراشة', stampFlower: 'زهرة', moon: 'هلال', smile: 'وجه مبتسم', stampPlaced: 'تم وضع الختم', emojiTool: 'إيموجي', emojiShapes: 'اختر الإيموجي', emojiHint: 'اختر رمزًا وحجمًا، ثم اضغط على الصورة. يحتفظ الإيموجي بألوانه الأصلية.', emojiPlaced: 'تمت إضافة الإيموجي', saveToPhotos: 'حفظ في الصور', galleryShareTitle: 'رسمتي من عالم التلوين', galleryShared: 'اختر «حفظ الصورة» من نافذة المشاركة لإضافتها للاستديو', galleryDownloaded: 'تم تنزيل PNG. افتح الملف واحفظه في تطبيق الصور من قائمة المشاركة.', galleryCancelled: 'تم إلغاء المشاركة', colors: 'الألوان', shades: 'درجات اللون', customColor: 'لون مخصص', lime: 'ليموني', white: 'أبيض', size: 'حجم الأداة', importPhoto: 'استيراد صورة من الاستديو', photoPrivacy: 'الصورة تبقى على جهازك دون رفعها للإنترنت', photoImported: 'تم استيراد الصورة. ارسم أو ضع الأختام عليها!', photoInvalid: 'تعذر قراءة الصورة. اختر صورة مدعومة بحجم أقل من 30 ميغابايت', photoImportFailed: 'فشل استيراد الصورة. جرّب صورة بصيغة أخرى', photoFillNeedsBorder: 'ارسم شكلًا مغلقًا أولًا، ثم استخدم الدلو داخله حتى لا تختفي الصورة',
       undo: 'تراجع', redo: 'إعادة', clear: 'مسح الألوان', save: 'حفظ', export: 'تصدير PNG',
       templates: 'رسومات جاهزة', templatesHint: 'اختر رسمة جاهزة، أو ارسم شكلًا مغلقًا بالقلم ثم اصبغ داخله بالدلو',
@@ -47,6 +59,7 @@
       heroCaption: 'Pick a picture, choose a color, and make something wonderful!', startPainting: 'Start coloring',
       title: 'Kids Paint', subtitle: 'Tap to fill, draw with a pen, or spray paint', workspace: 'Drawing canvas',
       workspaceHint: 'Draw a closed shape with the pen, then tap inside with the bucket to fill just that shape', offline: 'Works offline',
+      textTool: 'Text', textLabel: 'Your text', textPlaceholder: 'Type here...', textHint: 'Choose a color and size, then tap where the text should appear', textRequired: 'Type some text first, then tap its position on the canvas', textPlaced: 'Text added to the picture',
       tools: 'Tools', bucket: 'Paint bucket', brush: 'Drawing pen', spray: 'Spray paint', eraser: 'Eraser', stamp: 'Stamps', stampShapes: 'Pick a stamp', stampHint: 'Choose a color and size, then tap the canvas', heart: 'Heart', star: 'Star', stampButterfly: 'Butterfly', stampFlower: 'Flower', moon: 'Crescent moon', smile: 'Smiley face', stampPlaced: 'Stamp placed', emojiTool: 'Emoji', emojiShapes: 'Choose an emoji', emojiHint: 'Pick an emoji and size, then tap the canvas. Emoji use their original colors.', emojiPlaced: 'Emoji added', saveToPhotos: 'Save to Photos', galleryShareTitle: 'My Kids Paint artwork', galleryShared: 'Choose Save Image in the share sheet to add it to Photos', galleryDownloaded: 'PNG downloaded. Open it and use Share → Save Image to add it to Photos.', galleryCancelled: 'Sharing cancelled', colors: 'Colors', shades: 'Color shades', customColor: 'Custom color', lime: 'Lime', white: 'White', size: 'Tool size', importPhoto: 'Import a photo', photoPrivacy: 'Your photo stays on your device; nothing is uploaded', photoImported: 'Photo imported! Draw or add stamps on top', photoInvalid: 'Cannot read this image. Choose a supported image under 30 MB', photoImportFailed: 'Could not import the image. Try another image format', photoFillNeedsBorder: 'Draw a closed shape first; bucket fill cannot cover the entire photo',
       undo: 'Undo', redo: 'Redo', clear: 'Clear colors', save: 'Save', export: 'Export PNG',
       templates: 'Coloring pages', templatesHint: 'Choose a picture, or draw a closed shape with the pen and fill inside it with the bucket',
@@ -90,6 +103,10 @@
     ['⚽', 'كرة قدم', 'Football'], ['🍕', 'بيتزا', 'Pizza'], ['🎉', 'احتفال', 'Confetti']
   ];
   const templateCanvas = el('templateCanvas');
+  for (const canvas of [paintCanvas, photoCanvas, templateCanvas]) {
+    canvas.width = W;
+    canvas.height = H;
+  }
   const paintCtx = paintCanvas.getContext('2d', { willReadFrequently: true });
   const templateCtx = templateCanvas.getContext('2d');
   // Track only freehand pen outlines, independently from fills and spray pigment.
@@ -98,12 +115,28 @@
   strokeCanvas.width = W; strokeCanvas.height = H;
   const strokeCtx = strokeCanvas.getContext('2d', { willReadFrequently: true });
   const state = {
-    lang: 'ar', template: 'cat', tool: 'bucket', color: PALETTE[0][0], size: 12,
+    lang: 'ar', template: 'blank', tool: 'brush', color: PALETTE[0][0], size: 12,
     stamp: 'heart', emoji: '😀', colorFamily: 0, photoActive: false,
     pointer: null, lastPoint: null, history: [], historyIndex: 0,
     savedId: null, savedName: null, statusKey: 'ready', statusVars: {},
     storageMode: 'none', db: null, previewUrls: []
   };
+
+  function resizeDocument(width, height) {
+    // Open saved artwork in its original pixel dimensions, including legacy
+    // 960x640 projects, so imported photos, paint and pen boundaries stay aligned.
+    if (![width, height].every(n => Number.isInteger(n) && n >= 240 && n <= 2400)) {
+      throw new Error('Invalid artwork dimensions');
+    }
+    W = width; H = height;
+    for (const canvas of [photoCanvas, paintCanvas, templateCanvas, strokeCanvas]) {
+      canvas.width = W;
+      canvas.height = H;
+    }
+    stage.dataset.shape = H > W ? 'portrait' : 'landscape';
+    stage.style.setProperty('--canvas-ratio', W + ' / ' + H);
+  }
+  resizeDocument(DEFAULT_W, DEFAULT_H);
 
   function t(key, vars = {}) {
     let result = WORDS[state.lang][key] ?? key;
@@ -128,6 +161,7 @@
     document.querySelectorAll('[data-i18n]').forEach(node => {
       node.textContent = t(node.dataset.i18n);
     });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(node => { node.placeholder = t(node.dataset.i18nPlaceholder); });
     document.querySelectorAll('[data-i18n-aria]').forEach(node => {
       node.setAttribute('aria-label', t(node.dataset.i18nAria));
     });
@@ -316,7 +350,14 @@
   function renderOutline(ctx, templateId, width = W, height = H) {
     ctx.clearRect(0, 0, width, height);
     ctx.save();
-    ctx.scale(width / 600, height / 400);
+    if (height > width) {
+      // Keep illustrated shapes proportional and centered inside portrait pages.
+      const zoom = Math.min(width / 470, height / 470);
+      ctx.translate(width / 2 - 300 * zoom, height / 2 - 200 * zoom);
+      ctx.scale(zoom, zoom);
+    } else {
+      ctx.scale(width / 600, height / 400);
+    }
     ctx.lineWidth = 3.5;
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
@@ -327,6 +368,7 @@
   function chooseTemplate(id) {
     if (!DRAWERS[id] || (id === state.template && !state.photoActive)) return;
     if (hasArtwork() && !window.confirm(t('switchQuestion'))) return;
+    resizeDocument(DEFAULT_W, DEFAULT_H);
     state.template = id;
     state.tool = id === 'blank' ? 'brush' : 'bucket';
     updateToolButtons();
@@ -492,20 +534,55 @@
     commitHistory();
     message('emojiPlaced');
   }
+  function placeText(point) {
+    // Tap-to-position: text is flattened into the paint layer, leaving photos
+    // and reusable pen boundaries intact. Undo/Redo and Save work unchanged.
+    const input = el('textInput');
+    const content = input.value.trim();
+    if (!content) { message('textRequired'); input.focus(); return; }
+    const lines = content.split(/\r?\n/).slice(0, 3);
+    const size = Math.min(150, Math.max(23, Math.round(state.size * 3.2)));
+    const lineHeight = size * 1.22;
+    const top = Math.max(size * 0.7 + 10, Math.min(H - 10 - (lines.length - 1) * lineHeight - size * 0.4,
+      point.y - (lines.length - 1) * lineHeight / 2));
+    paintCtx.save();
+    paintCtx.globalCompositeOperation = 'source-over';
+    paintCtx.font = '700 ' + size + 'px system-ui, "Noto Sans Arabic", sans-serif';
+    paintCtx.textAlign = 'center';
+    paintCtx.textBaseline = 'middle';
+    paintCtx.lineJoin = 'round';
+    paintCtx.lineWidth = Math.max(2, size * 0.065);
+    paintCtx.strokeStyle = 'rgba(255,255,255,.88)';
+    paintCtx.fillStyle = state.color;
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const maxWidth = W - 24;
+      const measured = Math.min(maxWidth, paintCtx.measureText(line).width);
+      const x = Math.max(12 + measured / 2, Math.min(W - 12 - measured / 2, point.x));
+      const y = top + i * lineHeight;
+      paintCtx.direction = /[\u0600-\u06ff]/.test(line) ? 'rtl' : 'ltr';
+      paintCtx.strokeText(line, x, y, maxWidth);
+      paintCtx.fillText(line, x, y, maxWidth);
+    }
+    paintCtx.restore();
+    commitHistory();
+    message('textPlaced');
+  }
   function updateToolButtons() {
     paintCanvas.dataset.mode = state.tool;
+    el('textPanel').hidden = state.tool !== 'text';
     el('stampPanel').hidden = state.tool !== 'stamp';
     el('emojiPanel').hidden = state.tool !== 'emoji';
     el('brushSize').disabled = state.tool === 'bucket';
     el('brushSizeOutput').textContent = state.tool === 'bucket' ? '—' : String(state.size);
-    for (const tool of ['bucket', 'brush', 'spray', 'eraser', 'stamp', 'emoji']) {
-      const button = el(tool === 'bucket' ? 'bucketTool' : tool === 'brush' ? 'brushTool' : tool === 'spray' ? 'sprayTool' : tool === 'eraser' ? 'eraserTool' : tool === 'stamp' ? 'stampTool' : 'emojiTool');
+    for (const tool of ['bucket', 'brush', 'spray', 'eraser', 'stamp', 'emoji', 'text']) {
+      const button = el(tool === 'bucket' ? 'bucketTool' : tool === 'brush' ? 'brushTool' : tool === 'spray' ? 'sprayTool' : tool === 'eraser' ? 'eraserTool' : tool === 'stamp' ? 'stampTool' : tool === 'emoji' ? 'emojiTool' : 'textTool');
       button.classList.toggle('is-active', tool === state.tool);
       button.setAttribute('aria-pressed', String(tool === state.tool));
     }
   }
   function chooseTool(tool) {
-    if (!['bucket', 'brush', 'spray', 'eraser', 'stamp', 'emoji'].includes(tool)) return;
+    if (!['bucket', 'brush', 'spray', 'eraser', 'stamp', 'emoji', 'text'].includes(tool)) return;
     state.tool = tool; updateToolButtons(); message('toolSelected', { tool: t(tool) });
   }
   function placeStamp(point) {
@@ -703,6 +780,7 @@
     if (state.tool === 'bucket') { bucketFill(coords(e)); return; }
     if (state.tool === 'stamp') { placeStamp(coords(e)); return; }
     if (state.tool === 'emoji') { placeEmoji(coords(e)); return; }
+    if (state.tool === 'text') { placeText(coords(e)); return; }
     state.pointer = e.pointerId;
     state.lastPoint = coords(e);
     try { paintCanvas.setPointerCapture(e.pointerId); } catch (_) { /* unusual input device */ }
@@ -891,12 +969,12 @@
       const paintBlob = await toBlob(paintCanvas);
       const strokeBlob = await toBlob(strokeCanvas);
       const photoBlob = state.photoActive ? await toBlob(photoCanvas, 'image/jpeg', .86) : null;
-      const previewCanvas = document.createElement('canvas'); previewCanvas.width = 300; previewCanvas.height = 200;
-      previewCanvas.getContext('2d').drawImage(composeImage(), 0, 0, 300, 200);
+      const previewCanvas = document.createElement('canvas'); previewCanvas.width = 300; previewCanvas.height = Math.round(300 * H / W);
+      previewCanvas.getContext('2d').drawImage(composeImage(), 0, 0, previewCanvas.width, previewCanvas.height);
       const preview = previewCanvas.toDataURL('image/jpeg', .8);
       const id = state.savedId || (typeof window.crypto?.randomUUID === 'function' ? window.crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`);
       await database.request('put', null, {
-        id, name: name.slice(0, 60), template: state.template, preview, paintBlob, strokeBlob, photoBlob,
+        id, name: name.slice(0, 60), template: state.template, preview, paintBlob, strokeBlob, photoBlob, canvasWidth: W, canvasHeight: H,
         updatedAt: new Date().toISOString()
       });
       state.savedId = id; state.savedName = name;
@@ -923,6 +1001,7 @@
       if (hasArtwork() && !window.confirm(t('switchQuestion'))) return;
       // Resize onto the fixed drawing stage without stretching or cropping the source.
       // The original file is not modified, stored remotely, or sent over the network.
+      resizeDocument(DEFAULT_W, DEFAULT_H);
       const scale = Math.min(W / img.naturalWidth, H / img.naturalHeight);
       const width = Math.max(1, Math.round(img.naturalWidth * scale));
       const height = Math.max(1, Math.round(img.naturalHeight * scale));
@@ -963,6 +1042,7 @@
         try { restoredPhoto = await imageFrom(photoURL); }
         finally { if (record.photoBlob) URL.revokeObjectURL(photoURL); }
       }
+      resizeDocument(record.canvasWidth || 960, record.canvasHeight || 640);
       state.template = record.template; state.tool = record.template === 'blank' ? 'brush' : 'bucket';
       updateToolButtons(); state.savedId = record.id; state.savedName = record.name;
       paintCtx.clearRect(0, 0, W, H); paintCtx.drawImage(img, 0, 0, W, H);
@@ -1024,6 +1104,7 @@
     el('eraserTool').addEventListener('click', () => chooseTool('eraser'));
     el('stampTool').addEventListener('click', () => chooseTool('stamp'));
     el('emojiTool').addEventListener('click', () => chooseTool('emoji'));
+    el('textTool').addEventListener('click', () => chooseTool('text'));
     el('customColor').addEventListener('input', e => updateSelectedColor(e.target.value, -1));
     el('importPhotoBtn').addEventListener('click', () => el('photoInput').click());
     el('photoInput').addEventListener('change', async e => {
