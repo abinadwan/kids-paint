@@ -29,6 +29,20 @@ Actual screenshots of the web interface captured in Chromium (not physical iPhon
 
 
 
+## New in v4.7.0 — World of Light RGB (Phase 2C)
+
+**One installed app, two pages.** The app icon opens Drawing. Inside [Color Lab](color-lab.html) there are now two major tabs: **Pigment Lab** and **World of Light RGB**. Switching tabs does not reload either page or discard the current experiment.
+
+- **Additive RGB:** three red, green and blue lamps with 0–100% intensity sliders (5% steps), an overlapping-light scene and on/off controls. Red+green LIGHT makes yellow, green+blue cyan, red+blue magenta, all three at maximum white, and no light black. The engine models linear light intensity and encodes its result as a display-ready sRGB HEX color.
+- **Six untimed challenges:** reachable intensity targets with up to three stars based on OKLab perceptual distance. Hints guide children to increase or decrease a lamp, with unlimited retries.
+- **Separate notebook:** store up to 24 light recipes and 18 challenge stars. Uses independent localStorage keys from the pigment notebook and saved drawings; supports restoring and deleting recipes.
+- **Use in Drawing:** transfer the resulting HEX color to the drawing editor.
+- **Identical update controls:** Version v4.7.0 and an Update app button now appear at the bottom of both Drawing and Color Lab. Both check the same noncached version.json and ask before reloading. An offline-ready message appears only after checking that both pages and the RGB/pigment engine files were cached.
+- **Mobile and offline:** all light scripts are bundled into the same offline PWA shell. Responsive, bilingual Arabic/English and reduced-motion styling are retained.
+
+**Scientific limitation:** simulated additive RGB is rendered by the display; it cannot reproduce every physical lamp spectrum. Challenge scores are pilot thresholds.
+
+**Rights:** the additive RGB engine is original project code and adds no external library. Spectral.js remains used for pigment experiments, with its original MIT © 2025 Ronald van Wijnen license and source recorded in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 ## New in v4.6.0 — Color Lab Phase 2B
 
 The [Color Lab](color-lab.html) has **five paint tubes**: red, yellow, blue, white and black. Mix all **three colored pigments**, add white to make lighter shades or black for darker shades, with up to **18 drops** per cup.
@@ -93,7 +107,7 @@ The new **[Color Lab](color-lab.html)** is a separate, bilingual, mobile-friendl
 | Save to Photos | Native file Share sheet where supported; otherwise download and manually save the PNG to your gallery |
 | Language | Arabic and English, including RTL/LTR switch and retained preference when storage is available |
 | PWA | Installable app shell, icons, manifest, offline cache of essential static assets, standalone display |
-| Color Lab | Five pigments, 12 untimed challenges, up to 36 stars, saved recipes and color handoff to Drawing |
+| Color Lab | Two tabs: pigment mixing (five pigments, 12 challenges) and additive RGB light (six challenges); separate notebooks, saved recipes and drawing handoff |
 
 ## Get started
 
@@ -162,6 +176,8 @@ python tests/portrait_text_test.py
 python tests/mobile_zoom_test.py
 node tests/color_lab_unit.js
 python tests/color_lab_browser_test.py
+node tests/light_lab_unit.js
+python tests/light_lab_browser_test.py
 node tests/service_worker_unit.js
 ```
 
