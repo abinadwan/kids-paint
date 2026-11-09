@@ -1,28 +1,41 @@
-/* Kids Paint Color Lab v4.5.0 — educational pigment play, no accounts or network APIs. */
+/* Kids Paint Color Lab v4.6.0 — educational pigment play, no accounts or network APIs. */
 (() => {
   'use strict';
   const core = window.KidsColorLabCore;
   const engine = window.spectral;
   const $ = id => document.getElementById(id);
-  const pigmentNames = ['red', 'yellow', 'blue'];
-  const RELEASE = '4.5.0';
+  const pigmentNames = ['red', 'yellow', 'blue', 'white', 'black'];
+  const RELEASE = '4.6.0';
   const LANGUAGE_KEY = 'kids-paint-language';
   const COLOR_KEY = 'kids-paint-lab-colors-v1';
   const PROGRESS_KEY = 'kids-paint-lab-progress-v1';
-  const MAX_SAVES = 24;
+  const MAX_SAVES = 48;
   const words = {
     ar: {
+
+       stage1:'المرحلة الأولى: اكتشاف الألوان',stage2:'المرحلة الثانية: صانع الدرجات',stage3:'المرحلة الثالثة: الخبير',
+       stageTopic1:'جرّب مزج اللونين لتكتشف اللون المطلوب.',
+       stageTopic2:'استعمل الأبيض للتفتيح وراقب الفرق في الدرجة.',
+       stageTopic3:'جرّب الأسود للتغميق أو امزج ثلاثة ألوان أساسية.',
+       starsCollected:'النجوم المكتسبة',notebookGuide:'جرّب وصفة محفوظة، أو احذف لونًا لم تعد تحتاجه.',
+       deleteColor:'احذف',confirmDelete:'هل تريد حذف هذا اللون من دفتر ألوانك؟',
+       deletedColor:'حُذف اللون من الدفتر.',notebookFull:'دفتر الألوان ممتلئ (48 لونًا). احذف وصفة لإضافة لون جديد.',
+       lighterTone:'درجة فاتحة',darkerTone:'درجة داكنة',complexTone:'درجة مركبة',
+       neutralTone:'درجة رمادية',lightHint:'الأبيض يخفف اللون ويصنع درجات فاتحة.',
+       darkHint:'الأسود يجعل اللون أغمق. جرّب قطرات قليلة.',
+       threeHint:'ثلاثة ألوان أساسية يمكن أن تنتج درجات مركبة غير متوقعة.',
+       whiteBlackHint:'الأبيض والأسود معًا يصنعان درجات رمادية مختلفة.',
       brand:'عالم التلوين',painting:'لوحة الرسم',lab:'مختبر الألوان',
       eyebrow:'تجربة جديدة من عالم التلوين',title:'مختبر الألوان السحري',
       subtitle:'أضف القطرات، شاهد الألوان تمتزج، واكتشف لونًا جديدًا!',
       freeMode:'المختبر الحر',challengeMode:'تحديات الألوان',
-      fourChallenges:'٤ تحديات بدون مؤقت',challengeTitle:'اصنع اللون المطلوب!',
+      twelveChallenges:'١٢ تحديًا بدون مؤقت',challengeTitle:'اصنع اللون المطلوب!',
       noClock:'بدون وقت أو عقوبات',targetColor:'اللون المطلوب',
       tryMix:'اكتشف بنفسك أي قطرات تحتاجها.',yourExperiment:'تجربتك',
-      mixTitle:'هيا نخلط الألوان!',chooseTwo:'لونان في كل تجربة',
-      red:'أحمر',yellow:'أصفر',blue:'أزرق',tapTube:'اضغط على أي أنبوب لإضافة قطرة إلى الكأس.',
+      mixTitle:'هيا نخلط الألوان!',chooseThree:'٣ ألوان أساسية + الأبيض والأسود',
+      red:'أحمر',yellow:'أصفر',blue:'أزرق',white:'أبيض',black:'أسود',tapTube:'امزج الألوان، وأضف الأبيض للتفتيح أو الأسود للتغميق.',
       emptyCup:'الكأس ينتظر أول قطرة!',theRecipe:'وصفة اللون',noDrops:'لم تضف قطرات بعد',
-      maxTwelve:'يمكنك إضافة 12 قطرة كحد أقصى.',
+      maxEighteen:'يمكنك إضافة 18 قطرة كحد أقصى.',
       learningStart:'هل تعلم؟ تغيير عدد القطرات يغير درجة اللون الناتج!',
       undoDrop:'↶ تراجع عن قطرة',emptyCupButton:'إفراغ الكأس',
       discovery:'اكتشافك الجديد',waiting:'بانتظار المزج...',saveColor:'احفظ اللون',
@@ -34,8 +47,8 @@
       drops:'قطرات',oneDrop:'قطرة',twoDrops:'قطرتان',mixed:'لون ممزوج',
       stored:'تم حفظ اللون في دفتر ألواني.',alreadySaved:'هذا اللون محفوظ في دفتر ألواني.',
       savingUnavailable:'التخزين المحلي غير متاح. يمكنك استخدام اللون في الرسم دون حفظه.',
-      maxTwo:'في هذه المرحلة نمزج لونين فقط. أفرغ الكأس أو تراجع لتجربة لون آخر.',
-      fullCup:'الكأس ممتلئ! الحد الأقصى 12 قطرة.',reset:'أفرغت الكأس، جرّب وصفة جديدة!',
+      maxThree:'تستطيع إضافة ثلاثة ألوان أساسية، مع الأبيض والأسود. جرّب إزالة قطرة أو إفراغ الكأس.',
+      fullCup:'الكأس ممتلئ! الحد الأقصى 18 قطرة.',reset:'أفرغت الكأس، جرّب وصفة جديدة!',
       needMix:'أضف قطرة واحدة على الأقل قبل التحقق.',tap:'قطرة',
       swatchHint:'كل قطرة تغيّر النسبة، فهل ستتغير الدرجة؟',
       singleHint:'اختر لونًا ثانيًا وشاهد لونًا جديدًا يظهر!',
@@ -55,15 +68,28 @@
       updatePostponed:'تقدر تحدّث التطبيق لاحقًا.'
     },
     en: {
+
+       stage1:'Level 1: Discover colors',stage2:'Level 2: Make new shades',stage3:'Level 3: Color expert',
+       stageTopic1:'Try combining two colors to find the target.',
+       stageTopic2:'Use white to lighten the mix and compare shades.',
+       stageTopic3:'Use black to darken or mix all three base pigments.',
+       starsCollected:'Stars collected',notebookGuide:'Try saved recipes or delete any mix you no longer need.',
+       deleteColor:'Delete',confirmDelete:'Delete this color from your notebook?',
+       deletedColor:'Color removed from the notebook.',notebookFull:'Your notebook is full (48 colors). Delete a recipe to add another.',
+       lighterTone:'Light shade',darkerTone:'Dark shade',complexTone:'Complex blend',
+       neutralTone:'Gray shade',lightHint:'White makes many pigment colors lighter and softer.',
+       darkHint:'Black darkens a mix. Try adding just a little.',
+       threeHint:'Mixing three primary pigments can create surprising complex shades.',
+       whiteBlackHint:'White and black together create different gray shades.',
       brand:'Kids Paint',painting:'Drawing page',lab:'Color Lab',eyebrow:'A new Kids Paint adventure',
       title:'The Magic Color Lab',subtitle:'Add drops, watch colors swirl, and discover something new!',
       freeMode:'Free mixing',challengeMode:'Color challenges',
-      fourChallenges:'4 untimed challenges',challengeTitle:'Make the target color!',
+      twelveChallenges:'12 untimed challenges',challengeTitle:'Make the target color!',
       noClock:'No timer or penalties',targetColor:'Target color',tryMix:'Discover which color drops are needed.',
-      yourExperiment:'Your experiment',mixTitle:"Let's mix colors!",chooseTwo:'Two colors per mix',
-      red:'Red',yellow:'Yellow',blue:'Blue',tapTube:'Tap a paint tube to add a drop to the cup.',
+      yourExperiment:'Your experiment',mixTitle:"Let's mix colors!",chooseThree:'3 pigments + white and black',
+      red:'Red',yellow:'Yellow',blue:'Blue',white:'White',black:'Black',tapTube:'Mix pigments; add white to lighten or black to darken.',
       emptyCup:'Your cup is ready for its first drop!',theRecipe:'Your color recipe',
-      noDrops:'No drops added yet',maxTwelve:'You can add up to 12 drops.',
+      noDrops:'No drops added yet',maxEighteen:'You can add up to 18 drops.',
       learningStart:'Did you know? Changing the number of drops changes the color shade!',
       undoDrop:'↶ Undo one drop',emptyCupButton:'Empty cup',
       discovery:'Your discovery',waiting:'Waiting for the mix...',saveColor:'Save color',
@@ -75,8 +101,8 @@
       drops:'drops',oneDrop:'drop',twoDrops:'two drops',mixed:'Mixed color',
       stored:'Saved in your color notebook.',alreadySaved:'This color is already saved.',
       savingUnavailable:'Local storage is unavailable. You can still use this color for drawing.',
-      maxTwo:'In this first stage, mix only two colors. Empty the cup or undo to try another.',
-      fullCup:'The cup is full! Maximum 12 drops.',reset:'Cup emptied. Try a new recipe!',
+      maxThree:'Mix up to three base colors, plus white and black. Undo or empty the cup to try again.',
+      fullCup:'The cup is full! Maximum 18 drops.',reset:'Cup emptied. Try a new recipe!',
       needMix:'Add at least one drop before checking.',tap:'drop',
       swatchHint:'Every drop changes the proportions. Can you predict the shade?',
       singleHint:'Choose a second color and watch a new shade appear!',
@@ -164,26 +190,45 @@
     if (!core || !engine) return;
     const picker = $('challengePicker');
     picker.replaceChildren();
-    for (const item of core.challenges) {
-      const mixed = core.mix(item.recipe, engine);
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'challenge-choice';
-      button.setAttribute('aria-pressed', String(item.id === challengeId));
-      const swatch = document.createElement('span');
-      swatch.className = 'mini-swatch';
-      swatch.style.backgroundColor = mixed.hex;
-      const name = document.createElement('strong');
-      name.textContent = lang === 'en' ? item.en : item.ar;
-      const stars = document.createElement('small');
-      stars.textContent = '★'.repeat(progress[item.id] || 0) + '☆'.repeat(3 - (progress[item.id] || 0));
-      stars.setAttribute('aria-label', (progress[item.id] || 0) + '/3');
-      button.append(swatch, name, stars);
-      button.addEventListener('click', () => selectChallenge(item.id));
-      picker.append(button);
+    for (const level of [1, 2, 3]) {
+      const section = document.createElement('section');
+      section.className = 'challenge-stage';
+      const heading = document.createElement('h3');
+      heading.className = 'challenge-stage-heading';
+      const marker = document.createElement('span');
+      marker.className = 'challenge-stage-index';
+      marker.textContent = String(level);
+      const title = document.createElement('span');
+      title.textContent = text('stage' + level);
+      heading.append(marker, title);
+      const grid = document.createElement('div');
+      grid.className = 'challenge-stage-grid';
+      for (const item of core.challenges.filter(challenge => challenge.stage === level)) {
+        const mixed = core.mix(item.recipe, engine);
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'challenge-choice';
+        button.setAttribute('aria-pressed', String(item.id === challengeId));
+        const swatch = document.createElement('span');
+        swatch.className = 'mini-swatch';
+        swatch.style.backgroundColor = mixed.hex;
+        const name = document.createElement('strong');
+        name.textContent = lang === 'en' ? item.en : item.ar;
+        const stars = document.createElement('small');
+        stars.textContent = '★'.repeat(progress[item.id] || 0) + '☆'.repeat(3 - (progress[item.id] || 0));
+        stars.setAttribute('aria-label', (progress[item.id] || 0) + '/3');
+        button.append(swatch, name, stars);
+        button.addEventListener('click', () => selectChallenge(item.id));
+        grid.append(button);
+      }
+      section.append(heading, grid);
+      picker.append(section);
     }
+    $('challengeProgress').textContent = core.challenges.reduce((sum,item) =>
+      sum + (progress[item.id] || 0), 0) + ' / ' + (core.challenges.length * 3) + ' ★';
     const challenge = currentChallenge();
     $('challengeName').textContent = lang === 'en' ? challenge.en : challenge.ar;
+    $('challengeDescription').textContent = text('stageTopic' + challenge.stage);
     $('targetSwatch').style.backgroundColor = target().hex;
   }
   function selectChallenge(id) {
@@ -206,7 +251,7 @@
   function addPigment(name) {
     if (!core.pigments[name]) return;
     if (!core.mayAdd(drops, name)) {
-      notify(core.totalDrops(drops) >= core.MAX_DROPS ? 'fullCup' : 'maxTwo');
+      notify(core.totalDrops(drops) >= core.MAX_DROPS ? 'fullCup' : 'maxThree');
       return;
     }
     const next = core.addDrop(drops, name);
@@ -230,12 +275,23 @@
   }
   function getLearning() {
     const names = Object.keys(drops);
-    if (names.length < 1) return text('learningStart');
+    if (!names.length) return text('learningStart');
+    if (drops.white && drops.black) return text('whiteBlackHint');
+    if (drops.white) return text('lightHint');
+    if (drops.black) return text('darkHint');
+    if (core.BASE_PIGMENTS.filter(name => drops[name]).length >= 3) return text('threeHint');
     if (names.length === 1) return text('singleHint');
-    if (names.includes('blue') && names.includes('yellow')) return text('greenHint');
-    if (names.includes('red') && names.includes('yellow')) return text('orangeHint');
-    if (names.includes('red') && names.includes('blue')) return text('purpleHint');
+    if (drops.blue && drops.yellow) return text('greenHint');
+    if (drops.red && drops.yellow) return text('orangeHint');
+    if (drops.red && drops.blue) return text('purpleHint');
     return text('swatchHint');
+  }
+  function toneName(amounts) {
+    if (amounts.white && amounts.black && !core.BASE_PIGMENTS.some(name => amounts[name])) return text('neutralTone');
+    if (amounts.black) return text('darkerTone');
+    if (amounts.white) return text('lighterTone');
+    if (core.BASE_PIGMENTS.filter(name => amounts[name]).length === 3) return text('complexTone');
+    return text('mixed');
   }
   function renderMix(animate = false) {
     if (!core || !engine) return;
@@ -244,7 +300,7 @@
     const total = core.totalDrops(drops);
     for (const name of pigmentNames) {
       const count = drops[name] || 0;
-      $(name + 'Count').textContent = count + ' / 12';
+      $(name + 'Count').textContent = count + ' / ' + core.MAX_DROPS;
       const control = document.querySelector('[data-pigment="' + name + '"]');
       control.disabled = !core.mayAdd(drops, name);
       control.setAttribute('aria-label', (lang === 'en' ? core.pigments[name].en : core.pigments[name].ar) + ' — ' + count + ' ' + text('drops'));
@@ -255,7 +311,7 @@
     cup.setAttribute('aria-label', result ? text('mixed') + ': ' + result.hex : text('emptyCup'));
     liquid.style.height = result ? Math.max(18, Math.round(18 + 67 * total / core.MAX_DROPS)) + '%' : '0%';
     liquid.style.backgroundColor = result ? result.hex : '#eef1fc';
-    $('cupLabel').textContent = result ? total + ' ' + text('drops') + ' / 12' : text('emptyCup');
+    $('cupLabel').textContent = result ? total + ' ' + text('drops') + ' / ' + core.MAX_DROPS : text('emptyCup');
     $('dropSummary').textContent = result ? Object.entries(drops).map(([name,count]) =>
       (lang === 'en' ? core.pigments[name].en : core.pigments[name].ar) + ' × ' + count
     ).join(' + ') : text('noDrops');
@@ -264,7 +320,7 @@
     $('resetMixBtn').disabled = !actions.length;
     $('resultSwatch').style.backgroundColor = result ? result.hex : '';
     $('resultSwatch').classList.toggle('empty-result', !result);
-    $('resultName').textContent = result ? text('mixed') : text('waiting');
+    $('resultName').textContent = result ? toneName(drops) : text('waiting');
     $('resultHex').textContent = result ? result.hex : '—';
     $('saveColorBtn').disabled = !result;
     $('paintColorBtn').disabled = !result;
@@ -301,12 +357,17 @@
     $('challengeFeedback').dataset.messageKey = '';
     $('challengeFeedback').textContent = phrase || text('hintTry');
   }
+  function recipeId(amounts) {
+    return Object.entries(core.tidyDrops(amounts)).map(([name,count]) => name + ':' + count).join('|');
+  }
   function saveColor() {
     if (!result) return;
-    if (colors.some(item => item.hex === result.hex)) { notify('alreadySaved'); return; }
-    const item = { hex: result.hex, drops: { ...drops }, createdAt: new Date().toISOString() };
-    const next = [item, ...colors].slice(0, MAX_SAVES);
-    if (!writeStore(COLOR_KEY, next)) { notify('savingUnavailable'); return; }
+    const id = recipeId(drops);
+    if (colors.some(item => recipeId(item.drops) === id)) { notify('alreadySaved'); return; }
+    if (colors.length >= MAX_SAVES) { notify('notebookFull'); return; }
+    const item = {hex:result.hex, drops:{...drops}, createdAt:new Date().toISOString()};
+    const next = [item, ...colors];
+    if (!writeStore(COLOR_KEY,next)) { notify('savingUnavailable'); return; }
     colors = next;
     renderSaved();
     notify('stored');
@@ -330,27 +391,45 @@
       sample.style.backgroundColor = item.hex;
       const meta = document.createElement('span');
       meta.className = 'saved-meta';
-      const title = document.createElement('bdi');
-      title.textContent = item.hex;
+      const name = document.createElement('strong');
+      name.className = 'saved-name';
+      name.textContent = toneName(item.drops);
+      const hex = document.createElement('bdi');
+      hex.textContent = item.hex;
       const recipe = document.createElement('small');
-      recipe.textContent = Object.entries(item.drops).map(([name,count]) =>
-        (lang === 'en' ? core.pigments[name].en : core.pigments[name].ar) + ' × ' + count).join(' + ');
-      meta.append(title, recipe);
+      recipe.textContent = Object.entries(item.drops).map(([pigment,count]) =>
+        (lang === 'en' ? core.pigments[pigment].en : core.pigments[pigment].ar) + ' × ' + count
+      ).join(' + ');
+      meta.append(name, hex, recipe);
+      const buttons = document.createElement('span');
+      buttons.className = 'saved-actions';
       const use = document.createElement('button');
       use.type = 'button';
       use.textContent = text('loadRecipe');
       use.addEventListener('click', () => {
-        // Validate untrusted localStorage before restoring it to game state.
         try {
           const clean = core.tidyDrops(item.drops);
           drops = clean;
-          actions = Object.entries(clean).flatMap(([name,count]) => Array(count).fill(name));
+          actions = Object.entries(clean).flatMap(([pigment,count]) => Array(count).fill(pigment));
           renderMix();
           notify('recipeLoaded');
           $('mixTitle').scrollIntoView({behavior:'smooth',block:'center'});
-        } catch (error) { console.warn('Invalid saved mix:', error); }
+        } catch(error) { console.warn('Invalid saved mix:',error); }
       });
-      row.append(sample, meta, use);
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'delete-color';
+      remove.textContent = text('deleteColor');
+      remove.addEventListener('click', () => {
+        if (!window.confirm(text('confirmDelete'))) return;
+        const next = colors.filter(saved => saved !== item);
+        if (!writeStore(COLOR_KEY,next)) { notify('savingUnavailable'); return; }
+        colors = next;
+        renderSaved();
+        notify('deletedColor');
+      });
+      buttons.append(use,remove);
+      row.append(sample,meta,buttons);
       parent.append(row);
     }
   }
@@ -396,9 +475,12 @@
     const previous = (() => { try { return localStorage.getItem(LANGUAGE_KEY); } catch (_) { return 'ar'; } })();
     const storedColors = readStore(COLOR_KEY, []);
     if (Array.isArray(storedColors)) {
-      colors = storedColors.filter(item => item && /^#[0-9a-f]{6}$/i.test(item.hex) &&
-        item.drops && typeof item.drops === 'object' && Object.keys(item.drops).every(key => key in core.pigments))
-        .slice(0, MAX_SAVES);
+      colors = storedColors.filter(item => {
+        if (!item || !/^#[0-9a-f]{6}$/i.test(item.hex)) return false;
+        try {
+          return core.totalDrops(core.tidyDrops(item.drops)) > 0;
+        } catch (_) { return false; }
+      }).slice(0, MAX_SAVES);
     }
     const storedProgress = readStore(PROGRESS_KEY, {});
     if (storedProgress && typeof storedProgress === 'object' && !Array.isArray(storedProgress)) {
