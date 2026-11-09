@@ -59,3 +59,11 @@ Code syntax checked with Node.js (`drawing.js`, `sw.js`). The tests passed local
 Tested locally in Chromium at 320×740, 390×844, 428×926, and 1280×900. On portrait phones, the drawing stage measured 85% of viewport height with intrinsically portrait canvas dimensions; desktop retained 960×640. New pages start blank with the pen selected. Arabic/English text placement, size/color selection, Undo/Redo, local Save/Open, and switching to template art passed in browser emulation without JavaScript exceptions.
 
 Cross-device persistence checks confirmed a 960×640 legacy landscape drawing opens on the phone without stretching and a new mobile portrait drawing retains its original dimensions on desktop. Physical iOS Safari, keyboard overlays and browser toolbar changes remain unverified. Text is rasterized into artwork rather than remaining a separate editable text object.
+
+
+## v4.4.1 — Responsive screen scale / unintended zoom
+
+- Applied `touch-action: pan-y` to the application surface so vertical page scrolling remains available while touch-page pinch/double-tap zoom is suppressed; drawing canvas remains `touch-action: none`.
+- Prevented Safari's proprietary `gesturestart` / `gesturechange` page zoom without disabling drawing interactions. Inputs use at least 16px font size on mobile to avoid focus auto-zoom.
+- Kept viewport initial scale at 1 without `maximum-scale` or `user-scalable=no`; system/browser assistive zoom remains available.
+- Local Chromium simulation using the responsive layout and the same CSS/gesture rules passed at widths 320, 360, 390, 428, 768, and 1280px: no horizontal overflow; pinch simulation at 390px retained `visualViewport.scale === 1`. Physical iOS Safari verification remains pending.
