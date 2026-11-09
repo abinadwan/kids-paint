@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fcf7f0">
-  <meta name="description" content="Kids Paint — a bilingual, offline drawing and coloring app for children.">
+  <meta name="description" content="Kids Paint — an offline Arabic/English paint-bucket coloring game for children.">
   <title>عالم التلوين | Kids Paint</title>
   <link rel="stylesheet" href="style.css">
   <script src="drawing.js" defer></script>
@@ -16,7 +16,7 @@
         <span class="brand-icon" aria-hidden="true">🎨</span>
         <div>
           <h1 data-i18n="title">عالم التلوين</h1>
-          <p data-i18n="subtitle">ارسم، لوّن، واحفظ إبداعاتك</p>
+          <p data-i18n="subtitle">اضغط داخل الرسمة لصبغها بلونك المفضل</p>
         </div>
       </div>
       <nav class="lang-switch" aria-label="Language / اللغة">
@@ -30,7 +30,7 @@
         <div class="section-bar">
           <div>
             <h2 id="workspaceTitle" data-i18n="workspace">لوحة الرسم</h2>
-            <p class="muted" data-i18n="workspaceHint">اختر رسمة ثم ابدأ التلوين</p>
+            <p class="muted" data-i18n="workspaceHint">اختر اللون واضغط داخل مساحة مغلقة لصبغها فورًا</p>
           </div>
           <span class="offline-label" data-i18n="offline">يعمل دون إنترنت</span>
         </div>
@@ -39,7 +39,10 @@
           <aside class="tool-panel" aria-label="Drawing tools" id="toolsPanel">
             <h3 data-i18n="tools">الأدوات</h3>
             <div class="tool-buttons" role="group" data-i18n-aria="tools" aria-label="الأدوات">
-              <button id="brushTool" class="tool-button is-active" type="button" aria-pressed="true" data-i18n-aria="brush">
+              <button id="bucketTool" class="tool-button is-active" type="button" aria-pressed="true" data-i18n-aria="bucket">
+                <span aria-hidden="true">🪣</span><span data-i18n="bucket">دلو الصبغ</span>
+              </button>
+              <button id="brushTool" class="tool-button" type="button" aria-pressed="false" data-i18n-aria="brush">
                 <span aria-hidden="true">🖌️</span><span data-i18n="brush">فرشاة</span>
               </button>
               <button id="eraserTool" class="tool-button" type="button" aria-pressed="false" data-i18n-aria="eraser">
@@ -78,7 +81,7 @@
       </section>
 
       <section class="templates-section" aria-labelledby="templatesTitle">
-        <div class="section-bar"><div><h2 id="templatesTitle" data-i18n="templates">رسومات جاهزة</h2><p class="muted" data-i18n="templatesHint">اختر رسمة لتلوينها، أو صفحة بيضاء للرسم الحر</p></div></div>
+        <div class="section-bar"><div><h2 id="templatesTitle" data-i18n="templates">رسومات جاهزة</h2><p class="muted" data-i18n="templatesHint">اختر رسمة جاهزة للصّبغ بضغطة واحدة، أو صفحة للرسم الحر</p></div></div>
         <div id="templatePicker" class="template-grid" role="group" aria-label="Templates"></div>
       </section>
 
