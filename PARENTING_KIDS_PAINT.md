@@ -72,3 +72,10 @@ The approved bilingual Kids Paint banner and matching app icons are included wit
 عند فتح التطبيق على الجوال في الوضع الطولي، يبدأ برسم حر على صفحة فارغة، مع لوحة تأخذ نحو 85٪ من ارتفاع الشاشة. اختر «كتابة»، وأدخل النص، وحدد اللون والحجم، ثم المس المكان المطلوب لإضافة النص. لتغييره تراجع ثم ضع النص في موضع جديد. الرسومات المحفوظة قديمًا تبقى بمقاسها الأفقي الأصلي.
 
 On a phone, new work starts on a blank, portrait page with the pen active. Choose Text, enter a caption, pick a color and size, and tap the desired placement. Undo to reposition. Older saved landscape documents keep their original shape.
+
+
+## New: Color Lab / جديد: مختبر الألوان (v4.5.0)
+
+**العربية:** افتح «مختبر الألوان» من شريط الصفحات. الطفل يضغط على أنابيب الأحمر والأصفر والأزرق لإضافة قطرات إلى الكأس، ثم يشاهد اللون الناتج. يوجد «مختبر حر» وأربعة تحديات بلا مؤقت أو عقوبات. يمكنه طلب تلميح وحفظ ألوانه في «دفتر ألواني»، أو إرسال اللون إلى لوحة الرسم. في المرحلة الأولى للمختبر يُمزج لونان حتى 12 قطرة. النجوم والدفتر محفوظة محليًا على الجهاز نفسه. المزج محاكاة رقمية تقريبية للأصباغ، وليس تعليمات لخلط دهانات كيميائية حقيقية.
+
+**English:** Choose Color Lab from the page navigation. Children add drops of red, yellow or blue to an animated cup, then explore the result. Free mode and four untimed, unlimited-attempt challenges are available, with friendly hints. Saved mixes and star progress remain on this device only. Kids can transfer a mixed color back to Drawing. The simulation approximates pigment mixing rather than predicting exact physical paints.
