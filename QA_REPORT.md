@@ -67,3 +67,14 @@ Cross-device persistence checks confirmed a 960×640 legacy landscape drawing op
 - Prevented Safari's proprietary `gesturestart` / `gesturechange` page zoom without disabling drawing interactions. Inputs use at least 16px font size on mobile to avoid focus auto-zoom.
 - Kept viewport initial scale at 1 without `maximum-scale` or `user-scalable=no`; system/browser assistive zoom remains available.
 - Local Chromium simulation using the responsive layout and the same CSS/gesture rules passed at widths 320, 360, 390, 428, 768, and 1280px: no horizontal overflow; pinch simulation at 390px retained `visualViewport.scale === 1`. Physical iOS Safari verification remains pending.
+
+
+## v4.5.0 — Phase 2A Color Lab
+
+- Created `color-lab.html`, `color-lab.css`, `color-lab-core.js`, `color-lab.js` and connected navigation to the existing drawing editor.
+- Verified the exact vendored Spectral.js 3.0.0 can mix the starter pigments: equal yellow/blue -> #6FBA63, red/yellow 2:3 -> #FD9056, red/blue 2:3 -> #575294, yellow/blue 4:1 -> #CCE64E. Each exact target recipe produces three stars in the common OKLab scoring function.
+- Executed an in-process JavaScript DOM simulation covering pigment additions, notebook saving, challenge three-star completion and drawing color handoff URL. It passed without a JavaScript exception.
+- Added permanent Node `tests/color_lab_unit.js` and Chromium `tests/color_lab_browser_test.py` regression tests; the full browser test is committed for local/CI execution and was not run in a physical browser in this environment.
+- Updated offline Service Worker: PWA precaches all lab runtime assets and preserves independent navigation entries for Color Lab and Drawing, preventing the lab response from replacing the home page's cached HTML.
+- Attribution: exact upstream Spectral.js license retained and `THIRD_PARTY_NOTICES.md` added. No external network/runtime CDN dependency for pigment mixing.
+- Limitations: no user study or iPhone/Android physical-device testing; color matching thresholds are pilot values rather than scientifically calibrated child difficulty levels.
