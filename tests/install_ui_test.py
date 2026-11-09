@@ -47,8 +47,8 @@ def main():
         # Chromium install event should trigger native prompt immediately from user click.
         page=browser.new_page(viewport={'width':390,'height':844},user_agent='Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/122 Mobile Safari/537.36')
         html=(ROOT/'index.html').read_text('utf-8')
-        html=re.sub(r'<link\\b[^>]*>', '', html)
-        html=re.sub(r'<script\\b[^>]*></script>', '', html)
+        html=re.sub(r'<link\b[^>]*>', '', html)
+        html=re.sub(r'<script\b[^>]*></script>', '', html)
         page.set_content(html)
         page.add_style_tag(content=(ROOT/'style.css').read_text('utf-8'))
         page.add_script_tag(content=(ROOT/'pwa.js').read_text('utf-8'))
