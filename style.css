@@ -37,7 +37,7 @@ h3 { font-size: 1.02rem; }
 .tool-panel { padding: 20px; border-radius: 19px; background: #fbf9ff; border: 1px solid #ede8fa; }
 .tool-panel h3 { margin-bottom: 12px; }
 .section-spacing { margin-top: 23px; }
-.tool-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.tool-buttons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .tool-button { border: 1.5px solid #ded8eb; background: white; color: var(--ink); border-radius: 12px; padding: 13px 5px; display: flex; align-items: center; flex-direction: column; gap: 4px; font-size: .83rem; font-weight: 650; }
 .tool-button span:first-child { font-size: 1.3rem; }
 .tool-button.is-active { border-color: var(--brand); background: var(--brand-soft); color: #4f3da8; }
@@ -86,3 +86,7 @@ dialog::backdrop { background: rgba(30, 25, 52, .45); }
 @media (max-width: 760px) { .app-header { align-items: start; } .brand-icon { width: 48px; height: 48px; border-radius: 15px; font-size: 24px; } .brand p { font-size: .81rem; } .drawing-layout { grid-template-columns: 1fr; } .tool-panel { display: grid; grid-template-columns: auto 1fr; gap: 10px 16px; align-items: center; } .tool-panel h3 { margin: 0; } .tool-panel .section-spacing { margin-top: 0; } .tool-panel .color-palette { grid-column: 2; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px; } .tool-panel .slider-header { margin: 0; } .tool-panel #brushSize { margin: 0; } .tool-panel .history-actions { margin: 0; grid-column: 1 / -1; } .tool-panel .tool-buttons { min-width: 205px; } }
 @media (max-width: 530px) { .app-shell { padding: 12px 9px; } .app-header { flex-direction: column; align-items: stretch; gap: 12px; } .lang-switch { align-self: flex-end; } .workspace-card, .templates-section, .saved-section { border-radius: 17px; padding: 13px; margin-bottom: 13px; } .offline-label { display: none; } .tool-panel { display: block; padding: 13px; } .tool-panel h3 { margin-bottom: 8px; } .tool-panel .section-spacing { margin-top: 14px; } .tool-panel .color-palette { display: grid; grid-template-columns: repeat(5, 1fr); } .tool-panel .slider-header { margin-top: 13px; } .tool-panel #brushSize { margin-top: 7px; } .tool-panel .history-actions { margin-top: 12px; } .color-swatch { border-radius: 8px; } .template-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .bottom-actions { display: grid; grid-template-columns: 1fr 1fr; } #exportBtn { grid-column: 1 / -1; } .action-button { padding: 10px 8px; } .template-item { font-size: .83rem; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+/* Paint bucket is the primary tool. */
+#bucketTool.is-active { background: #e6fff3; border-color: #238d75; color: #155c4f; }
+#paintCanvas[data-mode="bucket"] { cursor: cell; }
+@media (max-width: 360px) { .tool-button { font-size: .73rem; padding: 10px 3px; } }
