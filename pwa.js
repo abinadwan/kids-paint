@@ -87,7 +87,7 @@
     updateButton.disabled = true;
     updateMessage('جارٍ التحقق من التحديثات…', 'Checking for updates…');
     try {
-      const checkURL = new URL('./version.json', window.location.href);
+      const checkURL = new URL('./version.json', document.baseURI);
       checkURL.searchParams.set('check', String(Date.now()));
       const response = await fetch(checkURL.href, { cache: 'no-store' });
       if (!response.ok) throw new Error('Version service unavailable: ' + response.status);
