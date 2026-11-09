@@ -7,7 +7,7 @@
   const MAX_HISTORY = 22;
   const STORAGE_PREFIX = 'kids-paint-art-';
   const LANGUAGE_KEY = 'kids-paint-language';
-  const TEMPLATES = ['cat', 'fish', 'apple', 'lion', 'pencil', 'blank'];
+  const TEMPLATES = ['cat', 'fish', 'apple', 'lion', 'pencil', 'butterfly', 'flower', 'house', 'rocket', 'car', 'turtle', 'icecream', 'sun', 'blank'];
   const PALETTE = [
     ['#ff6b6b', 'red'], ['#ff9f43', 'orange'], ['#ffdf55', 'yellow'],
     ['#62be78', 'green'], ['#24b9aa', 'teal'], ['#4f98ec', 'blue'],
@@ -15,21 +15,21 @@
   ];
   const WORDS = {
     ar: {
-      title: 'عالم التلوين', subtitle: 'ارسم، لوّن، واحفظ إبداعاتك', workspace: 'لوحة الرسم',
-      workspaceHint: 'اختر رسمة ثم ابدأ التلوين', offline: 'يعمل دون إنترنت',
-      tools: 'الأدوات', brush: 'فرشاة', eraser: 'ممحاة', colors: 'الألوان', size: 'حجم الأداة',
+      title: 'عالم التلوين', subtitle: 'اضغط داخل الرسمة لصبغها بلونك المفضل', workspace: 'لوحة الرسم',
+      workspaceHint: 'اختر اللون واضغط داخل مساحة مغلقة لصبغها فورًا', offline: 'يعمل دون إنترنت',
+      tools: 'الأدوات', bucket: 'دلو الصبغ', brush: 'فرشاة', eraser: 'ممحاة', colors: 'الألوان', size: 'حجم الأداة',
       undo: 'تراجع', redo: 'إعادة', clear: 'مسح الألوان', save: 'حفظ', export: 'تصدير PNG',
-      templates: 'رسومات جاهزة', templatesHint: 'اختر رسمة لتلوينها، أو صفحة بيضاء للرسم الحر',
+      templates: 'رسومات جاهزة', templatesHint: 'اختر رسمة جاهزة للصّبغ بضغطة واحدة، أو صفحة للرسم الحر',
       savedArtworks: 'رسوماتي المحفوظة', savedHint: 'تُحفظ على هذا الجهاز فقط، وليست في حساب سحابي',
       footer: 'Kids Paint — مساحة آمنة للإبداع دون حساب أو إعلانات',
       nameDrawing: 'اسم الرسمة', nameLabel: 'اكتب اسم رسمة مميزًا', cancel: 'إلغاء',
-      drawingArea: 'مساحة الرسم والتلوين', cat: 'قطة', fish: 'سمكة', apple: 'تفاح', lion: 'أسد',
+      drawingArea: 'مساحة الرسم والصبغ', butterfly: 'فراشة', flower: 'زهرة', house: 'منزل', rocket: 'صاروخ', car: 'سيارة', turtle: 'سلحفاة', icecream: 'آيس كريم', sun: 'شمس', cat: 'قطة', fish: 'سمكة', apple: 'تفاح', lion: 'أسد',
       pencil: 'قلم', blank: 'رسم حر', open: 'فتح', delete: 'حذف', red: 'أحمر', orange: 'برتقالي',
       yellow: 'أصفر', green: 'أخضر', teal: 'فيروزي', blue: 'أزرق', purple: 'بنفسجي',
       pink: 'وردي', brown: 'بني', black: 'أسود', colorName: 'اللون: {color}',
-      ready: 'اختر لونًا وارسم داخل اللوحة', toolSelected: 'الأداة الحالية: {tool}',
+      ready: 'اختر لونًا ثم اضغط داخل أي مساحة مغلقة لتصبغها', toolSelected: 'الأداة الحالية: {tool}',
       selectedColor: 'اخترت {color}', sizeSelected: 'حجم الأداة: {size}',
-      drawn: 'رسم ممتاز! يمكنك المتابعة أو الحفظ', undone: 'تم التراجع', redone: 'تمت الإعادة',
+      drawn: 'ممتاز! يمكنك المتابعة أو الحفظ', filled: 'تم صبغ المساحة بنجاح', openRegion: 'اضغط داخل مساحة مغلقة؛ لا يمكن صبغ الخلفية المفتوحة', blockedRegion: 'اضغط داخل حدود الرسمة، بعيدًا عن الخط الداكن', undone: 'تم التراجع', redone: 'تمت الإعادة',
       cleared: 'تم مسح تلوينك مع الاحتفاظ بالرسمة الأصلية', clearedQuestion: 'هل تريد مسح تلوينك؟ ستبقى الرسمة الأصلية.',
       switchQuestion: 'ستفقد التلوين غير المحفوظ عند تغيير الرسمة. هل تريد المتابعة؟',
       exported: 'تم تجهيز صورة PNG للتنزيل', exportFailed: 'تعذر تصدير الصورة. حاول مجددًا.',
@@ -43,21 +43,21 @@
       storageMode: 'تخزين محلي',
     },
     en: {
-      title: 'Kids Paint', subtitle: 'Draw, color, and save your creations', workspace: 'Drawing canvas',
-      workspaceHint: 'Choose a picture, then start coloring', offline: 'Works offline',
-      tools: 'Tools', brush: 'Brush', eraser: 'Eraser', colors: 'Colors', size: 'Tool size',
+      title: 'Kids Paint', subtitle: 'Tap inside a shape to fill it with color', workspace: 'Drawing canvas',
+      workspaceHint: 'Pick a color, then tap a closed area to paint it instantly', offline: 'Works offline',
+      tools: 'Tools', bucket: 'Paint bucket', brush: 'Brush', eraser: 'Eraser', colors: 'Colors', size: 'Tool size',
       undo: 'Undo', redo: 'Redo', clear: 'Clear colors', save: 'Save', export: 'Export PNG',
-      templates: 'Coloring pages', templatesHint: 'Choose a picture to color, or a blank page to draw freely',
+      templates: 'Coloring pages', templatesHint: 'Choose a picture to paint with one tap, or draw freely on a blank page',
       savedArtworks: 'My saved drawings', savedHint: 'Saved on this device only — not synced to a cloud account',
       footer: 'Kids Paint — a private, ad-free space to create',
       nameDrawing: 'Drawing name', nameLabel: 'Give your drawing a name', cancel: 'Cancel',
-      drawingArea: 'Drawing and coloring canvas', cat: 'Cat', fish: 'Fish', apple: 'Apples', lion: 'Lion',
+      drawingArea: 'Drawing and painting canvas', butterfly: 'Butterfly', flower: 'Flower', house: 'House', rocket: 'Rocket', car: 'Car', turtle: 'Turtle', icecream: 'Ice cream', sun: 'Sun', cat: 'Cat', fish: 'Fish', apple: 'Apples', lion: 'Lion',
       pencil: 'Pencil', blank: 'Free draw', open: 'Open', delete: 'Delete', red: 'Red', orange: 'Orange',
       yellow: 'Yellow', green: 'Green', teal: 'Teal', blue: 'Blue', purple: 'Purple',
       pink: 'Pink', brown: 'Brown', black: 'Black', colorName: '{color} color',
-      ready: 'Choose a color and draw on the canvas', toolSelected: 'Current tool: {tool}',
+      ready: 'Choose a color and tap inside a closed shape to fill it', toolSelected: 'Current tool: {tool}',
       selectedColor: 'Selected {color}', sizeSelected: 'Tool size: {size}',
-      drawn: 'Nice drawing! Keep going or save it', undone: 'Undone', redone: 'Redone',
+      drawn: 'Nice work! Keep going or save it', filled: 'Area painted successfully', openRegion: 'Tap inside a closed shape; the outside background cannot be filled', blockedRegion: 'Tap inside the shape, away from the dark outline', undone: 'Undone', redone: 'Redone',
       cleared: 'Your colors were cleared; the original outline remains', clearedQuestion: 'Clear your coloring? The original outline will remain.',
       switchQuestion: 'Changing pictures will discard any unsaved coloring. Continue?',
       exported: 'PNG image prepared for download', exportFailed: 'Could not export the image. Please retry.',
@@ -78,7 +78,7 @@
   const paintCtx = paintCanvas.getContext('2d', { willReadFrequently: true });
   const templateCtx = templateCanvas.getContext('2d');
   const state = {
-    lang: 'ar', template: 'cat', tool: 'brush', color: PALETTE[0][0], size: 12,
+    lang: 'ar', template: 'cat', tool: 'bucket', color: PALETTE[0][0], size: 12,
     pointer: null, lastPoint: null, history: [], historyIndex: 0,
     savedId: null, savedName: null, statusKey: 'ready', statusVars: {},
     storageMode: 'none', db: null, previewUrls: []
@@ -207,7 +207,88 @@
     ctx.restore();
     strokePath(ctx,c=>{c.moveTo(135,115);c.lineTo(150,104);c.moveTo(135,83);c.lineTo(151,93);c.moveTo(454,278);c.lineTo(475,278);c.moveTo(448,309);c.lineTo(462,323);});
   }
-  const DRAWERS = { cat: drawCat, fish: drawFish, apple: drawApple, lion: drawLion, pencil: drawPencil, blank: () => {} };
+
+  function drawButterfly(ctx) {
+    const wing = (side, upper) => {
+      ctx.save(); ctx.translate(300, 208); ctx.scale(side, 1);
+      strokePath(ctx, c => {
+        if (upper) { c.moveTo(4,-38); c.bezierCurveTo(88,-215,205,-166,188,-67); c.bezierCurveTo(180,-8,115,30,8,7); }
+        else { c.moveTo(4,10); c.bezierCurveTo(114,-9,173,56,146,124); c.bezierCurveTo(117,189,27,117,4,27); }
+        c.closePath();
+      });
+      circle(ctx, upper ? 105 : 99, upper ? -75 : 69, upper ? 27 : 22);
+      ctx.restore();
+    };
+    wing(-1,true); wing(1,true); wing(-1,false); wing(1,false);
+    strokePath(ctx,c=>{ c.ellipse(300,211,19,103,0,0,Math.PI*2); });
+    strokePath(ctx,c=>{c.moveTo(289,113);c.quadraticCurveTo(263,64,245,78);c.moveTo(311,113);c.quadraticCurveTo(337,64,355,78);});
+    circle(ctx,245,78,5); circle(ctx,355,78,5);
+  }
+  function drawFlower(ctx) {
+    const cx=300, cy=164;
+    for(let i=0;i<8;i++){const a=i*Math.PI/4; circle(ctx,cx+72*Math.cos(a),cy+72*Math.sin(a),53);}
+    circle(ctx,cx,cy,54);
+    strokePath(ctx,c=>{c.moveTo(300,273);c.lineTo(300,366);});
+    strokePath(ctx,c=>{c.moveTo(300,326);c.bezierCurveTo(237,255,201,313,300,346);c.closePath();});
+    strokePath(ctx,c=>{c.moveTo(300,346);c.bezierCurveTo(365,269,401,313,300,366);c.closePath();});
+  }
+  function drawHouse(ctx) {
+    strokePath(ctx,c=>{c.rect(189,163,222,196);});
+    strokePath(ctx,c=>{c.moveTo(163,174);c.lineTo(300,44);c.lineTo(437,174);c.closePath();});
+    strokePath(ctx,c=>{c.rect(269,257,63,102);});
+    strokePath(ctx,c=>{c.rect(216,200,50,51);c.rect(338,200,50,51);});
+    strokePath(ctx,c=>{c.moveTo(241,200);c.lineTo(241,251);c.moveTo(216,225);c.lineTo(266,225);c.moveTo(363,200);c.lineTo(363,251);c.moveTo(338,225);c.lineTo(388,225);});
+    circle(ctx,316,311,3.5,'#26334b');
+    strokePath(ctx,c=>{c.rect(371,82,24,44);});
+  }
+  function drawRocket(ctx) {
+    strokePath(ctx,c=>{c.moveTo(261,274);c.lineTo(261,150);c.quadraticCurveTo(261,89,300,37);c.quadraticCurveTo(339,89,339,150);c.lineTo(339,274);c.closePath();});
+    circle(ctx,300,158,33);
+    strokePath(ctx,c=>{c.moveTo(261,225);c.lineTo(216,300);c.lineTo(261,287);c.closePath();});
+    strokePath(ctx,c=>{c.moveTo(339,225);c.lineTo(384,300);c.lineTo(339,287);c.closePath();});
+    strokePath(ctx,c=>{c.moveTo(271,274);c.lineTo(329,274);c.lineTo(329,296);c.lineTo(271,296);c.closePath();});
+    strokePath(ctx,c=>{c.moveTo(283,296);c.quadraticCurveTo(263,348,300,379);c.quadraticCurveTo(337,348,317,296);c.closePath();});
+    strokePath(ctx,c=>{c.moveTo(261,220);c.lineTo(339,220);});
+    circle(ctx,300,158,17);
+  }
+  function drawCar(ctx) {
+    strokePath(ctx,c=>{c.moveTo(108,250);c.lineTo(108,211);c.quadraticCurveTo(108,190,139,190);c.lineTo(177,190);c.lineTo(223,131);c.quadraticCurveTo(235,119,253,119);c.lineTo(375,119);c.quadraticCurveTo(390,119,404,136);c.lineTo(448,190);c.lineTo(478,190);c.quadraticCurveTo(497,190,497,216);c.lineTo(497,263);c.lineTo(108,263);c.closePath();});
+    strokePath(ctx,c=>{c.moveTo(229,185);c.lineTo(267,135);c.lineTo(302,135);c.lineTo(302,185);c.closePath();});
+    strokePath(ctx,c=>{c.moveTo(318,135);c.lineTo(369,135);c.lineTo(416,185);c.lineTo(318,185);c.closePath();});
+    circle(ctx,194,268,39); circle(ctx,415,268,39);
+    circle(ctx,194,268,20); circle(ctx,415,268,20);
+    strokePath(ctx,c=>{c.moveTo(313,198);c.lineTo(313,256);c.moveTo(336,205);c.lineTo(354,205);});
+    strokePath(ctx,c=>{c.rect(468,213,29,17);c.rect(108,213,20,17);});
+  }
+  function drawTurtle(ctx) {
+    strokePath(ctx,c=>{c.ellipse(296,211,160,110,0,0,Math.PI*2);});
+    circle(ctx,468,202,51); circle(ctx,486,191,5,'#26334b');
+    strokePath(ctx,c=>{c.moveTo(491,216);c.quadraticCurveTo(480,227,467,215);});
+    for(const [x,y] of [[185,298],[370,299],[223,303],[340,302]]) {
+      strokePath(ctx,c=>{c.ellipse(x,y,23,39,-.15,0,Math.PI*2);});
+    }
+    strokePath(ctx,c=>{c.moveTo(143,231);c.lineTo(88,249);c.lineTo(149,265);c.closePath();});
+    strokePath(ctx,c=>{c.moveTo(263,135);c.lineTo(340,135);c.lineTo(382,205);c.lineTo(334,273);c.lineTo(263,273);c.lineTo(210,206);c.closePath();});
+    strokePath(ctx,c=>{c.moveTo(210,206);c.lineTo(136,206);c.moveTo(382,205);c.lineTo(455,205);c.moveTo(263,135);c.lineTo(228,107);c.moveTo(334,273);c.lineTo(348,304);});
+  }
+  function drawIcecream(ctx) {
+    strokePath(ctx,c=>{c.moveTo(223,218);c.lineTo(377,218);c.lineTo(300,364);c.closePath();});
+    strokePath(ctx,c=>{c.moveTo(250,233);c.lineTo(334,298);c.moveTo(350,233);c.lineTo(266,298);});
+    strokePath(ctx,c=>{c.arc(300,160,99,0,Math.PI*2);});
+    strokePath(ctx,c=>{c.moveTo(205,197);c.quadraticCurveTo(300,219,395,197);});
+    circle(ctx,300,59,17);
+    strokePath(ctx,c=>{c.moveTo(300,44);c.quadraticCurveTo(309,12,331,28);});
+  }
+  function drawSun(ctx) {
+    for(let i=0;i<12;i++){const a=i*Math.PI/6;const x=Math.cos(a),y=Math.sin(a);
+      strokePath(ctx,c=>{c.moveTo(300+x*146,194+y*146);c.lineTo(300+Math.cos(a-.15)*198,194+Math.sin(a-.15)*198);
+        c.lineTo(300+Math.cos(a+.15)*198,194+Math.sin(a+.15)*198);c.closePath();});
+    }
+    circle(ctx,300,194,129);
+    circle(ctx,256,170,9,'#26334b');circle(ctx,344,170,9,'#26334b');
+    strokePath(ctx,c=>{c.arc(300,194,67,.25*Math.PI,.75*Math.PI);});
+  }
+  const DRAWERS = { cat: drawCat, fish: drawFish, apple: drawApple, lion: drawLion, pencil: drawPencil, butterfly: drawButterfly, flower: drawFlower, house: drawHouse, rocket: drawRocket, car: drawCar, turtle: drawTurtle, icecream: drawIcecream, sun: drawSun, blank: () => {} };
 
   function renderOutline(ctx, templateId, width = W, height = H) {
     ctx.clearRect(0, 0, width, height);
@@ -224,6 +305,8 @@
     if (!DRAWERS[id] || id === state.template) return;
     if (hasPaint() && !window.confirm(t('switchQuestion'))) return;
     state.template = id;
+    state.tool = id === 'blank' ? 'brush' : 'bucket';
+    updateToolButtons();
     state.savedId = null; state.savedName = null;
     paintCtx.clearRect(0, 0, W, H);
     renderOutline(templateCtx, id);
@@ -258,21 +341,24 @@
       swatch.setAttribute('aria-label', t('colorName', { color: t(name) }));
       swatch.setAttribute('aria-pressed', String(color === state.color));
       swatch.addEventListener('click', () => {
-        state.color = color; state.tool = 'brush';
+        state.color = color; if (state.tool === 'eraser') state.tool = state.template === 'blank' ? 'brush' : 'bucket';
         renderPalette(); updateToolButtons(); message('selectedColor', { color: t(name) });
       });
       parent.append(swatch);
     }
   }
   function updateToolButtons() {
-    for (const tool of ['brush', 'eraser']) {
-      const button = el(tool === 'brush' ? 'brushTool' : 'eraserTool');
+    paintCanvas.dataset.mode = state.tool;
+    el('brushSize').disabled = state.tool === 'bucket';
+    el('brushSizeOutput').textContent = state.tool === 'bucket' ? '—' : String(state.size);
+    for (const tool of ['bucket', 'brush', 'eraser']) {
+      const button = el(tool === 'bucket' ? 'bucketTool' : tool === 'brush' ? 'brushTool' : 'eraserTool');
       button.classList.toggle('is-active', tool === state.tool);
       button.setAttribute('aria-pressed', String(tool === state.tool));
     }
   }
   function chooseTool(tool) {
-    if (!['brush', 'eraser'].includes(tool)) return;
+    if (!['bucket', 'brush', 'eraser'].includes(tool)) return;
     state.tool = tool; updateToolButtons(); message('toolSelected', { tool: t(tool) });
   }
 
@@ -318,6 +404,59 @@
     const r = paintCanvas.getBoundingClientRect();
     return { x: (event.clientX - r.left) * W / r.width, y: (event.clientY - r.top) * H / r.height };
   }
+
+  // Gather enclosed pixels first; open regions never partially change the drawing.
+  function bucketFill(point) {
+    if (state.pointer !== null) return;
+    let sx = Math.floor(point.x), sy = Math.floor(point.y);
+    if (sx < 0 || sy < 0 || sx >= W || sy >= H) return;
+    const ink = templateCtx.getImageData(0, 0, W, H).data;
+    const isLine = (x, y) => ink[((y * W + x) * 4) + 3] >= 52;
+    if (isLine(sx, sy)) {
+      let found = false;
+      for (let radius = 1; radius <= 10 && !found; radius++) {
+        for (let dy = -radius; dy <= radius && !found; dy++) {
+          for (let dx = -radius; dx <= radius && !found; dx++) {
+            const x = sx + dx, y = sy + dy;
+            if (x >= 0 && x < W && y >= 0 && y < H && !isLine(x,y)) {
+              sx = x; sy = y; found = true;
+            }
+          }
+        }
+      }
+      if (!found) { message('blockedRegion'); return; }
+    }
+    const checked = new Uint8Array(W * H);
+    const queue = new Int32Array(W * H);
+    let head = 0, tail = 0, reachedEdge = false;
+    const first = sy * W + sx;
+    checked[first] = 1; queue[tail++] = first;
+    function push(next) {
+      if (checked[next] || ink[next * 4 + 3] >= 52) return;
+      checked[next] = 1; queue[tail++] = next;
+    }
+    while (head < tail) {
+      const idx = queue[head++];
+      const x = idx % W, y = (idx / W) | 0;
+      if (x === 0 || y === 0 || x === W - 1 || y === H - 1) { reachedEdge = true; break; }
+      push(idx-1); push(idx+1); push(idx-W); push(idx+W);
+    }
+    if (reachedEdge) { message('openRegion'); return; }
+    const pixels = paintCtx.getImageData(0,0,W,H);
+    const hex = state.color.slice(1);
+    const red = parseInt(hex.slice(0,2), 16), green = parseInt(hex.slice(2,4), 16), blue = parseInt(hex.slice(4,6), 16);
+    let hasChange = false;
+    for (let i = 0; i < head; i++) {
+      const offset = queue[i] * 4;
+      if (pixels.data[offset] !== red || pixels.data[offset+1] !== green || pixels.data[offset+2] !== blue || pixels.data[offset+3] !== 255) {
+        hasChange = true;
+        pixels.data[offset] = red; pixels.data[offset+1] = green; pixels.data[offset+2] = blue; pixels.data[offset+3] = 255;
+      }
+    }
+    if (!hasChange) return;
+    paintCtx.putImageData(pixels,0,0);
+    commitHistory(); message('filled');
+  }
   function prepareTool() {
     paintCtx.globalCompositeOperation = state.tool === 'eraser' ? 'destination-out' : 'source-over';
     paintCtx.lineCap = 'round'; paintCtx.lineJoin = 'round';
@@ -333,6 +472,7 @@
   function onPointerDown(e) {
     if (state.pointer !== null || e.isPrimary === false || (e.pointerType === 'mouse' && e.button !== 0)) return;
     e.preventDefault();
+    if (state.tool === 'bucket') { bucketFill(coords(e)); return; }
     state.pointer = e.pointerId;
     state.lastPoint = coords(e);
     try { paintCanvas.setPointerCapture(e.pointerId); } catch (_) { /* unusual input device */ }
@@ -497,7 +637,8 @@
       const url = record.paintBlob ? URL.createObjectURL(record.paintBlob) : record.paintDataUrl;
       let img;
       try { img = await imageFrom(url); } finally { if (record.paintBlob) URL.revokeObjectURL(url); }
-      state.template = record.template; state.savedId = record.id; state.savedName = record.name;
+      state.template = record.template; state.tool = record.template === 'blank' ? 'brush' : 'bucket';
+      updateToolButtons(); state.savedId = record.id; state.savedName = record.name;
       paintCtx.clearRect(0, 0, W, H); paintCtx.drawImage(img, 0, 0, W, H);
       renderOutline(templateCtx, state.template); resetHistory(); renderTemplatePicker();
       message('loaded');
@@ -546,6 +687,7 @@
   function attachEvents() {
     el('langAr').addEventListener('click', () => setLanguage('ar'));
     el('langEn').addEventListener('click', () => setLanguage('en'));
+    el('bucketTool').addEventListener('click', () => chooseTool('bucket'));
     el('brushTool').addEventListener('click', () => chooseTool('brush'));
     el('eraserTool').addEventListener('click', () => chooseTool('eraser'));
     el('brushSize').addEventListener('input', e => {
