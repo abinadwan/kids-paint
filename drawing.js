@@ -15,9 +15,9 @@
   ];
   const WORDS = {
     ar: {
-      title: 'عالم التلوين', subtitle: 'اضغط داخل الرسمة لصبغها بلونك المفضل', workspace: 'لوحة الرسم',
-      workspaceHint: 'اختر اللون واضغط داخل مساحة مغلقة لصبغها فورًا', offline: 'يعمل دون إنترنت',
-      tools: 'الأدوات', bucket: 'دلو الصبغ', brush: 'فرشاة', eraser: 'ممحاة', colors: 'الألوان', size: 'حجم الأداة',
+      title: 'عالم التلوين', subtitle: 'صبغ بضغطة، أو ارسم بالقلم والبخاخ', workspace: 'لوحة الرسم',
+      workspaceHint: 'اختر القلم أو البخاخ أو الدلو، ثم اضغط أو اسحب داخل اللوحة', offline: 'يعمل دون إنترنت',
+      tools: 'الأدوات', bucket: 'دلو الصبغ', brush: 'قلم الرسم', spray: 'بخاخ الألوان', eraser: 'ممحاة', colors: 'الألوان', size: 'حجم الأداة',
       undo: 'تراجع', redo: 'إعادة', clear: 'مسح الألوان', save: 'حفظ', export: 'تصدير PNG',
       templates: 'رسومات جاهزة', templatesHint: 'اختر رسمة جاهزة للصّبغ بضغطة واحدة، أو صفحة للرسم الحر',
       savedArtworks: 'رسوماتي المحفوظة', savedHint: 'تُحفظ على هذا الجهاز فقط، وليست في حساب سحابي',
@@ -27,9 +27,9 @@
       pencil: 'قلم', blank: 'رسم حر', open: 'فتح', delete: 'حذف', red: 'أحمر', orange: 'برتقالي',
       yellow: 'أصفر', green: 'أخضر', teal: 'فيروزي', blue: 'أزرق', purple: 'بنفسجي',
       pink: 'وردي', brown: 'بني', black: 'أسود', colorName: 'اللون: {color}',
-      ready: 'اختر لونًا ثم اضغط داخل أي مساحة مغلقة لتصبغها', toolSelected: 'الأداة الحالية: {tool}',
+      ready: 'اختر لونًا: دلو الصبغ للمساحات، القلم للرسم، والبخاخ للرذاذ', toolSelected: 'الأداة الحالية: {tool}',
       selectedColor: 'اخترت {color}', sizeSelected: 'حجم الأداة: {size}',
-      drawn: 'ممتاز! يمكنك المتابعة أو الحفظ', filled: 'تم صبغ المساحة بنجاح', openRegion: 'اضغط داخل مساحة مغلقة؛ لا يمكن صبغ الخلفية المفتوحة', blockedRegion: 'اضغط داخل حدود الرسمة، بعيدًا عن الخط الداكن', undone: 'تم التراجع', redone: 'تمت الإعادة',
+      drawn: 'ممتاز! يمكنك المتابعة أو الحفظ', filled: 'تم صبغ المنطقة', backgroundFilled: 'تم صبغ الخلفية أيضًا', alreadyColored: 'هذه المنطقة بنفس اللون بالفعل', blockedRegion: 'اضغط بجوار الخط الداكن داخل المنطقة المطلوبة', undone: 'تم التراجع', redone: 'تمت الإعادة',
       cleared: 'تم مسح تلوينك مع الاحتفاظ بالرسمة الأصلية', clearedQuestion: 'هل تريد مسح تلوينك؟ ستبقى الرسمة الأصلية.',
       switchQuestion: 'ستفقد التلوين غير المحفوظ عند تغيير الرسمة. هل تريد المتابعة؟',
       exported: 'تم تجهيز صورة PNG للتنزيل', exportFailed: 'تعذر تصدير الصورة. حاول مجددًا.',
@@ -43,9 +43,9 @@
       storageMode: 'تخزين محلي',
     },
     en: {
-      title: 'Kids Paint', subtitle: 'Tap inside a shape to fill it with color', workspace: 'Drawing canvas',
-      workspaceHint: 'Pick a color, then tap a closed area to paint it instantly', offline: 'Works offline',
-      tools: 'Tools', bucket: 'Paint bucket', brush: 'Brush', eraser: 'Eraser', colors: 'Colors', size: 'Tool size',
+      title: 'Kids Paint', subtitle: 'Tap to fill, draw with a pen, or spray paint', workspace: 'Drawing canvas',
+      workspaceHint: 'Choose the pen, spray or bucket, then tap or drag on the canvas', offline: 'Works offline',
+      tools: 'Tools', bucket: 'Paint bucket', brush: 'Drawing pen', spray: 'Spray paint', eraser: 'Eraser', colors: 'Colors', size: 'Tool size',
       undo: 'Undo', redo: 'Redo', clear: 'Clear colors', save: 'Save', export: 'Export PNG',
       templates: 'Coloring pages', templatesHint: 'Choose a picture to paint with one tap, or draw freely on a blank page',
       savedArtworks: 'My saved drawings', savedHint: 'Saved on this device only — not synced to a cloud account',
@@ -55,9 +55,9 @@
       pencil: 'Pencil', blank: 'Free draw', open: 'Open', delete: 'Delete', red: 'Red', orange: 'Orange',
       yellow: 'Yellow', green: 'Green', teal: 'Teal', blue: 'Blue', purple: 'Purple',
       pink: 'Pink', brown: 'Brown', black: 'Black', colorName: '{color} color',
-      ready: 'Choose a color and tap inside a closed shape to fill it', toolSelected: 'Current tool: {tool}',
+      ready: 'Pick a color: bucket fills areas, pen draws, spray adds a mist', toolSelected: 'Current tool: {tool}',
       selectedColor: 'Selected {color}', sizeSelected: 'Tool size: {size}',
-      drawn: 'Nice work! Keep going or save it', filled: 'Area painted successfully', openRegion: 'Tap inside a closed shape; the outside background cannot be filled', blockedRegion: 'Tap inside the shape, away from the dark outline', undone: 'Undone', redone: 'Redone',
+      drawn: 'Nice work! Keep going or save it', filled: 'Area filled with color', backgroundFilled: 'Background painted too', alreadyColored: 'This region already has that color', blockedRegion: 'Tap beside the dark outline inside the area you want', undone: 'Undone', redone: 'Redone',
       cleared: 'Your colors were cleared; the original outline remains', clearedQuestion: 'Clear your coloring? The original outline will remain.',
       switchQuestion: 'Changing pictures will discard any unsaved coloring. Continue?',
       exported: 'PNG image prepared for download', exportFailed: 'Could not export the image. Please retry.',
@@ -207,7 +207,6 @@
     ctx.restore();
     strokePath(ctx,c=>{c.moveTo(135,115);c.lineTo(150,104);c.moveTo(135,83);c.lineTo(151,93);c.moveTo(454,278);c.lineTo(475,278);c.moveTo(448,309);c.lineTo(462,323);});
   }
-
   function drawButterfly(ctx) {
     const wing = (side, upper) => {
       ctx.save(); ctx.translate(300, 208); ctx.scale(side, 1);
@@ -351,14 +350,14 @@
     paintCanvas.dataset.mode = state.tool;
     el('brushSize').disabled = state.tool === 'bucket';
     el('brushSizeOutput').textContent = state.tool === 'bucket' ? '—' : String(state.size);
-    for (const tool of ['bucket', 'brush', 'eraser']) {
-      const button = el(tool === 'bucket' ? 'bucketTool' : tool === 'brush' ? 'brushTool' : 'eraserTool');
+    for (const tool of ['bucket', 'brush', 'spray', 'eraser']) {
+      const button = el(tool === 'bucket' ? 'bucketTool' : tool === 'brush' ? 'brushTool' : tool === 'spray' ? 'sprayTool' : 'eraserTool');
       button.classList.toggle('is-active', tool === state.tool);
       button.setAttribute('aria-pressed', String(tool === state.tool));
     }
   }
   function chooseTool(tool) {
-    if (!['bucket', 'brush', 'eraser'].includes(tool)) return;
+    if (!['bucket', 'brush', 'spray', 'eraser'].includes(tool)) return;
     state.tool = tool; updateToolButtons(); message('toolSelected', { tool: t(tool) });
   }
 
@@ -404,8 +403,9 @@
     const r = paintCanvas.getBoundingClientRect();
     return { x: (event.clientX - r.left) * W / r.width, y: (event.clientY - r.top) * H / r.height };
   }
-
-  // Gather enclosed pixels first; open regions never partially change the drawing.
+  // Flood-fill template regions by using line-art alpha as a boundary mask.
+  // Unlike the previous version, the external/background region is also paintable.
+  // This matters for children: tapping the white background should not look broken.
   function bucketFill(point) {
     if (state.pointer !== null) return;
     let sx = Math.floor(point.x), sy = Math.floor(point.y);
@@ -413,50 +413,88 @@
     const ink = templateCtx.getImageData(0, 0, W, H).data;
     const isLine = (x, y) => ink[((y * W + x) * 4) + 3] >= 52;
     if (isLine(sx, sy)) {
-      let found = false;
-      for (let radius = 1; radius <= 10 && !found; radius++) {
-        for (let dy = -radius; dy <= radius && !found; dy++) {
-          for (let dx = -radius; dx <= radius && !found; dx++) {
+      // Resolve a near-outline tap to the nearest fillable pixel.
+      let nearest = null;
+      for (let radius = 1; radius <= 12 && !nearest; radius++) {
+        for (let dy = -radius; dy <= radius; dy++) {
+          for (let dx = -radius; dx <= radius; dx++) {
+            if (Math.max(Math.abs(dx), Math.abs(dy)) !== radius) continue;
             const x = sx + dx, y = sy + dy;
-            if (x >= 0 && x < W && y >= 0 && y < H && !isLine(x,y)) {
-              sx = x; sy = y; found = true;
+            if (x >= 0 && x < W && y >= 0 && y < H && !isLine(x, y)) {
+              const distance = dx * dx + dy * dy;
+              if (!nearest || distance < nearest.distance) nearest = { x, y, distance };
             }
           }
         }
       }
-      if (!found) { message('blockedRegion'); return; }
+      if (!nearest) { message('blockedRegion'); return; }
+      sx = nearest.x; sy = nearest.y;
     }
-    const checked = new Uint8Array(W * H);
+
+    const visited = new Uint8Array(W * H);
     const queue = new Int32Array(W * H);
-    let head = 0, tail = 0, reachedEdge = false;
-    const first = sy * W + sx;
-    checked[first] = 1; queue[tail++] = first;
-    function push(next) {
-      if (checked[next] || ink[next * 4 + 3] >= 52) return;
-      checked[next] = 1; queue[tail++] = next;
-    }
+    let head = 0, tail = 0;
+    let touchesEdge = false;
+    const seed = sy * W + sx;
+    visited[seed] = 1;
+    queue[tail++] = seed;
+    const push = idx => {
+      if (visited[idx] || ink[idx * 4 + 3] >= 52) return;
+      visited[idx] = 1;
+      queue[tail++] = idx;
+    };
     while (head < tail) {
       const idx = queue[head++];
       const x = idx % W, y = (idx / W) | 0;
-      if (x === 0 || y === 0 || x === W - 1 || y === H - 1) { reachedEdge = true; break; }
-      push(idx-1); push(idx+1); push(idx-W); push(idx+W);
+      if (x === 0 || y === 0 || x === W - 1 || y === H - 1) touchesEdge = true;
+      if (x > 0) push(idx - 1);
+      if (x < W - 1) push(idx + 1);
+      if (y > 0) push(idx - W);
+      if (y < H - 1) push(idx + W);
     }
-    if (reachedEdge) { message('openRegion'); return; }
-    const pixels = paintCtx.getImageData(0,0,W,H);
-    const hex = state.color.slice(1);
-    const red = parseInt(hex.slice(0,2), 16), green = parseInt(hex.slice(2,4), 16), blue = parseInt(hex.slice(4,6), 16);
-    let hasChange = false;
-    for (let i = 0; i < head; i++) {
+
+    const data = paintCtx.getImageData(0, 0, W, H);
+    const value = state.color;
+    const r = parseInt(value.slice(1, 3), 16);
+    const g = parseInt(value.slice(3, 5), 16);
+    const b = parseInt(value.slice(5, 7), 16);
+    let changed = false;
+    for (let i = 0; i < tail; i++) {
       const offset = queue[i] * 4;
-      if (pixels.data[offset] !== red || pixels.data[offset+1] !== green || pixels.data[offset+2] !== blue || pixels.data[offset+3] !== 255) {
-        hasChange = true;
-        pixels.data[offset] = red; pixels.data[offset+1] = green; pixels.data[offset+2] = blue; pixels.data[offset+3] = 255;
+      if (data.data[offset] !== r || data.data[offset + 1] !== g || data.data[offset + 2] !== b || data.data[offset + 3] !== 255) {
+        changed = true;
+        data.data[offset] = r; data.data[offset + 1] = g;
+        data.data[offset + 2] = b; data.data[offset + 3] = 255;
       }
     }
-    if (!hasChange) return;
-    paintCtx.putImageData(pixels,0,0);
-    commitHistory(); message('filled');
+    if (!changed) { message('alreadyColored'); return; }
+    paintCtx.putImageData(data, 0, 0);
+    commitHistory();
+    message(touchesEdge ? 'backgroundFilled' : 'filled');
   }
+
+  // Soft spray: randomized semitransparent pigment particles distributed over a
+  // circular radius. Continuous drags interpolate between pointer samples.
+  function sprayAt(point) {
+    const radius = Math.max(5, state.size * 2.5);
+    const quantity = Math.max(12, Math.min(28, Math.round(state.size * 1.15)));
+    paintCtx.save();
+    paintCtx.globalCompositeOperation = 'source-over';
+    paintCtx.fillStyle = state.color;
+    paintCtx.globalAlpha = 0.28;
+    for (let i = 0; i < quantity; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const distance = radius * Math.sqrt(Math.random());
+      const x = point.x + Math.cos(angle) * distance;
+      const y = point.y + Math.sin(angle) * distance;
+      const particleSize = 0.65 + Math.random() * 1.7;
+      paintCtx.beginPath();
+      paintCtx.arc(x, y, particleSize, 0, Math.PI * 2);
+      paintCtx.fill();
+    }
+    paintCtx.restore();
+  }
+
   function prepareTool() {
     paintCtx.globalCompositeOperation = state.tool === 'eraser' ? 'destination-out' : 'source-over';
     paintCtx.lineCap = 'round'; paintCtx.lineJoin = 'round';
@@ -476,7 +514,8 @@
     state.pointer = e.pointerId;
     state.lastPoint = coords(e);
     try { paintCanvas.setPointerCapture(e.pointerId); } catch (_) { /* unusual input device */ }
-    prepareTool(); pointDot(state.lastPoint);
+    if (state.tool === 'spray') sprayAt(state.lastPoint);
+    else { prepareTool(); pointDot(state.lastPoint); }
     paintCtx.globalCompositeOperation = 'source-over';
   }
   function onPointerMove(e) {
@@ -484,11 +523,22 @@
     e.preventDefault();
     const events = typeof e.getCoalescedEvents === 'function' ? e.getCoalescedEvents() : [];
     const points = events.length ? events : [e];
-    prepareTool();
+    if (state.tool !== 'spray') prepareTool();
     for (const sample of points) {
       const p = coords(sample);
-      paintCtx.beginPath(); paintCtx.moveTo(state.lastPoint.x, state.lastPoint.y);
-      paintCtx.lineTo(p.x, p.y); paintCtx.stroke(); state.lastPoint = p;
+      if (state.tool === 'spray') {
+        const dx = p.x - state.lastPoint.x;
+        const dy = p.y - state.lastPoint.y;
+        const distance = Math.hypot(dx, dy);
+        const steps = Math.min(8, Math.max(1, Math.ceil(distance / Math.max(4, state.size * 0.65))));
+        for (let i = 1; i <= steps; i++) {
+          sprayAt({x: state.lastPoint.x + dx * i / steps, y: state.lastPoint.y + dy * i / steps});
+        }
+      } else {
+        paintCtx.beginPath(); paintCtx.moveTo(state.lastPoint.x, state.lastPoint.y);
+        paintCtx.lineTo(p.x, p.y); paintCtx.stroke();
+      }
+      state.lastPoint = p;
     }
     paintCtx.globalCompositeOperation = 'source-over';
   }
@@ -689,6 +739,7 @@
     el('langEn').addEventListener('click', () => setLanguage('en'));
     el('bucketTool').addEventListener('click', () => chooseTool('bucket'));
     el('brushTool').addEventListener('click', () => chooseTool('brush'));
+    el('sprayTool').addEventListener('click', () => chooseTool('spray'));
     el('eraserTool').addEventListener('click', () => chooseTool('eraser'));
     el('brushSize').addEventListener('input', e => {
       state.size = Number(e.target.value); el('brushSizeOutput').textContent = String(state.size);
