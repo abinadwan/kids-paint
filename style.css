@@ -212,3 +212,12 @@ dialog::backdrop { background: rgba(30, 25, 52, .45); }
 @media (max-width: 760px) { .tool-panel .tool-buttons { grid-template-columns: repeat(5, minmax(0,1fr)); min-width: 0; } .tool-panel .color-palette { grid-column: auto; grid-template-columns: repeat(12,minmax(0,1fr)); } }
 @media (max-width: 530px) { .tool-panel .tool-buttons { grid-template-columns: repeat(3, minmax(0,1fr)); } .tool-panel .color-palette { grid-template-columns: repeat(6,minmax(0,1fr)); } .photo-import-row .import-button { width: 100%; } .tool-button { min-height: 70px; } }
 @media (max-width: 360px) { .tool-panel .color-palette { gap: 6px; } .stamp-picker { gap: 5px; } }
+/* Project attribution — responsive, keyboard-accessible links. */
+.site-footer { margin-top: 14px; padding: 20px 14px 28px; border-top: 1px solid var(--stroke); text-align: center; color: var(--muted); font-size: .85rem; }
+.site-footer .footer-tagline { margin: 0 0 10px; }
+.site-footer .footer-meta, .site-footer .footer-links { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 18px; }
+.site-footer .footer-meta { line-height: 1.7; }
+.site-footer .footer-links a { color: var(--brand); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.site-footer .footer-links a:hover { color: var(--ink); }
+.site-footer .footer-links a:focus-visible { outline: 3px solid var(--brand); outline-offset: 4px; border-radius: 4px; }
+@media (max-width: 530px) { .site-footer .footer-meta { flex-direction: column; gap: 5px; } .site-footer .footer-links { gap: 8px 20px; } }
