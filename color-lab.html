@@ -4,13 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#7058d6">
-  <meta name="app-version" content="4.7.0">
+  <meta name="app-version" content="4.8.0">
   <meta name="description" content="Kids Paint Color Lab — mix paint-like pigments and solve friendly color challenges.">
   <title>مختبر الألوان | Kids Paint</title>
   <link rel="icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="color-lab.css?v=4.7.0">
+  <link rel="stylesheet" href="color-lab.css?v=4.8.0">
+  <link rel="stylesheet" href="assets/site-header.css?v=4.8.0">
   <script src="vendor/spectral.min.js?v=3.0.0" defer></script>
   <script src="color-lab-core.js?v=4.6.0" defer></script>
   <script src="color-lab.js?v=4.7.0" defer></script>
@@ -19,19 +20,22 @@
 </head>
 <body>
   <div class="lab-shell">
-    <header class="lab-header">
-      <a class="brand" href="./index.html" aria-label="Kids Paint — عالم التلوين">
-        <img src="assets/app-icon.png" width="50" height="50" alt="">
-        <span><strong data-t="brand">عالم التلوين</strong><small>Kids Paint</small></span>
+    <header class="site-header">
+      <a class="site-brand" href="./index.html" aria-label="Kids Paint — عالم التلوين">
+        <img src="assets/app-icon.png" width="56" height="56" alt="" aria-hidden="true">
+        <span class="site-brand-copy">
+          <strong class="site-brand-name" data-t="brand">عالم التلوين</strong>
+          <small class="site-brand-tagline">Kids Paint</small>
+        </span>
       </a>
-      <nav class="app-nav" aria-label="Pages / الصفحات">
+      <nav class="site-pages" aria-label="Pages / الصفحات">
         <a href="./index.html" data-t="painting">لوحة الرسم</a>
-        <a class="selected" href="./color-lab.html" aria-current="page" data-t="lab">مختبر الألوان</a>
+        <a href="./color-lab.html" aria-current="page" data-t="lab">مختبر الألوان</a>
       </nav>
-      <div class="language-actions" role="group" aria-label="Language / اللغة">
-        <button id="langAr" type="button" aria-pressed="true">عربي</button>
-        <button id="langEn" type="button" aria-pressed="false">English</button>
-      </div>
+      <nav class="site-languages" aria-label="Language / اللغة">
+        <button id="langAr" type="button" data-lang="ar" aria-pressed="true">العربية</button>
+        <button id="langEn" type="button" data-lang="en" aria-pressed="false">English</button>
+      </nav>
     </header>
 
     <main id="main">
@@ -41,6 +45,7 @@
       </div>
       <div id="pigmentLab" role="tabpanel" aria-labelledby="pigmentTab">
       <section class="lab-intro" aria-labelledby="labTitle">
+        <img class="experience-banner" src="assets/kids-paint-pigment-lab.webp" width="1600" height="533" alt="" decoding="async" fetchpriority="high">
         <div class="intro-symbols" aria-hidden="true"><span>✦</span><span>●</span><span>✦</span></div>
         <p class="eyebrow" data-t="eyebrow">تجربة جديدة من عالم التلوين</p>
         <h1 id="labTitle" data-t="title">مختبر الألوان السحري</h1>
@@ -170,6 +175,7 @@
       </div>
       <div id="lightLab" class="light-lab" role="tabpanel" aria-labelledby="lightTab" hidden>
         <section class="light-intro" aria-labelledby="lightTitle">
+          <img class="experience-banner" src="assets/kids-paint-light-lab.webp" width="1600" height="533" alt="" decoding="async" loading="lazy">
           <div class="light-intro-stars" aria-hidden="true">✦ · ✧ · ✦</div>
           <p class="light-eyebrow" data-light-t="introSmall">رحلة إلى عالم الضوء</p>
           <h1 id="lightTitle" data-light-t="introTitle">عالم الضوء الملوّن</h1>
@@ -268,11 +274,10 @@
     </main>
 
     <footer class="lab-footer">
-      <p><span data-t="poweredBy">مزج الأصباغ التقريبي بواسطة</span> <a href="https://github.com/rvanwijnen/spectral.js" target="_blank" rel="noopener noreferrer">Spectral.js</a> · MIT © 2025 Ronald van Wijnen</p>
-      <p><a href="THIRD_PARTY_NOTICES.md" data-t="licenseLink">حقوق المكتبات والتراخيص</a> · <a href="README.ar.md" data-t="aboutProject">عن المشروع</a></p>
+      <p class="lab-copyright">Kids Paint © 2026 <bdi>abinadwan</bdi></p>
       <div class="lab-update-panel">
         <div class="lab-update-top">
-          <span class="lab-version"><span data-t="versionLabel">الإصدار</span> <bdi id="labVersionLabel">4.7.0</bdi></span>
+          <span class="lab-version"><span data-t="versionLabel">الإصدار</span> <bdi id="labVersionLabel">4.8.0</bdi></span>
           <button id="labUpdateBtn" type="button" data-t="checkUpdates">تحديث التطبيق</button>
         </div>
         <p id="labUpdateStatus" role="status" aria-live="polite" data-t="updateHelp">اضغط للتحقق من توفر إصدار أحدث.</p>
