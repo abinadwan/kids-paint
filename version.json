@@ -1,6 +1,6 @@
 {
-  "version": "4.3.0",
+  "version": "4.4.0",
   "released": "2026-11-09",
-  "summary": "In-app version display and safe PWA update checks",
-  "notes": "Use Update app in the footer; save unsaved drawings before refreshing."
+  "summary": "Portrait mobile canvas (85% viewport height), blank start, and tap-to-place text",
+  "notes": "New phone drawings are portrait; desktop and older saved artwork keep their original proportions. Text is positioned by tapping the canvas. Save your drawing before updating."
 }
