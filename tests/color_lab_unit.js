@@ -11,6 +11,8 @@ assert.deepEqual(core.tidyDrops({red:2,yellow:1,white:3}),{red:2,yellow:1,white:
 assert.throws(()=>core.tidyDrops({red:19}),RangeError);
 assert.throws(()=>core.tidyDrops({red:-1}),RangeError);
 assert.throws(()=>core.tidyDrops({red:1,unknown:2}),RangeError);
+assert.throws(()=>core.tidyDrops({constructor:1}),RangeError);
+assert.equal(core.mayAdd({},'__proto__'),false);
 assert.equal(core.mayAdd({red:1,yellow:1},'blue'),true,'Third primary pigment allowed');
 assert.equal(core.mayAdd({red:1,yellow:1,blue:1},'white'),true,'White also allowed');
 assert.equal(core.mayAdd({red:1,yellow:1,blue:1,white:1},'black'),true,'Black also allowed');
