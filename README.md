@@ -188,6 +188,7 @@ node tests/color_lab_unit.js
 python tests/color_lab_browser_test.py
 node tests/light_lab_unit.js
 python tests/light_lab_browser_test.py
+python tests/header_layout_browser_test.py
 node tests/service_worker_unit.js
 ```
 
