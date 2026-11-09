@@ -27,6 +27,15 @@ Actual screenshots of the web interface captured in Chromium (not physical iPhon
 
 <img src="docs/screenshots/mobile.webp" alt="Kids Paint Arabic mobile interface with the emoji picker" width="390">
 
+
+## New in v4.4.0 — immersive portrait editor and text
+
+- **85% mobile portrait canvas:** on a new page in phone portrait mode (screen width up to 760px), the drawing stage fills 85% of the viewport height. It uses a genuine portrait-resolution bitmap, not a stretched 960×640 landscape image. New desktop pages remain 960×640.
+- **Blank start:** the application now opens on Free Draw with the Drawing Pen already active. All 13 outlined coloring templates remain available.
+- **Text tool (T):** select Text, enter up to 120 characters across up to three lines, select a color and tool size, then tap the exact location on the canvas or imported image where the text should appear. Use Undo to remove or reposition it. Text is included in Save, Open, Undo/Redo, Export PNG and Save to Photos.
+- **Preserved document dimensions:** the stored artwork includes its original width and height. A legacy 960×640 landscape save will still open in landscape on a phone, and a portrait mobile save will preserve its portrait proportions on a desktop.
+- **Mobile memory:** portrait drawing history stores up to 16 states; desktop stores up to 22. Screen orientation changes during a drawing can change the displayed size without changing the saved document dimensions.
+
 ## What's new in v4.2
 
 - **Emoji stickers:** 18 native emoji (faces, hearts, rainbow, butterfly, animals, flowers, rocket, ball, food, celebration). Choose **Emoji**, select a symbol and set its size, then tap the canvas or imported picture. Emoji retain their native multicolor appearance, unlike the color-customizable vector stamps. Undo/redo, clear, local save, and PNG export all include emoji.
@@ -44,12 +53,13 @@ Actual screenshots of the web interface captured in Chromium (not physical iPhon
 | Eraser | Removes user-applied paint, marks, stamps, and emoji without erasing an imported photo or original template |
 | Vector stamps | Six recolorable shapes: heart, star, butterfly, flower, crescent moon, smiley face |
 | Emoji tool | 18 OS-rendered emoji stickers placed at adjustable size; their intrinsic colors are not changed by the palette |
+| Text tool | Enter Arabic or English text, select size/color and tap the exact placement on the canvas or imported photo |
 | Colors | 12 color families, five shades per family, plus a custom color input (for pen/spray/bucket/vector stamps) |
 | Gallery photo import | Import a browser-supported image (e.g. JPG, PNG, WebP) from your device, draw or place emoji/stamps over it; file size limit 30 MB |
 | Picture templates | 13 built-in vector illustrations plus one blank canvas (14 choices total) |
-| Undo / Redo | Up to 22 drawing states, including user pen boundaries and emoji/stamps |
+| Undo / Redo | Up to 16 drawing states for portrait mobile work and 22 on desktop, including text and stamps |
 | Save / Open / Delete | Editable drawings saved locally in IndexedDB, with localStorage fallback; not synced or cloud-backed |
-| Export PNG | Download a flattened 960 × 640 PNG containing the photo/background, template, and all additions |
+| Export PNG | Download a flat image at the artwork's native dimensions; new mobile portrait drawings are tall, desktop and legacy drawings can be 960×640 |
 | Save to Photos | Native file Share sheet where supported; otherwise download and manually save the PNG to your gallery |
 | Language | Arabic and English, including RTL/LTR switch and retained preference when storage is available |
 | PWA | Installable app shell, icons, manifest, offline cache of essential static assets, standalone display |
@@ -115,6 +125,7 @@ python tests/user_outline_test.py
 python tests/photo_stamps_test.py
 python tests/emoji_gallery_test.py
 python tests/install_ui_test.py
+python tests/portrait_text_test.py
 node tests/service_worker_unit.js
 ```
 
