@@ -86,3 +86,10 @@ On a phone, new work starts on a blank, portrait page with the pen active. Choos
 في المختبر أصبح بالإمكان مزج الأحمر والأصفر والأزرق مع الأبيض للتفتيح والأسود للتغميق، حتى 18 قطرة. تتوزع 12 تحديًا على 3 مراحل بدون وقت أو عقوبات. دفتر الألوان يحفظ 48 وصفة ويمكن استعادتها أو حذفها. ألوان ونجوم الإصدار السابق محفوظة. المزج تقريب تعليمي لا يطابق بالضرورة الدهانات الواقعية.
 
 Kids now mix red, yellow and blue with white and black in an 18-drop cup. There are 12 untimed challenges, 48 notebook slots and no attempt penalties. Previous notebook entries and stars remain stored locally.
+
+
+## World of Light — عالم الضوء (2C, v4.7.0)
+
+**العربية:** افتح مختبر الألوان ثم اختر «عالم الضوء». حرّك أشرطة الأحمر والأخضر والأزرق من 0 إلى 100٪، واكتشف كيف يصنع الأحمر والأخضر ضوءًا أصفر، وكيف تصنع الأضواء الثلاثة بكامل شدتها اللون الأبيض. توجد ستة تحديات دون مؤقت ودفتر مستقل عن دفتر الأصباغ. جميع الرسومات والألوان والنجوم السابقة تبقى محفوظة محليًا.
+
+**English:** Open Color Lab and choose World of Light. Use red/green/blue sliders to learn additive light mixing, with six untimed challenges and a separate light notebook. Old pigment progress remains untouched. The same PWA offers version and Update app controls at the bottom of both app pages.
