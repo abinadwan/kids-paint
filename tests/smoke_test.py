@@ -16,8 +16,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def load_app(page, stored=None):
     html = (ROOT / 'index.html').read_text('utf-8')
-    html = re.sub(r'<link[^>]+href="style.css"[^>]*>', '', html)
-    html = html.replace('<script src="drawing.js" defer></script>', '')
+    html = re.sub(r'<link[^>]+href="style\.css(?:\?[^"]*)?"[^>]*>', '', html)
+    html = re.sub(r'<script src="drawing\.js(?:\?[^"]*)?" defer></script>', '', html)
     page.set_content(html)
     page.add_style_tag(content=(ROOT / 'style.css').read_text('utf-8'))
     page.evaluate('''seed => {
