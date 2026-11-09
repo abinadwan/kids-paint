@@ -45,7 +45,7 @@ def run():
             assert 'مُحدّث' in page.locator('#updateStatus').inner_text()
             assert page.evaluate('window.__requests[0].cache') == 'no-store'
             assert '/version.json?check=' in page.evaluate('window.__requests[0].url')
-            page.evaluate("window.__servedVersion = '4.4.0'")
+            page.evaluate("window.__servedVersion = '4.5.0'")
             page.once('dialog', lambda dialog: dialog.dismiss())
             page.locator('#checkUpdateBtn').click()
             page.wait_for_function("document.querySelector('#updateStatus').textContent.includes('لم يُطبّق')")
