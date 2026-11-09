@@ -27,9 +27,10 @@ vm.runInNewContext(fs.readFileSync(path.join(root,'sw.js'),'utf8'),context);
 function event(type,request){let job;const e={request,waitUntil(p){job=p},respondWith(p){job=p}};listeners[type](e);return job}
 (async()=>{
  await event('install');
- assert(db.has('kids-paint-shell-v4.7.0'));
- const cache=db.get('kids-paint-shell-v4.7.0');
- for(const item of ['','index.html','manifest.webmanifest','style.css?v=4.5.0','drawing.js?v=4.5.0','color-lab.html','color-lab.css?v=4.7.0','color-lab-core.js?v=4.6.0','color-lab.js?v=4.7.0','light-lab-core.js?v=4.7.0','light-lab.js?v=4.7.0','vendor/spectral.min.js?v=3.0.0','THIRD_PARTY_NOTICES.md','licenses/spectral-MIT.txt','assets/icon-192.png','assets/icon-512.png']){
+ assert(db.has('kids-paint-shell-v4.8.0'));
+ const cache=db.get('kids-paint-shell-v4.8.0');
+ assert.equal(cache.records.size,27,'All 4.8.0 offline files are cached');
+ for(const item of ['','index.html','manifest.webmanifest','style.css?v=4.5.0','assets/site-header.css?v=4.8.0','drawing.js?v=4.5.0','pwa.js?v=4.8.0','color-lab.html','color-lab.css?v=4.8.0','color-lab-core.js?v=4.6.0','color-lab.js?v=4.8.0','light-lab-core.js?v=4.7.0','light-lab.js?v=4.7.0','vendor/spectral.min.js?v=3.0.0','THIRD_PARTY_NOTICES.md','LICENSE','docs/LICENSING_AND_CREDITS.md','licenses/spectral-MIT.txt','assets/kids-paint-banner.webp','assets/kids-paint-pigment-lab.webp','assets/kids-paint-light-lab.webp','assets/kids-paint-platform-banner.webp','assets/app-icon.png','assets/icon-192.png','assets/icon-512.png','apple-touch-icon.png','favicon.ico']){
   assert(await cache.match(scope+item), `Missing ${item}`);
  }
  const rgbCore={url:scope+'light-lab-core.js?v=4.7.0',method:'GET',mode:'cors'};
@@ -67,6 +68,15 @@ function event(type,request){let job;const e={request,waitUntil(p){job=p},respon
  assert((await event('fetch',rgbUi)).ok,'RGB interface works without a network');
  const vendorAsset={url:scope+'vendor/spectral.min.js?v=3.0.0',method:'GET',mode:'cors'};
  assert((await event('fetch',vendorAsset)).ok,'Pigment library loads offline');
+ for(const banner of ['assets/kids-paint-pigment-lab.webp','assets/kids-paint-light-lab.webp','assets/kids-paint-platform-banner.webp']){
+  const request={url:scope+banner,method:'GET',mode:'cors'};
+  const response=await event('fetch',request);
+  assert(response && response.ok && response.source===scope+banner,'Banner works offline: '+banner);
+ }
+ for(const doc of ['LICENSE','licenses/spectral-MIT.txt','docs/LICENSING_AND_CREDITS.md']){
+  assert((await event('fetch',{url:scope+doc,method:'GET',mode:'cors'})).ok,'Legal notices remain cached: '+doc);
+ }
+
  const css={url:scope+'style.css?v=4.5.0',method:'GET',mode:'cors'};
  assert((await event('fetch',css)).ok,'Offline static asset');
  assert(!event('fetch',{url:'https://example.invalid/other',method:'GET',mode:'cors'}),'SW respects scope');
