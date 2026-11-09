@@ -18,7 +18,7 @@ def prepare(page):
     page.set_content(html)
     page.add_style_tag(content=(ROOT / 'style.css').read_text('utf-8'))
     page.evaluate("""() => {
-      window.__servedVersion = '4.4.0';
+      window.__servedVersion = '4.4.1';
       window.__failUpdateCheck = false;
       window.__requests = [];
       window.fetch = async (url, init) => {
@@ -38,10 +38,10 @@ def run():
             problems = []
             page.on('pageerror', lambda error: problems.append(str(error)))
             prepare(page)
-            assert page.locator('#appVersionLabel').inner_text() == '4.4.0'
+            assert page.locator('#appVersionLabel').inner_text() == '4.4.1'
             assert page.locator('#checkUpdateBtn').is_visible()
             page.locator('#checkUpdateBtn').click()
-            page.wait_for_function("document.querySelector('#updateStatus').textContent.includes('4.4.0')")
+            page.wait_for_function("document.querySelector('#updateStatus').textContent.includes('4.4.1')")
             assert 'مُحدّث' in page.locator('#updateStatus').inner_text()
             assert page.evaluate('window.__requests[0].cache') == 'no-store'
             assert '/version.json?check=' in page.evaluate('window.__requests[0].url')
@@ -49,7 +49,7 @@ def run():
             page.once('dialog', lambda dialog: dialog.dismiss())
             page.locator('#checkUpdateBtn').click()
             page.wait_for_function("document.querySelector('#updateStatus').textContent.includes('لم يُطبّق')")
-            assert page.locator('#appVersionLabel').inner_text() == '4.4.0'
+            assert page.locator('#appVersionLabel').inner_text() == '4.4.1'
             page.evaluate("window.__failUpdateCheck = true")
             page.locator('#checkUpdateBtn').click()
             page.wait_for_function("document.querySelector('#updateStatus').textContent.includes('تعذّر')")
