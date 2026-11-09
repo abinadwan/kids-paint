@@ -6,6 +6,7 @@ const PRECACHE = [
   './color-lab.html', './color-lab.css?v=4.5.0',
   './color-lab-core.js?v=4.5.0', './color-lab.js?v=4.5.0',
   './vendor/spectral.min.js?v=3.0.0',
+  './THIRD_PARTY_NOTICES.md', './licenses/spectral-MIT.txt',
   './assets/kids-paint-banner.webp', './assets/app-icon.png',
   './assets/icon-192.png', './assets/icon-512.png',
   './apple-touch-icon.png', './favicon.ico'
