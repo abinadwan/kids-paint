@@ -1,33 +1,40 @@
-# Kids Paint — دليل الأهل والأطفال / Parents' Guide
+# Kids Paint — دليل الصبغ للأطفال | Parent Guide
 
-## عربي
+## بالعربية
 
-**عالم التلوين** تطبيق بسيط للرسم والتلوين يعمل من جهازك دون إنشاء حساب أو الاتصال بالإنترنت.
+**Kids Paint** تطبيق مجاني ومفتوح المصدر لصبغ أجزاء الرسومات بضغطة واحدة بدل التلوين اليدوي الطويل.
 
-**طريقة الاستخدام:** افتح `index.html`، واختر رسمة القطة أو السمكة أو التفاح أو الأسد أو القلم، أو اختر **رسم حر**. اختر لونًا من اللوحة، واضبط حجم الفرشاة، ثم ارسم بالماوس أو الإصبع أو القلم الإلكتروني. استخدم **ممحاة** لإزالة الألوان التي أضفتها، و**تراجع** و**إعادة** للتنقل بين خطوات الرسم. زر **مسح الألوان** يمسح تلوين الطفل فقط ويُبقي شكل الرسمة الأصلي.
+### كيف تستخدمه؟
 
-**اللغات:** اضغط **العربية** أو **English** أعلى الصفحة. تتغير الكتابة واتجاه الواجهة فورًا دون مسح الرسم. يحاول التطبيق تذكر اللغة في نفس المتصفح.
+1. افتح [الموقع](https://abinadwan.github.io/kids-paint/) أو ملف `index.html` محليًا.
+2. اختر **العربية** أو **English**.
+3. اختر رسمة من **14 صفحة**: قطة، سمكة، تفاح، أسد، قلم، فراشة، زهرة، منزل، صاروخ، سيارة، سلحفاة، آيس كريم، شمس، أو رسم حر.
+4. اختر اللون واترك **دلو الصبغ** مفعّلًا (هو الافتراضي للرسومات الجاهزة).
+5. اضغط داخل مساحة **مغلقة** لتصبغها بالكامل. غيّر اللون واضغط مرة ثانية لإعادة صبغ نفس المكان.
+6. استخدم **تراجع** و**إعادة** أو **مسح الألوان** لاستعادة الرسمة الأصلية دون فقد الحدود.
+7. اضغط **حفظ** للاحتفاظ بها داخل نفس المتصفح أو **تصدير PNG** لتنزيل صورة مستقلة.
 
-**الحفظ:** اضغط **حفظ** ثم اكتب اسم الرسمة. تظهر في قسم **رسوماتي المحفوظة**، ويمكن فتحها أو حذفها لاحقًا. هذه الرسومات محلية في المتصفح فقط، وليست مرتبطة بحساب أو متزامنة بين الأجهزة. قد تضيع إذا حذفت بيانات المتصفح.
+### الأدوات
 
-**تصدير صورة:** اضغط **تصدير PNG** لإنزال صورة تحتوي على الرسمة الأصلية والتلوين وخلفية بيضاء. هذا أفضل خيار للاحتفاظ بنسخة ومشاركتها مع العائلة.
+- **دلو الصبغ:** يملأ الأجزاء المغلقة فقط، ويمنع وصول اللون للخلفية المفتوحة.
+- **الفرشاة:** للرسم اليدوي الحر؛ مفعّلة تلقائيًا في صفحة «رسم حر».
+- **الممحاة:** تزيل أجزاء من طبقة صبغ الطفل دون حذف الحدود الأصلية.
+- **حجم الأداة:** يخص الفرشاة والممحاة فقط؛ لا يغيّر طريقة عمل الدلو.
 
-**السلامة والخصوصية:** لا يوجد تسجيل حساب، ولا إعلانات، ولا تتبع، ولا إرسال صور إلى خادم. لا تحتاج الملفات الأساسية لاتصال خارجي. يُفضّل أن يساعد أحد الوالدين الطفل الصغير عند حفظ الملفات أو حذف الرسومات.
+### الخصوصية
 
-**إذا تعذر الحفظ:** استخدم **تصدير PNG**؛ قد يكون تخزين المتصفح ممتلئًا أو مقيدًا، خاصة في وضع التصفح الخاص.
+لا يوجد تسجيل دخول ولا تتبع أو إعلانات أو رفع للرسومات. يُحفظ العمل محليًا في المتصفح وقد يضيع عند حذف بيانات المتصفح؛ لذلك يُنصح بتصدير PNG للأعمال المهمة. التطبيق ثابت ويعمل دون إنترنت عند فتح ملفاته محليًا.
+
+### ملاحظات
+
+قد لا تقبل الأشكال ذات الحدود المفتوحة أداة الدلو، لأن التطبيق يرفض صبغ الخلفية الخارجية لحماية الطفل من تسرب اللون. للبدء جرّب المنزل أو الشمس.
 
 ## English
 
-**Kids Paint** is a child-friendly drawing and coloring app that runs locally without signing in or connecting to the internet.
+**Kids Paint** is a free open-source **paint-by-tap** application for children. Select a color, choose the **Paint Bucket**, and tap inside an **enclosed region** to fill it. The app deliberately refuses areas connected to the outside background.
 
-**Getting started:** Open `index.html`, then choose a cat, fish, apples, lion, pencil, or a blank page. Choose a color and brush size, then draw with a mouse, fingertip, or stylus. Use **Eraser** to remove only your added coloring, **Undo/Redo** to move between drawing steps, and **Clear colors** to remove added coloring without deleting the original outline.
+It includes **13 illustrations and a blank Free Draw page**, Arabic/English switching, Undo/Redo, optional Brush and Eraser, browser-local Save/Open/Delete and PNG export.
 
-**Languages:** Select **العربية** or **English** at the top. The interface and text direction change immediately without erasing the drawing. The browser remembers your language when storage is available.
+Browser storage is **not a backup**. Use PNG export to keep or share drawings. No accounts, ads, trackers, or automatic uploads.
 
-**Save:** Select **Save**, enter a name, and find the artwork in **My saved drawings**. You can reopen or delete a saved picture. These editable drawings live only in the current browser profile, not in a cloud account; clearing browser data can erase them.
-
-**Export:** Select **Export PNG** to download a standalone image with a white background, the outline, and your added coloring. This is the recommended way to keep or share a copy.
-
-**Privacy:** No accounts, ads, analytics, uploads, or remote scripts. The core application runs offline. An adult may want to help younger children manage downloaded files and delete saved drawings.
-
-**Storage problems:** If local saving is blocked or full, use **Export PNG** instead. PNG files cannot be reopened as editable layered projects.
+**License:** [MIT](LICENSE), © 2026 `abinadwan`.
